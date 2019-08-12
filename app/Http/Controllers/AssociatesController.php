@@ -29,7 +29,7 @@ class AssociatesController extends Controller
 
     public function store(Request $request)
     {
-
+        // dd($request->all());
         //validate the received data
         $data = $request->validate([
             'associate_name'=>'required',
@@ -58,7 +58,7 @@ class AssociatesController extends Controller
             'associate_experience' => $data['associate_experience'],
             'created_by'=>Auth::user()->id
         ]);
-        return['Associate added sucessively'];    
+        return redirect()->route('associates.index');    
     }
 
     public function show($id)

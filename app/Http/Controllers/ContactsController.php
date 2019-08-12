@@ -78,12 +78,7 @@ class ContactsController extends Controller
             'alternative_person_phone'=>$data['alternative_person_phone'],
             'created_by'=>Auth::user()->id
         ]);
-        if(!$contact){
-            throw('Failed to save contact');
-        }
-        else{
-            return ['Contact saved successfully'];
-        }
+        return redirect()->route('contacts.index');
     }
 
     /**

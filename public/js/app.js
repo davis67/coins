@@ -1837,6 +1837,14 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_form_wizard__WEBPACK_IMPORTED
     generalInfo: _general_info__WEBPACK_IMPORTED_MODULE_3__["default"],
     contactInfo: _contact_info__WEBPACK_IMPORTED_MODULE_5__["default"],
     otherInfo: _other_info__WEBPACK_IMPORTED_MODULE_4__["default"]
+  },
+  methods: {
+    validate: function validate() {
+      this.$v.form.$touch();
+      var isValid = !this.$v.form.$invalid;
+      this.$emit('on-validate', this.$data, isValid);
+      return isValid;
+    }
   }
 });
 
@@ -1846,9 +1854,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_form_wizard__WEBPACK_IMPORTED
 /*!*************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/opportunities/general_info.vue?vue&type=script&lang=js& ***!
   \*************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 //
 //
 //
@@ -1876,7 +1886,25 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_form_wizard__WEBPACK_IMPORTED
 //
 //
 //
-//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      opportunity_name: "",
+      country: "",
+      client_name: "",
+      funder: "",
+      external_deadline: ""
+    };
+  },
+  methods: {
+    validate: function validate() {
+      this.$v.form.$touch();
+      var isValid = !this.$v.form.$invalid;
+      this.$emit("on-validate", this.$data, isValid);
+      return isValid;
+    }
+  }
+});
 
 /***/ }),
 
@@ -38107,8 +38135,21 @@ var render = function() {
         [
           _c(
             "tab-content",
-            { attrs: { title: "General Info", icon: "ti-bookmark-alt" } },
-            [_c("general-info")],
+            {
+              attrs: {
+                title: "General Info",
+                "before-change": function() {
+                  return _vm.validateStep("general_info")
+                },
+                icon: "ti-bookmark-alt"
+              }
+            },
+            [
+              _c("general-info", {
+                ref: "general_info",
+                on: { "on-validate": _vm.mergePartialModels }
+              })
+            ],
             1
           ),
           _vm._v(" "),
@@ -38156,26 +38197,26 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "form-group col-md-12" }, [
-      _c("label", [_vm._v("Opportunity  Name")]),
+      _c("label", [_vm._v("Opportunity Name")]),
       _vm._v(" "),
       _c("input", {
         directives: [
           {
             name: "model",
             rawName: "v-model.trim",
-            value: _vm.firstName,
-            expression: "firstName",
+            value: _vm.opportunity_name,
+            expression: "opportunity_name",
             modifiers: { trim: true }
           }
         ],
         staticClass: "form-control",
-        domProps: { value: _vm.firstName },
+        domProps: { value: _vm.opportunity_name },
         on: {
           input: function($event) {
             if ($event.target.composing) {
               return
             }
-            _vm.firstName = $event.target.value.trim()
+            _vm.opportunity_name = $event.target.value.trim()
           },
           blur: function($event) {
             return _vm.$forceUpdate()
@@ -38193,19 +38234,19 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model.trim",
-              value: _vm.lastName,
-              expression: "lastName",
+              value: _vm.country,
+              expression: "country",
               modifiers: { trim: true }
             }
           ],
           staticClass: "form-control",
-          domProps: { value: _vm.lastName },
+          domProps: { value: _vm.country },
           on: {
             input: function($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.lastName = $event.target.value.trim()
+              _vm.country = $event.target.value.trim()
             },
             blur: function($event) {
               return _vm.$forceUpdate()
@@ -38222,20 +38263,20 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model.trim",
-              value: _vm.email,
-              expression: "email",
+              value: _vm.external_date,
+              expression: "external_date",
               modifiers: { trim: true }
             }
           ],
           staticClass: "form-control",
           attrs: { type: "date" },
-          domProps: { value: _vm.email },
+          domProps: { value: _vm.external_date },
           on: {
             input: function($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.email = $event.target.value.trim()
+              _vm.external_date = $event.target.value.trim()
             },
             blur: function($event) {
               return _vm.$forceUpdate()
@@ -38253,19 +38294,19 @@ var render = function() {
           {
             name: "model",
             rawName: "v-model.trim",
-            value: _vm.firstName,
-            expression: "firstName",
+            value: _vm.client_name,
+            expression: "client_name",
             modifiers: { trim: true }
           }
         ],
         staticClass: "form-control",
-        domProps: { value: _vm.firstName },
+        domProps: { value: _vm.client_name },
         on: {
           input: function($event) {
             if ($event.target.composing) {
               return
             }
-            _vm.firstName = $event.target.value.trim()
+            _vm.client_name = $event.target.value.trim()
           },
           blur: function($event) {
             return _vm.$forceUpdate()
@@ -38282,19 +38323,19 @@ var render = function() {
           {
             name: "model",
             rawName: "v-model.trim",
-            value: _vm.firstName,
-            expression: "firstName",
+            value: _vm.funder,
+            expression: "funder",
             modifiers: { trim: true }
           }
         ],
         staticClass: "form-control",
-        domProps: { value: _vm.firstName },
+        domProps: { value: _vm.funder },
         on: {
           input: function($event) {
             if ($event.target.composing) {
               return
             }
-            _vm.firstName = $event.target.value.trim()
+            _vm.funder = $event.target.value.trim()
           },
           blur: function($event) {
             return _vm.$forceUpdate()
@@ -50986,9 +51027,7 @@ component.options.__file = "resources/js/components/opportunities/general_info.v
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_general_info_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./general_info.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/opportunities/general_info.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_general_info_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_general_info_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_general_info_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_general_info_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_general_info_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_general_info_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

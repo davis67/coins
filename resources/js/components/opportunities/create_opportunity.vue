@@ -1,8 +1,8 @@
 <template>
   <div>
     <form-wizard shape="shape" color="#3498db">
-      <tab-content title="General Info" icon="ti-bookmark-alt">
-        <general-info></general-info>
+      <tab-content title="General Info" :before-change="()=>validateStep('general_info')" icon="ti-bookmark-alt">
+        <general-info ref="general_info" @on-validate="mergePartialModels"></general-info>
       </tab-content>
       <tab-content title="Other Info" icon="ti-id-badge">
           <other-info></other-Info>
@@ -35,6 +35,14 @@ export default {
     generalInfo,
     contactInfo,
     otherInfo
+  },
+  methods:{
+    validate() {
+      this.$v.form.$touch();
+      var isValid = !this.$v.form.$invalid
+      this.$emit('on-validate', this.$data, isValid)
+      return isValid
+    }
   }
 };
 </script>

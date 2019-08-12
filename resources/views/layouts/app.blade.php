@@ -12,8 +12,8 @@
 
     <!-- Bootstrap core CSS -->
     <!-- Bootstrap core CSS -->
-    {{-- <link href="{{ asset("css/app.css") }}" rel="stylesheet">
-    <link href="{{ asset("css/dashboard.css") }}" rel="stylesheet">
+    <link href="{{ asset("css/app.css") }}" rel="stylesheet">
+    {{-- <link href="{{ asset("css/dashboard.css") }}" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="{{ asset("css/fontawesome-all.min.css") }}" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css" rel="stylesheet">
@@ -267,7 +267,7 @@
                             <li class="nav-item"><a class="nav-link" href="{{route("home")}}"><i
                                         class="flaticon-desktop-computer-screen-with-rising-graph"></i><span
                                         class="hide-menu">Dashboard</span></a></li>
-                             <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
+                            <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
                                         class="flaticon-calendar"></i><span class="hide-menu">Opportunities</span></a>
                                 <ul aria-expanded="false" class="collapse">
                                     <li><a href="{{route('opportunities.index')}}">Opportunities</a></li>
@@ -284,7 +284,7 @@
                                     <li><a href="{{route('contacts.create')}}">Add New</a></li>
                                 </ul>
                             </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
+                            <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
                                         class="flaticon-forms"></i><span class="hide-menu">Associates</span></a>
                                 <ul aria-expanded="false" class="collapse">
                                     <li><a href="{{route('associates.index')}}">view associates</a></li>
@@ -324,7 +324,7 @@
     </div>
     </div>
     <footer>
-    <p class="text-center">@copyright 2019 AH Consulting Ltd</p>
+        <p class="text-center">@copyright 2019 AH Consulting Ltd</p>
     </footer>
     {{-- Forms and Modals --}}
     @include("partials.modals")
@@ -351,11 +351,11 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="plugins/vendors/jquery/jquery.min.js"></script>
-    <script src="/js/app.js"></script>
+    <script src="{{asset('plugins/vendors/jquery/jquery.min.js') }}"></script>
+    <script src="{{asset('/js/app.js') }}"></script>
     <!-- Bootstrap popper Core JavaScript -->
-    <script src="plugins/vendors/bootstrap/js/popper.min.js"></script>
-    <script src="plugins/vendors/bootstrap/js/bootstrap.min.js"></script>
+    <script src="{{asset('plugins/vendors/bootstrap/js/popper.min.js') }}"></script>
+    <script src="{{asset('plugins/vendors/bootstrap/js/bootstrap.min.js') }}"></script>
     <script>
         function toggleIcon(e) {
       $(e.target)
@@ -367,33 +367,33 @@
     $('.panel-group').on('shown.bs.collapse', toggleIcon);
     </script>
     <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="plugins/vendors/ps/perfect-scrollbar.jquery.min.js"></script>
+    <script src="{{asset('plugins/vendors/ps/perfect-scrollbar.jquery.min.js') }}"></script>
     <!--Wave Effects -->
-    <script src="assets/js/waves.js"></script>
+    <script src="{{asset('assets/js/waves.js') }}"></script>
     <!--Menu sidebar -->
-    <script src="assets/js/sidebarmenu.js"></script>
+    <script src="{{asset('assets/js/sidebarmenu.js') }}"></script>
     <!--Custom JavaScript -->
-    <script src="assets/js/custom.min.js"></script>
+    <script src="{{asset('assets/js/custom.min.js') }}"></script>
     <!-- ============================================================== -->
     <!-- This page plugins -->
     <!-- ============================================================== -->
     <!--c3 JavaScript -->
-    <script src="plugins/vendors/d3/d3.min.js"></script>
-    <script src="plugins/vendors/c3-master/c3.min.js"></script>
+    <script src="{{asset('plugins/vendors/d3/d3.min.js') }}"></script>
+    <script src="{{asset('plugins/vendors/c3-master/c3.min.js') }}"></script>
     <!--jquery knob -->
-    <script src="plugins/vendors/knob/jquery.knob.js"></script>
+    <script src="{{asset('plugins/vendors/knob/jquery.knob.js') }}"></script>
     <!--Morris JavaScript -->
-    <script src="plugins/vendors/raphael/raphael-min.js"></script>
-    <script src="plugins/vendors/morrisjs/morris.js"></script>
+    <script src="{{asset('plugins/vendors/raphael/raphael-min.js') }}"></script>
+    <script src="{{asset('plugins/vendors/morrisjs/morris.js') }}"></script>
     <!-- Popup message jquery -->
-    <script src="plugins/vendors/toast-master/js/jquery.toast.js"></script>
+    <script src="{{asset('plugins/vendors/toast-master/js/jquery.toast.') }}"></script>
     <!-- Dashboard JS -->
-    <script src="assets/js/dashboard-projects.js"></script>
+    <script src="{{asset('assets/js/dashboard-projects.js') }}"></script>
     <!-- ============================================================== -->
     <!-- Style switcher -->
     <!-- ============================================================== -->
-    <script src="plugins/vendors/styleswitcher/jQuery.style.switcher.js"></script>
-    <script src="plugins/vendors/datatables/jquery.dataTables.min.js"></script>
+    <script src="{{asset('plugins/vendors/styleswitcher/jQuery.style.switcher.js') }}"></script>
+    <script src="{{asset('plugins/vendors/datatables/jquery.dataTables.min.js') }}"></script>
     <script>
         $(function () {
       $('#myTable').DataTable();

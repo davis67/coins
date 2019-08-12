@@ -28,11 +28,6 @@ class CreateAssociatesTable extends Migration
             $table->string('associate_experience');
             $table->string('created_by');
             $table->string('updated_by')->nullable();
-
-            $table->foreign('expertise_id')->references('id')->on('expertises');
-            $table->foreign('specialization_id')->references('id')->on('specializations');
-            $table->foreign('created_by')->references('id')->on('users');
-            $table->foreign('updated_by')->references('id')->on('users');
             $table->timestamps();
         });
     }
