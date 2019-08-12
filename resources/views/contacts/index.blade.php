@@ -1,9 +1,11 @@
 @extends('layouts.app')
     @section('content')
+    <div class="card">
+    <div class="card-body">
     <div class="row">
         <div class="col-md-12">
             @can('isAdmin')
-            <button class="btn btn-outline-danger mb-3 btn-sm" data-toggle="modal" data-target="#addContact"><i class="fas fa-contacts-cog"></i> Add contacts</button>
+            <button class="btn btn-outline-danger mb-3 btn-sm" data-toggle="modal" data-target="#addContact"><i class="fas fa-plus"></i> Add contacts</button>
             @endcan
             <div class="table-responsive">
                 <table class="table table-sm table-striped tabledata">
@@ -42,5 +44,7 @@
                 </table>
             </div>
         </div>
+    </div>
+    </div>
     </div>
     @endsection

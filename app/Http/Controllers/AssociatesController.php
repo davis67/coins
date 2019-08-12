@@ -21,6 +21,12 @@ class AssociatesController extends Controller
 
     }
 
+    public function create()
+    {
+        return view('associates.create');
+
+    }
+
     public function store(Request $request)
     {
 

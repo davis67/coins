@@ -19,6 +19,13 @@ class ContactsController extends Controller
         $contacts = Contact::all();
         return view('contacts.index',compact('contacts'));
     }
+
+    public function create()
+    {
+        
+        return view('contacts.create');
+    }
+
     public function getcontacts(){
         return Contact::all();
     }

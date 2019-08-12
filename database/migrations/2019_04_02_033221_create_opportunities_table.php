@@ -16,8 +16,8 @@ class CreateOpportunitiesTable extends Migration
         Schema::create('opportunities', function (Blueprint $table) {
             $table->uuid('id');
             $table->primary('id');
-            $table->string('contact_id');
             $table->integer('om_number');
+            $table->string('clients_name');
             $table->string('opportunity_name');
             $table->string('country');
             $table->string('funder');
@@ -31,8 +31,6 @@ class CreateOpportunitiesTable extends Migration
             $table->integer('probability')->nullable();
             $table->string('created_by');
             $table->string('updated_by')->nullable();            
-
-            $table->foreign('contact_id')->references('id')->on('contacts');
             $table->foreign('team_id')->references('id')->on('teams');
             $table->foreign('created_by')->references('id')->on('users');
             $table->foreign('updated_by')->references('id')->on('users');

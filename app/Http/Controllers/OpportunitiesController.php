@@ -129,6 +129,14 @@ class OpportunitiesController extends Controller
         return view('opportunities.index', compact('opportunity_stage','opportunity_team','opportunities'));
     }
 
+    public function create(){
+
+        $teams = Team::all();
+        $users = User::all();
+        return view('opportunities.create', compact('teams', 'users'));
+        
+    }
+
     public function makeSummary($type,$start_date = NULL)
     {
         $start_date = isset($start_date)? $start_date : 30;
@@ -156,12 +164,11 @@ class OpportunitiesController extends Controller
         $latest = $opportunity->latestOM();
 
         //validate the received data
+        // dd($request->all());
         $data = $request->validate([
             'opportunity_name'=>'required',
-            'contact_id'=>'required',
             'country'=>'required',
             'revenue'=>'nullable',
-            'sales_stage'=>'required',
             'type'=>'required',
             'lead_source'=>'required',
             'external_deadline'=>'required|date|after:internal_deadline',
@@ -173,10 +180,10 @@ class OpportunitiesController extends Controller
 
         $run = Opportunity::create([
             'opportunity_name' => $data['opportunity_name'],
-            'contact_id' => $data['contact_id'],
+            // 'contact_id' => $data['contact_id'],
             'country' => $data['country'],
             'revenue' => $data['revenue'],
-            'sales_stage' => $data['sales_stage'],
+            // 'sales_stage' => $data['sales_stage'],
             'type' => $data['type'],
             'lead_source' => $data['lead_source'],
             'external_deadline' => $data['external_deadline'],

@@ -1,6 +1,6 @@
 @extends('layouts.app')
   @section('content')
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-md-12 p-3 mb-3 shadow-sm rounded">
             <form id="projectsFilterForm">
                 @csrf
@@ -60,8 +60,10 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div> --}}
 
+<div class="card">
+<div class="card-body">
     <div class="row">
         <div class="col-md-12">
             <h5 id="summaries"></h5>
@@ -69,15 +71,15 @@
                 <button type="button" class="btn btn-outline-primary" id="export_projects" style="float:right; display:none">Export <i class="fa fa-file-excel"></i></button>
             </div>
             <!-- Loader here -->
-            <div id="loading">
+            {{-- <div id="loading">
                 <img src="{{ asset("/files/loader.gif") }}" class="mx-auto d-block">
-            </div>
+            </div> --}}
         </div>
     </div>
 
     <div class="row">
         <div class="table-responsive">
-            <table class="table table-sm table-hover dat">
+            <table class="table table-sm table-hover table-border">
             <thead>
                 <tr>
                 <th>OM Number</th>
@@ -100,5 +102,7 @@
             </tbody>
         </table>
         </div>
+    </div>
+    </div>
     </div>
 @endsection
