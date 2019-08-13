@@ -72,7 +72,7 @@
                     </div>
 
                     <div class="form-group m-4">
-                        <button type="submit" class="btn btn-primary">Add Associate</button>
+                        <button type="submit" class="btn btn-primary">Add Contact</button>
                     </div>
 
                 </div>

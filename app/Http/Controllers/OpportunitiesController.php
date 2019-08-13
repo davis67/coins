@@ -195,17 +195,18 @@ class OpportunitiesController extends Controller
             'created_by'=>Auth::user()->id
         ]);
         
-        if(!$run){
-            return ['The opportunity not created'];;
-        }else{
+        return redirect()->route('opportunities.index')-> with('success', 'Opportunity created successfully');
+        // if(!$run){
+        //     return ['The opportunity not created'];;
+        // }else{
 
-            $team_leader = Team::where('id','=',$request->team_id)->pluck('team_leader')->first();
-            if( !User::find($team_leader)){
-            }else{
-                User::find($team_leader)->notify(new OpportunityCreated($opportunity));
-            }      
-            return ['Opportunity successfully created'];
-        }
+        //     $team_leader = Team::where('id','=',$request->team_id)->pluck('team_leader')->first();
+        //     if( !User::find($team_leader)){
+        //     }else{
+        //         User::find($team_leader)->notify(new OpportunityCreated($opportunity));
+        //     }      
+        //     return ['Opportunity successfully created'];
+        // }
     }
 
     /**

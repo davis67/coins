@@ -74,7 +74,7 @@
                             <div class="float-right pr-3">
                                 <ul class="navbar-nav my-lg-0 float-right">
 
-                                    <li class="nav-item"><a class="nav-link">Leave</a></li>
+                                    <li class="nav-item"><a href="{{ route('leaves.index')}}" class="nav-link">Leave</a></li>
                                     <li class="nav-item"><a class="nav-link">Team</a></li>
                                     <li class="nav-item"><a class="nav-link">Help</a></li>
                                     <li class="nav-item dropdown"> <a
@@ -270,7 +270,7 @@
                             <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
                                         class="flaticon-calendar"></i><span class="hide-menu">Opportunities</span></a>
                                 <ul aria-expanded="false" class="collapse">
-                                    <li><a href="{{route('opportunities.index')}}">Opportunities</a></li>
+                                    <li><a href="{{route('opportunities.index')}}">Show All</a></li>
                                     <li><a href="{{route('opportunities.create')}}">Create </a></li>
                                 </ul>
                             </li>
@@ -317,7 +317,12 @@
                         </div>
                     </div>
                     {{-- Content for all the pages --}}
-                    @yield("content")
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            @yield("content")
+                        </div>
+                    </div>
+                    
                 </main>
             </div>
         </div>
@@ -388,59 +393,9 @@
     <!-- Popup message jquery -->
     <script src="{{asset('plugins/vendors/toast-master/js/jquery.toast.') }}"></script>
     <!-- Dashboard JS -->
-    <script src="{{asset('assets/js/dashboard-projects.js') }}"></script>
-    <!-- ============================================================== -->
-    <!-- Style switcher -->
-    <!-- ============================================================== -->
-    <script src="{{asset('plugins/vendors/styleswitcher/jQuery.style.switcher.js') }}"></script>
-    <script src="{{asset('plugins/vendors/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{asset('assets/js/dashboard-projects.js') }}"></script> 
     <script>
-        $(function () {
-      $('#myTable').DataTable();
-      var table = $('#example').DataTable({
-        "columnDefs": [{
-          "visible": false,
-          "targets": 2
-        }],
-        "order": [
-          [2, 'asc']
-        ],
-        "displayLength": 8,
-        "drawCallback": function (settings) {
-          var api = this.api();
-          var rows = api.rows({
-            page: 'current'
-          }).nodes();
-          var last = null;
-          api.column(2, {
-            page: 'current'
-          }).data().each(function (group, i) {
-            if (last !== group) {
-              $(rows).eq(i).before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
-              last = group;
-            }
-          });
-        }
-      });
-      // Order by the grouping
-      $('#example tbody').on('click', 'tr.group', function () {
-        var currentOrder = table.order()[0];
-        if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
-          table.order([2, 'desc']).draw();
-        } else {
-          table.order([2, 'asc']).draw();
-        }
-      });
-    });
-    $('#example23').DataTable({
-      dom: 'Bfrtip',
-      buttons: [
-        'copy', 'csv', 'excel', 'pdf', 'print'
-      ]
-    });
-    </script>
-    <script>
-        $('#slimtest1, #slimtest2, #slimtest3, #slimtest4').perfectScrollbar();
+    $('#example23').DataTable();
     </script>
 </body>
 

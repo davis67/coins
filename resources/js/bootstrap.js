@@ -13,7 +13,8 @@ try {
 
     require('bootstrap');
 } catch (e) {}
-
+import 'datatables.net';
+import 'select2/dist/js/select2';
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -54,3 +55,4 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+

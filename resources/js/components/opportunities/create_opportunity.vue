@@ -4,11 +4,11 @@
       <tab-content title="General Info" :before-change="()=>validateStep('general_info')" icon="ti-bookmark-alt">
         <general-info ref="general_info" @on-validate="mergePartialModels"></general-info>
       </tab-content>
-      <tab-content title="Other Info" icon="ti-id-badge">
-          <other-info></other-Info>
+      <tab-content title="Other Info" :before-change="()=>validateStep('other_info')" icon="ti-id-badge">
+          <other-info ref="other_info" @on-validate="mergePartialModels"></other-Info>
       </tab-content>
-      <tab-content title="Contact Info" icon="ti-check">
-        <contact-info></contact-info>  
+      <tab-content title="contact Info" :before-change="()=>validateStep('contact_info')" icon="ti-check">
+        <contact-info ref="contact_info" @on-validate="mergePartialModels"></contact-info>  
       </tab-content>
     </form-wizard>
   </div>
@@ -36,13 +36,25 @@ export default {
     contactInfo,
     otherInfo
   },
-  methods:{
+  methods: {
+    validateStep(name) {
+      var refToValidate = this.$refs[name];
+      return refToValidate.validate();
+    },
+    mergePartialModels(model, isValid){
+      if(isValid){
+      // merging each step model into the final model
+       this.finalModel = Object.assign({},this.finalModel, model)
+      }},
+        
     validate() {
       this.$v.form.$touch();
-      var isValid = !this.$v.form.$invalid
-      this.$emit('on-validate', this.$data, isValid)
-      return isValid
+      var isValid = !this.$v.form.$invalid;
+      this.$emit("on-validate", this.$data, isValid);
+      return isValid;
     }
-  }
+  
+    }
+  
 };
 </script>

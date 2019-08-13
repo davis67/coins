@@ -7,7 +7,7 @@
             Add Associates</a>
         @endcan
         <div class="table-responsive">
-            <table class="table table-sm table-hover dat">
+            <table class="table table-sm table-hover" id="example23">
                 <thead>
                     <tr>
                         <th>Fullname</th>

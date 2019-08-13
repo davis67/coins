@@ -20,12 +20,6 @@ class LeavesController extends Controller
     {
         $this->middleware('auth');
     }
-    
-    public function index()
-    {
-        return abort(404);
-
-    }
 
     public function checkSettings($duration,$leaveType){
 
@@ -69,6 +63,11 @@ class LeavesController extends Controller
             $msg .='Passed';
         }
         return $msg;
+    }
+
+    public function index(){
+        $leaves = Leave::all();
+        return view('leaves.index', compact('leaves'));
     }
 
     public function store(Request $request)

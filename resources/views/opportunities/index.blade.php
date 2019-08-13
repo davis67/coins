@@ -3,12 +3,12 @@
 <div class="card">
 	<div class="card-body">
 		<div class="row">
-			<div class="col-md-12 mb-2 shadow-sm">
+			<div class="col-md-12 mb-2">
 				<a href="{{route('opportunities.create')}}" class="btn btn-outline-danger mb-2 btn-sm"
 					id="create_opportunity" style="@if(Gate::check('isConsultant'))	display:none @endif">
 					<i class="fa fa-plus"></i> Create Opportunity
 				</a>
-				<form id="opportunitiesFilterForm">
+				{{-- <form id="opportunitiesFilterForm">
 					@csrf
 					<div class="form-row">
 						<div class="col-md-2">
@@ -70,7 +70,7 @@
 								<i class="fa fa-search"></i></button>
 						</div>
 					</div>
-				</form>
+				</form> --}}
 			</div>
 		</div>
 		<div class="row">
@@ -101,8 +101,12 @@
 			</div>
 		</div> --}}
 	<div class="row">
-		<div class="table-responsive">
-			<table class="table table-hover tabledata">
+		<div class="col-sm-12 col-md-12 col-lg-12">
+			@include('partials/flash-message')
+		</div>
+		<div class="table-responsive col-md-12 col-lg-12">
+				
+			<table class="table table-hover" id="example23">
 				<thead>
 					<tr>
 						<th>OM</th>
@@ -130,7 +134,18 @@
 						<td>{{$opportunity->team->team_code}}</td>
 						<td>{{$opportunity->type}}</td>
 						<td>{{$opportunity->internal_deadline}}</td>
-						<td>View|Edit|Delete</td>
+						<td><div class="btn-group dropbottom">
+							<button type="button" class="btn btn-xs btn-ddefault dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							  <span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<div class="dropdown-menu" style="font-size:0.9em;">
+							  <a class="dropdown-item" href="#">View</a>
+							  <div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="{{route('opportunities.edit', $opportunity->id)}}">Edit</a>
+							  <div class="dropdown-divider"></div>
+							  <a class="dropdown-item" href="#">Delete</a>
+							</div>
+						  </div></td>
 					</tr>
 					@endforeach
 				</tbody>

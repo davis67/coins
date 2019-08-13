@@ -8,7 +8,7 @@
             <button class="btn btn-outline-danger mb-3 btn-sm" data-toggle="modal" data-target="#addContact"><i class="fas fa-plus"></i> Add contacts</button>
             @endcan
             <div class="table-responsive">
-                <table class="table table-sm table-striped tabledata">
+                <table class="table table-sm table-striped" id="example23">
                     <thead>
                         <tr>
                             <th>Contact Name</th>
