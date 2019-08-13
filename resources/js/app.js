@@ -21,7 +21,7 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-import createOpportunity from "./components/opportunities/create_opportunity.vue";
+// import createOpportunity from "./components/opportunities/create_opportunity.vue";
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
