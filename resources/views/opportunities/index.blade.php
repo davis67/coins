@@ -106,14 +106,13 @@
 		</div>
 		<div class="table-responsive col-md-12 col-lg-12">
 				
-			<table class="table table-hover" id="example23">
+			<table class="table color-table table-hover" id="example23">
 				<thead>
 					<tr>
-						<th>OM</th>
-						<th>Opportunity Name</th>
+						<th>ID</th>
+						<th>Opportunity</th>
 						<th>Country</th>
 						<th>Team</th>
-						<th>Type</th>
 						<th>Internal Deadline</th>
 						<th>Actions</th>
 					</tr>
@@ -132,20 +131,9 @@
 						<td>{{$opportunity->opportunity_name}}</td>
 						<td>{{$opportunity->country}}</td>
 						<td>{{$opportunity->team->team_code}}</td>
-						<td>{{$opportunity->type}}</td>
 						<td>{{$opportunity->internal_deadline}}</td>
-						<td><div class="btn-group dropbottom">
-							<button type="button" class="btn btn-xs btn-ddefault dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							  <span class="sr-only">Toggle Dropdown</span>
-							</button>
-							<div class="dropdown-menu" style="font-size:0.9em;">
-							  <a class="dropdown-item" href="#">View</a>
-							  <div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="{{route('opportunities.edit', $opportunity->id)}}">Edit</a>
-							  <div class="dropdown-divider"></div>
-							  <a class="dropdown-item" href="#">Delete</a>
-							</div>
-						  </div></td>
+						<td class="text-center text-light-blue"><a href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="fas fa-ellipsis-v"></i></a>
+							<div class="dropdown-menu"> <a class="dropdown-item" data-toggle="modal" href="" data-target=".edit-member">Edit</a> <a class="dropdown-item" href="#">View</a> <a class="dropdown-item text-light-danger" href="#">Delete</a> </div></td>
 					</tr>
 					@endforeach
 				</tbody>

@@ -13,6 +13,9 @@ use App\Notifications\leave_statusChange;
 use Session;
 use Auth;
 use DB;
+use Carbon\CarbonPeriod;
+use Carbon\Carbon;
+
 class LeavesController extends Controller
 {
 
@@ -20,6 +23,12 @@ class LeavesController extends Controller
     {
         $this->middleware('auth');
     }
+
+
+    public function create(){
+        return view('leaves.create');
+    }
+
 
     public function checkSettings($duration,$leaveType){
 
@@ -66,107 +75,106 @@ class LeavesController extends Controller
     }
 
     public function index(){
-        $leaves = Leave::all();
+        $leaves = Leave::where('user_id', auth()->user()->id)->get();
         return view('leaves.index', compact('leaves'));
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
-            'user_id'=>'required',
             'the_leavesetting'=>'required',
             'leave_start'  => 'required|date|after:tomorrow',
             'leave_end'    => 'required|date|after:leave_start',
             'leave_detail'=>'required',
             ]);
 
-        $holidays = Holiday::get('holiday_date');
-        $leave_start = strtotime($request->leave_start); 
-        $leave_end = strtotime($request->leave_end);
+        // $holidays = Holiday::get('holiday_date');
+        // $leave_start = strtotime($request->leave_start); 
+        // $leave_end = strtotime($request->leave_end);
 
-        //Get all dates by name
-        $leaveDays = [];
-        for ($i=$leave_start; $i<=$leave_end; $i+=86400) {  
-            array_push($leaveDays,date("Y-m-d", $i));
-        }
+        // //Get all dates by name
+        // $leaveDays = [];
+        // for ($i=$leave_start; $i<=$leave_end; $i+=86400) {  
+        //     array_push($leaveDays,date("Y-m-d", $i));
+        // }
 
-        //Subtract weekends
-        $leftDays = [];
-        foreach ($leaveDays as $date){
-            $day = date("D", strtotime($date));
-            if($day != 'Sat' && $day != 'Sun'){
-                array_push($leftDays,$date);
-            }
-        }
-        //Calculate leave duration
-        $array_dates = [];
+        // //Subtract weekends
+        // $leftDays = [];
+        // foreach ($leaveDays as $date){
+        //     $day = date("D", strtotime($date));
+        //     if($day != 'Sat' && $day != 'Sun'){
+        //         array_push($leftDays,$date);
+        //     }
+        // }
+        // //Calculate leave duration
+        // $array_dates = [];
 
-        foreach($holidays as $holiday){
+        // foreach($holidays as $holiday){
 
-            array_push($array_dates,$holiday->holiday_date);
+        //     array_push($array_dates,$holiday->holiday_date);
 
-        }
+        // }
 
-        $result = array_diff($leftDays,$array_dates);
+        // $result = array_diff($leftDays,$array_dates);
 
-        $leave_duration = (int)sizeof($result);
+        // $leave_duration = (int)sizeof($result);
 
-        if($this->checkSettings($leave_duration,$request->leaveType) == 'Passed'){
+        // if($this->checkSettings($leave_duration,$request->leaveType) == 'Passed'){
 
-            if($request->leaveType =='Annual'||$request->leaveType =='Annual Leave'){
+        //     if($request->leaveType =='Annual'||$request->leaveType =='Annual Leave'){
 
-                $forwards = Leaveforward::where(['user_id'=>$request->user_id])->get(['days_left']);
+        //         $forwards = Leaveforward::where(['user_id'=>$request->user_id])->get(['days_left']);
 
-                $days_cforward = [];
+        //         $days_cforward = [];
 
-                foreach($forwards as $forward){
+        //         foreach($forwards as $forward){
 
-                    array_push($days_cforward,$forward->days_left);
-                }
+        //             array_push($days_cforward,$forward->days_left);
+        //         }
 
-                $days_cforward = (int)$days_cforward[0];
+        //         $days_cforward = (int)$days_cforward[0];
 
-                if($days_cforward>0){
+        //         if($days_cforward>0){
 
-                    if( $days_cforward < $leave_duration ){
+        //             if( $days_cforward < $leave_duration ){
 
-                        $forwarded_days_left = 0;
+        //                 $forwarded_days_left = 0;
 
-                    }else{
+        //             }else{
 
-                        $forwarded_days_left = $days_cforward - $leave_duration;
+        //                 $forwarded_days_left = $days_cforward - $leave_duration;
 
-                    }
-                }else{
-                    return ['Found nothing'];
-                }
+        //             }
+        //         }else{
+        //             return ['Found nothing'];
+        //         }
 
-                $update_leave_forward = Leaveforward::where(['user_id'=>$request->user_id])
-                                                    ->update([
-                                                        'days_taken'=> $leave_duration,
-                                                        'days_left'=> $forwarded_days_left,
-                                                        'created_by'=>Auth::user()->id
-                                                    ]);
-            }
-            else{
-            }
+        //         $update_leave_forward = Leaveforward::where(['user_id'=>$request->user_id])
+        //                                             ->update([
+        //                                                 'days_taken'=> $leave_duration,
+        //                                                 'days_left'=> $forwarded_days_left,
+        //                                                 'created_by'=>Auth::user()->id
+        //                                             ]);
+        //     }
+        //     else{
+        //     }
             
-            if( $request->user_id != Auth::user()->id && Auth::user()->level != 'Consultant'){
-                $leave_status = 'Confirmed';
-            }
-            else{
-                $leave_status = 'Pending';
-            }
+        //     if( $request->user_id != Auth::user()->id && Auth::user()->level != 'Consultant'){
+        //         $leave_status = 'Confirmed';
+        //     }
+        //     else{
+        //         $leave_status = 'Pending';
+        //     }
 
             $save_leave = Leave::create([
-                'user_id'=> $data['user_id'],
+                'user_id'=>auth()->user()->id,
                 'leavesetting_id'=> $data['the_leavesetting'],
                 'leave_start'=> $data['leave_start'],
                 'leave_end'=> $data['leave_end'],
                 'leave_detail'=>$data['leave_detail'],
-                'duration'=>$leave_duration,
-                'leave_status'=>$leave_status,
-                'created_by'=>$request->user_id
+                'duration'=> Leave::calculateDuration($request->leave_start, $request->leave_end),
+                'leave_status'=>'pending',
+                'created_by'=>auth()->user()->id
             ]);
 
             // Leavetracker::create([
@@ -177,17 +185,17 @@ class LeavesController extends Controller
             //     'days_left'=>$data['leave_detail'],
             //     'created_by'=>Auth::user()->id
             // ]);
-            if( $save_leave ){
-                return ['success'];
-            }
-            else{
-                return ['Failed'];
-            }
-        }else{
-            return $request->leaveType.' leave'.$this->checkSettings($leave_duration,$request->leaveType);
-        }
+        //     if( $save_leave ){
+        //         return ['success'];
+        //     }
+        //     else{
+        //         return ['Failed'];
+        //     }
+        // }else{
+        //     return $request->leaveType.' leave'.$this->checkSettings($leave_duration,$request->leaveType);
+        // }
 
-        return $request->leaveType;
+        return redirect()->route('leaves.index')->with('success', "Your leave request has been successfully recorded.");
         
     }
 

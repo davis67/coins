@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 use Webpatser\Uuid\Uuid;
-
+use Carbon\Carbon;
 class Leave extends Model
 {
     public $incrementing = false;
@@ -21,6 +21,21 @@ class Leave extends Model
             $model->id = (string) Uuid::generate();
 
         });
+    }
+
+    public static function calculateDuration($start_date, $end_date){
+        $holidays = Holiday::pluck('holiday_date');
+        $excludeWeekends =Carbon::create($start_date)->diffInDaysFiltered(function(Carbon $date) use($holidays){
+            foreach($holidays as $holiday){
+                $converted_date = Carbon::create($holiday);
+                if($date != $converted_date && !$date->isWeekend()){
+                    return true;
+                }
+            }
+            
+        }, Carbon::create($end_date)) + 1;
+
+        return $excludeWeekends;
     }
     
     public function user(){

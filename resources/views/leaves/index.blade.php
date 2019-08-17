@@ -9,9 +9,9 @@
                     </ol>
                 </nav>
                 <div class="container-fluid">
-                    <p><a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#addleave"><i class="fa fa-plus"></i>Request  for Leave</a></p>
+                <p><a class="btn btn-danger btn-sm text-white" href="{{route('leaves.create')}}"><i class="fa fa-plus"></i>Request  for Leave</a></p>
                     <div class="table-responsive">
-                        <table class="table table-sm table-hover" id="example23">
+                        <table class="table color-table table-sm table-hover" id="example23">
                             <thead>
                                 <tr>
                                     <th>leave Name</th>
@@ -24,12 +24,13 @@
                             <tbody>
                                 @foreach($leaves as $leave)
                                 <tr>
-                                    <td><a href="/leaves/{{$leave->id}}" class="text-primary" title="View leave">{{$leave->account_name}}</a></td>
-                                    <td>{{$leave->leaveCountry}}</td>
-                                    <td>{{$leave->full_address}}</td>
-                                    <td>{{$leave->leaveEmail}}</td>
-                                    <td>{{$leave->leaveMobilePhone}}</td>
-                                    <td>{{$leave->leavePerson}}</td>
+                                    <td><a href="" class="text-primary" title="View leave">{{$leave->leavesetting->leave_type}}</a></td>
+                                    <td>{{$leave->leave_start}}</td>
+                                    <td>{{$leave->leave_end}}</td>
+                                    <td class="text-center">{{$leave->duration}} days</td>
+                                    <td class="text-center text-light-blue"><a href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="fas fa-ellipsis-v"></i></a>
+                                        <div class="dropdown-menu"> <a class="dropdown-item" data-toggle="modal" href="" data-target=".edit-member">Edit</a> <a class="dropdown-item" href="#">View</a> <a class="dropdown-item text-light-danger" href="#">Delete</a> </div></td>
+            
                                 </tr>
                                 @endforeach
                             </tbody>
