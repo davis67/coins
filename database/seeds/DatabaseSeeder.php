@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             LeavesettingsTableSeeder::class,
             ExpertisesTableSeeder::class,
             DeliverablesTableSeeder::class,
+            FinancialyearTableSeeder::class
         ]);
     }
 }

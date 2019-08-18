@@ -17,6 +17,7 @@ class CreateLeavesTable extends Migration
             $table->uuid('id');
             $table->primary('id');
             $table->string('user_id');
+            $table->integer('financialyear_id');
             $table->string('leavesetting_id');
             $table->string('leave_start');
             $table->string('leave_end');

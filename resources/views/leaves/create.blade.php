@@ -8,7 +8,7 @@
                     <li class="breadcrumb-item active" aria-current="page">leaves</li>
                     </ol>
                 </nav>
-                <div class="container-fluid">
+                <div class="container-fluid mt-0">
                 <p><a class="btn btn-danger btn-sm text-white" href="{{route('leaves.index')}}">My Leave Requests</a></p>
                     {{var_dump($errors)}}
                     <form method="post" action="{{route('leaves.store')}}">

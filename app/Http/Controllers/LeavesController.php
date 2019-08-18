@@ -12,6 +12,7 @@ use App\Notifications\LeaveApplied;
 use App\Notifications\leave_statusChange;
 use Session;
 use Auth;
+use App\Financialyear;
 use DB;
 use Carbon\CarbonPeriod;
 use Carbon\Carbon;
@@ -81,6 +82,20 @@ class LeavesController extends Controller
 
     public function store(Request $request)
     {
+        //attach the finacial year to the leave.I found it easy this way
+        //to keep track on the leave setting
+        $current_financial_year = null;
+        $financial_years = Financialyear::all();
+        foreach($financial_years as $financial_year){
+            if(Carbon::now()->between(Carbon::create($financial_year->start_date), Carbon::create($financial_year->end_date))){
+                $current_financial_year = $financial_year->id;
+            }
+        }
+        //check if the leave requested exists in the database
+        $leave_exists  = Leave::where([['leavesetting_id', '=', $request->the_leavesetting],                                        ['financialyear_id', '=', $current_financial_year]
+                                       ])->first();
+
+        //validate leave requests here
         $data = $request->validate([
             'the_leavesetting'=>'required',
             'leave_start'  => 'required|date|after:tomorrow',
@@ -88,114 +103,30 @@ class LeavesController extends Controller
             'leave_detail'=>'required',
             ]);
 
-        // $holidays = Holiday::get('holiday_date');
-        // $leave_start = strtotime($request->leave_start); 
-        // $leave_end = strtotime($request->leave_end);
-
-        // //Get all dates by name
-        // $leaveDays = [];
-        // for ($i=$leave_start; $i<=$leave_end; $i+=86400) {  
-        //     array_push($leaveDays,date("Y-m-d", $i));
-        // }
-
-        // //Subtract weekends
-        // $leftDays = [];
-        // foreach ($leaveDays as $date){
-        //     $day = date("D", strtotime($date));
-        //     if($day != 'Sat' && $day != 'Sun'){
-        //         array_push($leftDays,$date);
-        //     }
-        // }
-        // //Calculate leave duration
-        // $array_dates = [];
-
-        // foreach($holidays as $holiday){
-
-        //     array_push($array_dates,$holiday->holiday_date);
-
-        // }
-
-        // $result = array_diff($leftDays,$array_dates);
-
-        // $leave_duration = (int)sizeof($result);
-
-        // if($this->checkSettings($leave_duration,$request->leaveType) == 'Passed'){
-
-        //     if($request->leaveType =='Annual'||$request->leaveType =='Annual Leave'){
-
-        //         $forwards = Leaveforward::where(['user_id'=>$request->user_id])->get(['days_left']);
-
-        //         $days_cforward = [];
-
-        //         foreach($forwards as $forward){
-
-        //             array_push($days_cforward,$forward->days_left);
-        //         }
-
-        //         $days_cforward = (int)$days_cforward[0];
-
-        //         if($days_cforward>0){
-
-        //             if( $days_cforward < $leave_duration ){
-
-        //                 $forwarded_days_left = 0;
-
-        //             }else{
-
-        //                 $forwarded_days_left = $days_cforward - $leave_duration;
-
-        //             }
-        //         }else{
-        //             return ['Found nothing'];
-        //         }
-
-        //         $update_leave_forward = Leaveforward::where(['user_id'=>$request->user_id])
-        //                                             ->update([
-        //                                                 'days_taken'=> $leave_duration,
-        //                                                 'days_left'=> $forwarded_days_left,
-        //                                                 'created_by'=>Auth::user()->id
-        //                                             ]);
-        //     }
-        //     else{
-        //     }
-            
-        //     if( $request->user_id != Auth::user()->id && Auth::user()->level != 'Consultant'){
-        //         $leave_status = 'Confirmed';
-        //     }
-        //     else{
-        //         $leave_status = 'Pending';
-        //     }
-
+       
+        //save the leave requested in the database  if its not existing
+        if($leave_exists == null){
             $save_leave = Leave::create([
                 'user_id'=>auth()->user()->id,
                 'leavesetting_id'=> $data['the_leavesetting'],
                 'leave_start'=> $data['leave_start'],
                 'leave_end'=> $data['leave_end'],
                 'leave_detail'=>$data['leave_detail'],
-                'duration'=> Leave::calculateDuration($request->leave_start, $request->leave_end),
+                'financialyear_id' => $current_financial_year,
+                'duration'=> Leave::calculateDuration($request->leave_start,
+                                                      $request->leave_end),
                 'leave_status'=>'pending',
                 'created_by'=>auth()->user()->id
             ]);
-
-            // Leavetracker::create([
-            //     'user_id'=> $data['the_leavesetting'],
-            //     'leavesetting_id'=> $data['leave_start'],
-            //     'leave_year'=> date('Y'),
-            //     'days_taken'=> $data['leave_end'],
-            //     'days_left'=>$data['leave_detail'],
-            //     'created_by'=>Auth::user()->id
-            // ]);
-        //     if( $save_leave ){
-        //         return ['success'];
-        //     }
-        //     else{
-        //         return ['Failed'];
-        //     }
-        // }else{
-        //     return $request->leaveType.' leave'.$this->checkSettings($leave_duration,$request->leaveType);
-        // }
-
-        return redirect()->route('leaves.index')->with('success', "Your leave request has been successfully recorded.");
+          } else{
+              //Here you update the leave if it exists for a certain financial year
+              $leave_exists->update([
+                'duration' => Leave::calculateDuration($request->leave_start,
+                                                       $request->leave_end) + $leave_existdatas->duration
+              ]);
+          }         
+        return redirect()->route('leaves.index')
+                        ->with('success', "Your leave request has been successfully recorded.");
         
     }
 

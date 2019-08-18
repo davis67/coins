@@ -53,4 +53,9 @@ class Leave extends Model
         
         return $this->belongsTo('App\Leavesetting');
     }
+
+    public function financialYear(){
+
+        return $this->belongsTo(Financialyear::class);
+    }
 }
