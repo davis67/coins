@@ -10,6 +10,7 @@ use App\Leavesetting;
 use App\Leavetracker;
 use App\Notifications\LeaveApplied;
 use App\Notifications\leave_statusChange;
+use App\Events\LeaveUpdateEvent;
 use Session;
 use Auth;
 use App\Financialyear;
@@ -118,12 +119,20 @@ class LeavesController extends Controller
                 'leave_status'=>'pending',
                 'created_by'=>auth()->user()->id
             ]);
+
+            //recording an activity any time a leave is requested
+            event(new LeaveUpdateEvent($save_leave));
+
           } else{
               //Here you update the leave if it exists for a certain financial year
               $leave_exists->update([
                 'duration' => Leave::calculateDuration($request->leave_start,
-                                                       $request->leave_end) + $leave_existdatas->duration
+                                                       $request->leave_end) + $leave_exists->duration
               ]);
+
+              
+            //recording an activity any time a leave is requested
+            event(new LeaveUpdateEvent($leave_exists));
           }         
         return redirect()->route('leaves.index')
                         ->with('success', "Your leave request has been successfully recorded.");
@@ -138,9 +147,8 @@ class LeavesController extends Controller
      */
     public function show($id)
     {
-        //
         $leave = Leave::findOrFail($id);
-        return($leave);
+        return view('leaves.show', compact('leave'));
     }
 
     /**

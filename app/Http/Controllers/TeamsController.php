@@ -25,7 +25,8 @@ class TeamsController extends Controller
     }
     public function index()
     {
-        return abort(404);
+        $teams = Team::all();
+        return view('teams.index', compact('teams'));
 
     }
     public function assessmentSummary($team)
@@ -98,19 +99,6 @@ class TeamsController extends Controller
     {
         $team = Team::findOrFail($team->id);
         $users = User::where('team_id',$team->id)->get();
-        $user_data = [];
-        // foreach($team->users as $user){
-        //     // $assessments = Target::selectRaw("targets.target_category AS category,assessments.assessment_score/targets.target_value*100 AS score")
-        //     //                     ->join('assessments', 'assessments.target_id', '=', 'targets.id')
-        //     //                     ->where(['assessments.user_id' => $user->id])
-        //     //                     ->groupBy("category")
-        //     //                     ->get();
-        //     //$assessments = DB::SELECT("SELECT targets.target_category AS category, assessments.assessment_score/targets.target_value*100 AS score FROM assessments JOIN targets ON assessments.target_id = targets.id  WHERE assessments.user_id =$user->id  GROUP BY category");
-        //     $timesheets = $this->timesheetSummary( $user->id);
-        //     array_push($user_data,[
-        //         $timesheets
-        //    ]); 
-        // }
         return view('teams.show', compact('team','users'));
     }
 

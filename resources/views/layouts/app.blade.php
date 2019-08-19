@@ -24,14 +24,16 @@
     <link href="{{asset('plugins/vendors/perfect-scrollbar/css/perfect-scrollbar.css')}}" rel="stylesheet">
     <!-- This page CSS -->
     <!-- chartist CSS -->
-    <link href="{{asset('plugins/vendors/morrisjs/morris.css')}}" rel="stylesheet">
+    {{-- <link href="{{asset('plugins/vendors/morrisjs/morris.css')}}" rel="stylesheet"> --}}
     <!--c3 CSS -->
-    <link href="{{asset('plugins/vendors/c3-master/c3.min.css')}}" rel="stylesheet">
+    {{-- <link href="{{asset('plugins/vendors/c3-master/c3.min.css')}}" rel="stylesheet"> --}}
     <!--Toaster Popup message CSS -->
     <link href="{{asset('/vendors/toast-master/css/jquery.toast.css')}}" rel="stylesheet">
     <!-- page css -->
-    <link href="{{asset('assets/css/pages/tab-page.')}}" rel="stylesheet">
+    <link href="{{asset('assets/css/pages/tab-page.css')}}" rel="stylesheet">
     <!-- Custom CSS -->
+    <link href="{{asset('/css/timeline-vertical-horizontal.css')}}" rel="stylesheet">
+
     <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/responsive.css')}}" rel="stylesheet">
     <link href="{{asset('/vendors/bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet"
@@ -75,8 +77,8 @@
                                 <ul class="navbar-nav my-lg-0 float-right">
 
                                     <li class="nav-item"><a href="{{ route('leaves.index')}}" class="nav-link">Leave</a></li>
-                                    <li class="nav-item"><a class="nav-link">Team</a></li>
-                                    <li class="nav-item"><a class="nav-link">Help</a></li>
+                                    <li class="nav-item"><a href="{{route('teams.index')}}" class="nav-link">Team</a></li>
+                                <li class="nav-item"><a href="" class="nav-link">Help</a></li>
                                     <li class="nav-item dropdown"> <a
                                             class="nav-link dropdown-toggle waves-effect waves-dark" href=""
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i

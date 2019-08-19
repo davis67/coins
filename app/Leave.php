@@ -44,6 +44,11 @@ class Leave extends Model
 
     }
 
+    public function leaveactivities(){
+
+        return $this->hasMany(Leaveactivity::class);
+    }
+
     public function comments(){
 
         return $this->morphMany('App\Comment', 'commentable');
@@ -54,7 +59,7 @@ class Leave extends Model
         return $this->belongsTo('App\Leavesetting');
     }
 
-    public function financialYear(){
+    public function financialyear(){
 
         return $this->belongsTo(Financialyear::class);
     }
