@@ -24,7 +24,7 @@
                             <tbody>
                                 @foreach($leaves as $leave)
                                 <tr>
-                                    <td><a href="" class="text-primary" title="View leave">{{$leave->leavesetting->leave_type}}</a></td>
+                                    <td><a href="" class="text-primary" title="View leave">{{$leave->leavesetting->leave_type}} leave</a></td>
                                     <td>{{$leave->leave_start}}</td>
                                     <td>{{$leave->leave_end}}</td>
                                     <td class="text-center">{{$leave->duration}} days</td>

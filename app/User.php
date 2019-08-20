@@ -104,9 +104,9 @@ class User extends Authenticatable
 
     }
 
-    public function title(){
+    public function titles(){
 
-        return $this->belongsTo('App\Title')->withDefault(['id' =>1]);
+        return $this->belongsToMany('App\Title');
 
     }
 
@@ -135,6 +135,31 @@ class User extends Authenticatable
     }
     public function approvedUsers() {
         return $this->hasMany('App\Opportunity')->where('approved', 1)->orderBy('email');
+    }
+
+    //actual function that checks whther the user has a title from a specified array of titles.This function will be usedd in the middleware to check if a user is authorised to perform a certain task.
+    public function hasAnyTitles($titles){
+        if(is_array($titles)){
+            foreach($titles as $title){
+                if($this->hasRole($title)){
+                    return true;
+                }
+
+                return false;
+            }
+        }
+    }
+
+    //function that checks whether the user has acertain title.
+    public function hasTitle($title){
+
+        //check if the user has the title stated in the arguments
+        if($this->titles()->where('name', $title)-> first()){
+            return true;
+        }
+
+        //return false if the user has no the title stated in the arguments
+        return false;
     }
 }
 

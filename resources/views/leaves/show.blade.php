@@ -14,7 +14,7 @@
                     <div id="navpills-11" class="tab-pane active">
                       <div class="row">
                         <div class="col-md-12">
-                          <h6 class="card-subtitle alert alert-primary m-b-40">Each consultant can get a maximum of 21 days of annual leave and not a once.One can get atmost of 14days of annual  leave at once</h6>
+                          <h6 class="card-subtitle alert alert-primary m-b-40">Each consultant can get a maximum of 21 days of annual leave and not a once.One can get atmost of 14days of annual  leave at once.</h6>
                           <div class="timeline-centered">
                                 @foreach($leave->leaveactivities as $leaveactivity)
 

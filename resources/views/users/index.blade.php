@@ -29,7 +29,9 @@
                 <td>{{$user->email}}</td>
                 <td>{{$user->mobilePhone}}</td>
                 <td>{{$user->team->team_code}}</td>
-                <td>{{$user->title->name}}</td>
+                <td>@foreach($user->titles as $title)
+                        <span>/{{$title->name}}</span>
+                         @endforeach</td>
                 <td>{{$user->userStatus}}</td>
                 @if(Gate::check('isAdmin'))
                 <td>

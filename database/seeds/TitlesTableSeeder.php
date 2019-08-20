@@ -26,6 +26,7 @@ class TitlesTableSeeder extends Seeder
             ['id' => 13, 'created_by' => 'fdf3cda0-13f0-11e9-9a86-ab5a0fb32b10', 'name' => 'Consultant II', 'description' => 'Reporting to Consultant I'],
             ['id' => 14, 'created_by' => 'fdf3cda0-13f0-11e9-9a86-ab5a0fb32b10', 'name' => 'Consultant III', 'description' => 'Reporting toConsultant II'],
             ['id' => 15, 'created_by' => 'fdf3cda0-13f0-11e9-9a86-ab5a0fb32b10', 'name' => 'Intern', 'description' => 'Reporting to Consultant III'],
+            ['id' => 16, 'created_by' => 'fdf3cda0-13f0-11e9-9a86-ab5a0fb32b10', 'name' => 'Administrator', 'description' => 'The inventor.'],
         ];
         foreach($titles as $title){
             Title::create($title);
