@@ -180,14 +180,14 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6 mb-2">
+    {{-- <div class="col-md-6 mb-2">
         <div class="card">
             <div class="card-body">
                 {!! $opportunityStatus->container() !!}
                 {!! $opportunityStatus->script() !!}
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 </div>
 @endsection

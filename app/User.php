@@ -104,11 +104,22 @@ class User extends Authenticatable
 
     }
 
+    public function reportsTo(){
+        return $this-> hasMany(User::class, 'reportsTo');
+    }
+
     public function titles(){
 
         return $this->belongsToMany('App\Title');
 
     }
+
+    public function leavestatus(){
+
+        return $this->hasMany(Leavestatus::class, 'approved_by');
+    }
+
+
 
     public function team(){
 

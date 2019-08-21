@@ -31,102 +31,103 @@ class OpportunitiesController extends Controller
     
     public function index(){
 
-        if(Gate::allows('isAdmin')){
+        $opportunities = Opportunity::all();
+        // if(Gate::allows('isAdmin')){
 
-            $opportunities_stage = Opportunity::selectRaw("count('id') as opportunities,sales_stage" )
-                                                ->whereMonth('created_at', now())
-                                                ->orWhere('updated_at', now())
-                                                ->groupBy("sales_stage")
-                                                ->get();
+        //     $opportunities_stage = Opportunity::selectRaw("count('id') as opportunities,sales_stage" )
+        //                                         ->whereMonth('created_at', now())
+        //                                         ->orWhere('updated_at', now())
+        //                                         ->groupBy("sales_stage")
+        //                                         ->get();
 
-            $opportunity_team = Opportunity::selectRaw("count('id') as opportunities,teams.team_code as team_code")
-                                                ->join('teams', 'opportunities.team_id', '=', 'teams.id')
-                                                ->whereMonth('opportunities.created_at', now())
-                                                ->orWhere('opportunities.updated_at', now())
-                                                ->groupBy("teams.team_code")
-                                                ->get();
-        }
-        else if(Gate::allows('isDirector')){
-            $opportunities_stage = Opportunity::selectRaw("count('id') as opportunities,sales_stage" )
-                                                ->where(['opportunities.team_id' => Auth::user()->team_id])
-                                                ->whereMonth('created_at', now())
-                                                ->groupBy("sales_stage")
-                                                ->get();
+        //     $opportunity_team = Opportunity::selectRaw("count('id') as opportunities,teams.team_code as team_code")
+        //                                         ->join('teams', 'opportunities.team_id', '=', 'teams.id')
+        //                                         ->whereMonth('opportunities.created_at', now())
+        //                                         ->orWhere('opportunities.updated_at', now())
+        //                                         ->groupBy("teams.team_code")
+        //                                         ->get();
+        // }
+        // else if(Gate::allows('isDirector')){
+        //     $opportunities_stage = Opportunity::selectRaw("count('id') as opportunities,sales_stage" )
+        //                                         ->where(['opportunities.team_id' => Auth::user()->team_id])
+        //                                         ->whereMonth('created_at', now())
+        //                                         ->groupBy("sales_stage")
+        //                                         ->get();
 
-            $opportunity_team = Opportunity::selectRaw("count('id') as opportunities,teams.team_code as team_code")
-                                                ->join('teams', 'opportunities.team_id', '=', 'teams.id')
-                                                ->where(['opportunities.team_id'=>Auth::user()->team_id])
-                                                ->whereMonth('opportunities.created_at', now())
-                                                ->groupBy("teams.team_code")
-                                                ->get();
-        }
-        else if(Gate::allows('isConsultant')){
+        //     $opportunity_team = Opportunity::selectRaw("count('id') as opportunities,teams.team_code as team_code")
+        //                                         ->join('teams', 'opportunities.team_id', '=', 'teams.id')
+        //                                         ->where(['opportunities.team_id'=>Auth::user()->team_id])
+        //                                         ->whereMonth('opportunities.created_at', now())
+        //                                         ->groupBy("teams.team_code")
+        //                                         ->get();
+        // }
+        // else if(Gate::allows('isConsultant')){
 
-            $opportunities_stage = Opportunity::selectRaw("count('opportunities.id') as opportunities,opportunities.sales_stage as sales_stage")
-                                                ->join('opportunity_user', 'opportunities.id', '=', 'opportunity_user.opportunity_id')
-                                                ->whereMonth('opportunities.created_at', now())
-                                                ->orWhere('opportunities.updated_at', now())
-                                                ->where('opportunity_user.user_id', Auth::user()->id)
-                                                ->groupBy("opportunities.sales_stage")
-                                                ->get();
+        //     $opportunities_stage = Opportunity::selectRaw("count('opportunities.id') as opportunities,opportunities.sales_stage as sales_stage")
+        //                                         ->join('opportunity_user', 'opportunities.id', '=', 'opportunity_user.opportunity_id')
+        //                                         ->whereMonth('opportunities.created_at', now())
+        //                                         ->orWhere('opportunities.updated_at', now())
+        //                                         ->where('opportunity_user.user_id', Auth::user()->id)
+        //                                         ->groupBy("opportunities.sales_stage")
+        //                                         ->get();
 
-            $opportunity_team = Opportunity::selectRaw("count('id') as opportunities,teams.team_code as team_code")
-                                                ->join('teams', 'opportunities.team_id', '=', 'teams.id')
-                                                ->join('opportunity_user', 'opportunities.id', '=', 'opportunity_user.opportunity_id')
-                                                ->whereMonth('opportunities.created_at', now())
-                                                ->orWhere('opportunities.updated_at', now())
-                                                ->where('opportunity_user.user_id', Auth::user()->id)
-                                                ->groupBy("teams.team_code")
-                                                ->get();
-        }
+        //     $opportunity_team = Opportunity::selectRaw("count('id') as opportunities,teams.team_code as team_code")
+        //                                         ->join('teams', 'opportunities.team_id', '=', 'teams.id')
+        //                                         ->join('opportunity_user', 'opportunities.id', '=', 'opportunity_user.opportunity_id')
+        //                                         ->whereMonth('opportunities.created_at', now())
+        //                                         ->orWhere('opportunities.updated_at', now())
+        //                                         ->where('opportunity_user.user_id', Auth::user()->id)
+        //                                         ->groupBy("teams.team_code")
+        //                                         ->get();
+        // }
 
-        $stageData = [];
-        $stageLables = [];
-        foreach($opportunities_stage as $data){
-            array_push($stageData,[
-                    $data->opportunities
-            ]); 
-            array_push($stageLables,[
-                $data->sales_stage
-            ]);
-        }
+        // $stageData = [];
+        // $stageLables = [];
+        // foreach($opportunities_stage as $data){
+        //     array_push($stageData,[
+        //             $data->opportunities
+        //     ]); 
+        //     array_push($stageLables,[
+        //         $data->sales_stage
+        //     ]);
+        // }
 
-        $opportunity_stage = new CoinChart;
-        $opportunity_stage->labels($stageLables);
-        $colors = ['#229954','#BA4A00','#7DCEA0','#D1F2EB','#E8DAEF','#C0392B','#76D7C4','#117864','#E67E22','#AF7AC5'];
-        $opps = $opportunity_stage->dataset('Opportunities per Sales stage', 'bar',$stageData);
-        $opps->backgroundColor($colors);
+        // $opportunity_stage = new CoinChart;
+        // $opportunity_stage->labels($stageLables);
+        // $colors = ['#229954','#BA4A00','#7DCEA0','#D1F2EB','#E8DAEF','#C0392B','#76D7C4','#117864','#E67E22','#AF7AC5'];
+        // $opps = $opportunity_stage->dataset('Opportunities per Sales stage', 'bar',$stageData);
+        // $opps->backgroundColor($colors);
 
-        $teamData = [];
-        $teamLables = [];
-        foreach($opportunity_team as $data){
-            array_push($teamData,[
-                    $data->opportunities
-            ]); 
-            array_push($teamLables,[
-                $data->team_code
-            ]);
-        }
-        $opportunity_team = new CoinChart;
-        $opportunity_team->labels($teamLables);
-        $opportunity_team->title('Opportunities per Team');
-        $colors = ['#C0392B','#76D7C4','#117864','#E67E22','#AF7AC5','#D5F5E3','#D5DBDB','#7DCEA0','#D1F2EB','#E8DAEF'];
-        $opps = $opportunity_team->dataset('Group by Team', 'pie',$teamData);
-        $opps->backgroundColor($colors);
+        // $teamData = [];
+        // $teamLables = [];
+        // foreach($opportunity_team as $data){
+        //     array_push($teamData,[
+        //             $data->opportunities
+        //     ]); 
+        //     array_push($teamLables,[
+        //         $data->team_code
+        //     ]);
+        // }
+        // $opportunity_team = new CoinChart;
+        // $opportunity_team->labels($teamLables);
+        // $opportunity_team->title('Opportunities per Team');
+        // $colors = ['#C0392B','#76D7C4','#117864','#E67E22','#AF7AC5','#D5F5E3','#D5DBDB','#7DCEA0','#D1F2EB','#E8DAEF'];
+        // $opps = $opportunity_team->dataset('Group by Team', 'pie',$teamData);
+        // $opps->backgroundColor($colors);
 
-        if(Gate::allows('isAdmin')){
-            $opportunities = Opportunity::all();
-        }
-        elseif(Gate::allows('isDirector')){
-            $opportunities = Opportunity::where('team_id', Auth::user()->team_id)->get();
-        }
-        elseif(Gate::allows('isConsultant')){
-            $opportunities = Opportunity::join('opportunity_user', 'opportunities.id', '=', 'opportunity_user.opportunity_id')
-                                        ->where('opportunity_user.user_id', Auth::user()->id)
-                                        ->get();
-        }
+        // if(Gate::allows('isAdmin')){
+        //     $opportunities = Opportunity::all();
+        // }
+        // elseif(Gate::allows('isDirector')){
+        //     $opportunities = Opportunity::where('team_id', Auth::user()->team_id)->get();
+        // }
+        // elseif(Gate::allows('isConsultant')){
+        //     $opportunities = Opportunity::join('opportunity_user', 'opportunities.id', '=', 'opportunity_user.opportunity_id')
+        //                                 ->where('opportunity_user.user_id', Auth::user()->id)
+        //                                 ->get();
+        // }
         // dd($opportunities_stage);
-        return view('opportunities.index', compact('opportunity_stage','opportunity_team','opportunities'));
+        return view('opportunities.index', compact('opportunities'));
     }
 
     public function create(){

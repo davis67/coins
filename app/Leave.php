@@ -49,6 +49,12 @@ class Leave extends Model
         return $this->hasMany(Leaveactivity::class);
     }
 
+    //leave AND leavestatus relationship
+    // public function leavestatus(){
+
+    //     return $this->hasMany(Leavestatus::class, 'approved_by');
+    // }
+
     public function comments(){
 
         return $this->morphMany('App\Comment', 'commentable');

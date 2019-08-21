@@ -6,19 +6,19 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use App\Project;
-class OpportunityWon extends Notification
+
+class leaveStatusNotification extends Notification
 {
     use Queueable;
-    public $project;
+    public $leave;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Project $project)
+    public function __construct($leave)
     {
-       $this->project = $project;
+        $this->leave = $leave;
     }
 
     /**
@@ -29,7 +29,7 @@ class OpportunityWon extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -41,10 +41,9 @@ class OpportunityWon extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Opportunity was won')
-                    ->greeting('Congrats!')
-                    ->line('Your team won a new opportunity, a project has thus been created.')
-                    ->action('View Project',url('/projects/'.$this->project->id));
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -57,6 +56,19 @@ class OpportunityWon extends Notification
     {
         return [
             //
+        ];
+    }
+
+    public function toDatabase($notifiable)
+    {
+        return [
+            'user_id' =>  $this->leave->user_id,
+            'financial_year' => $this->leave->financialyear_id,
+            'leavesetting'=> $this->leave->leavesetting_id,
+            'leave_start' => $this->leave->leave_start,
+            'leave_end' => $this->leave->leave_end,
+            'leave_detail' => $this->leave->leave_detail,
+            'duration' => $this->leave->duration
         ];
     }
 }

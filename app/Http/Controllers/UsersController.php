@@ -30,6 +30,7 @@ class UsersController extends Controller
 
     protected function validator(array $data)
     {
+        
         return Validator::make($data, [
             'staffId' => 'required|string|max:10',
             'name' => 'required|string|max:20',
@@ -40,10 +41,15 @@ class UsersController extends Controller
             'alternativePhone' => 'required|string|max:20',
             'user_team_id' => 'required|integer',
             'role_id' => 'required|integer',
-            'level_id' => 'required|integer',
             'reportsTo' => 'required|string',
             'userStatus' => 'required|string|max:20',
         ]);
+    }
+
+    public function create(){
+
+        return view('users.create');
+
     }
     
     public function store(Request $data)
@@ -53,14 +59,12 @@ class UsersController extends Controller
             'name' => $data['name'],
             'gender' => $data['gender'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => Hash::make('AHC@secret'),
             'mobilePhone' => $data['mobilePhone'],
             'alternativePhone' => $data['alternativePhone'],
             'team_id' => $data['user_team_id'],
-            'role_id' => $data['role_id'],
-            'level_id' => $data['level_id'],
             'reportsTo' => $data['reportsTo'],
-            'userStatus' => $data['userStatus'],
+            'userStatus' => 'registered',
             'created_by'=>Auth::user()->id
             ]);
         return ['User added succesfully'];

@@ -38,13 +38,13 @@ class HomeController extends Controller
 
     public function index()
     {
-        $streams = DB::SELECT("SELECT u.name,o.id, o.opportunity_name,o.revenue,o.created_at,c.account_name
-                                FROM users u JOIN opportunities o ON o.created_by = u.id
-                                JOIN contacts c ON o.contact_id = c.id 
-                                ORDER BY o.id DESC LIMIT 5");
-        foreach ($streams as $stream){
-            $timeframe = Carbon::parse($stream->created_at)->diffForHumans();
-        }
+        // $streams = DB::SELECT("SELECT u.name,o.id, o.opportunity_name,o.revenue,o.created_at,c.account_name
+        //                         FROM users u JOIN opportunities o ON o.created_by = u.id
+        //                         JOIN contacts c ON o.contact_id = c.id 
+        //                         ORDER BY o.id DESC LIMIT 5");
+        // foreach ($streams as $stream){
+        //     $timeframe = Carbon::parse($stream->created_at)->diffForHumans();
+        // }
 
         $users = User::all();
         $contacts = contact::all();
@@ -218,7 +218,7 @@ class HomeController extends Controller
         $opps->backgroundColor($colors);
 
         return view('pages.home',compact(
-            'projects','teams','streams',
+            'projects','teams',
             'opportunities','users',
             'contacts','userChart',
             'teamChart','projectChart',

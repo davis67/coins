@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\Leave;
 use App\Holiday;
 use App\Leaveforward;
+use App\User;
 use App\Leavesetting;
 use App\Leavetracker;
-use App\Notifications\LeaveApplied;
-use App\Notifications\leave_statusChange;
+use App\Notifications\leaveStatusNotification;
 use App\Events\LeaveUpdateEvent;
 use Session;
 use Auth;
@@ -31,6 +31,9 @@ class LeavesController extends Controller
         return view('leaves.create');
     }
 
+    public  function leaveRequestForm(){
+        return view('leaves.leaveRequest');
+    }
 
     public function checkSettings($duration,$leaveType){
 
@@ -83,10 +86,13 @@ class LeavesController extends Controller
 
     public function store(Request $request)
     {
+        $supervisor = User::findOrFail(auth()->user()->reportsTo);
+        // dd($supervisor);
         //attach the finacial year to the leave.I found it easy this way
         //to keep track on the leave setting
         $current_financial_year = null;
         $financial_years = Financialyear::all();
+        
         foreach($financial_years as $financial_year){
             if(Carbon::now()->between(Carbon::create($financial_year->start_date), Carbon::create($financial_year->end_date))){
                 $current_financial_year = $financial_year->id;
@@ -122,6 +128,7 @@ class LeavesController extends Controller
 
             //recording an activity any time a leave is requested
             event(new LeaveUpdateEvent($save_leave));
+            $supervisor->notify(new leaveStatusNotification($save_leave));
 
           } else{
               //Here you update the leave if it exists for a certain financial year
@@ -133,6 +140,7 @@ class LeavesController extends Controller
               
             //recording an activity any time a leave is requested
             event(new LeaveUpdateEvent($leave_exists));
+            $supervisor->notify(new leaveStatusNotification($leave_exists));
           }         
         return redirect()->route('leaves.index')
                         ->with('success', "Your leave request has been successfully recorded.");

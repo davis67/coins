@@ -11,7 +11,7 @@
 |
 */
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name("home");
@@ -66,6 +66,7 @@ Route::resource('/evaluations','EvaluationsController');
 //Routing everything about leaves
 Route::resource('/leaves', 'LeavesController');
 Route::get('/delLeave/{leave}','LeavesController@destroy')->name('delLeave');
+Route::get('/leave/request-form', 'LeavesController@leaveRequestForm')->name('leaveRequest');
 Route::resource('/leavesettings', 'LeavesettingsController');
 Route::get('/leavesettings', 'LeavesettingsController@create');
 Route::post('/leavesettings/{leavesetting}', 'LeavesettingsController@update')->name('targets');
