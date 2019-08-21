@@ -78,7 +78,7 @@
                                     <li aria-haspopup="true" aria-expanded="false" class="nav-item"><a href="{{ route('leaves.index')}}" class="nav-link">Leave</a></li>
                                     <li aria-haspopup="true" aria-expanded="false" class="nav-item"><a href="{{route('teams.index')}}" class="nav-link">Teams</a></li>
                                 <li aria-haspopup="true" aria-expanded="false" class="nav-item"><a href="" class="nav-link">Help</a></li>
-                                    <li class="nav-item dropdown"> <a
+                                    {{-- <li class="nav-item dropdown"> <a
                                             class="nav-link dropdown-toggle waves-effect waves-dark" href=""
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
                                                 class="mdi mdi-bell"></i>
@@ -125,7 +125,7 @@
                                                         notifications </a> </li>
                                             </ul>
                                         </div>
-                                    </li>
+                                    </li> --}}
                                     <!-- Profile -->
                                     <!-- ============================================================== -->
                                     <li class="nav-item dropdown u-pro"> <a

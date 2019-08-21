@@ -62,6 +62,7 @@ class leaveStatusNotification extends Notification
     public function toDatabase($notifiable)
     {
         return [
+            'leave_id' => $this->leave->id,
             'user_id' =>  $this->leave->user_id,
             'financial_year' => $this->leave->financialyear_id,
             'leavesetting'=> $this->leave->leavesetting_id,

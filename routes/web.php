@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Auth::logout();
+Auth::loginUsingId('a8459f10-c3f8-11e9-a0d3-6980d251f062', true);
 
 Auth::routes(['register' => false]);
 
@@ -66,7 +68,8 @@ Route::resource('/evaluations','EvaluationsController');
 //Routing everything about leaves
 Route::resource('/leaves', 'LeavesController');
 Route::get('/delLeave/{leave}','LeavesController@destroy')->name('delLeave');
-Route::get('/leave/request-form', 'LeavesController@leaveRequestForm')->name('leaveRequest');
+Route::get('/leave/request-form/{nofification_id}/{leave}', 'LeavesController@leaveRequestForm')->name('leaveRequest');
+Route::post('/leave/request-form', 'LeavesController@updateLeaveRequest')->name('updateLeaveRequest');
 Route::resource('/leavesettings', 'LeavesettingsController');
 Route::get('/leavesettings', 'LeavesettingsController@create');
 Route::post('/leavesettings/{leavesetting}', 'LeavesettingsController@update')->name('targets');

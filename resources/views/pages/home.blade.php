@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+@if(auth()->user()->unreadNotifications)
+@include('pages/notifications')
+@endif
 <div id="dashboard">
     <div class="row mb-2">
         <div class="col-md-12">

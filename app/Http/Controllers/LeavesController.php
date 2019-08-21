@@ -31,8 +31,41 @@ class LeavesController extends Controller
         return view('leaves.create');
     }
 
-    public  function leaveRequestForm(){
-        return view('leaves.leaveRequest');
+    public  function leaveRequestForm($id, $leave_id){
+        $notification = DB::table('notifications')
+                        ->where('id', $id)->first();
+        // dd($notification->id);
+        $leave = Leave::findOrFail($leave_id);
+        return view('leaves.leaveRequest', compact('notification', 'leave'));
+    }
+
+    public function updateLeaveRequest(Request $request){
+        dd($request->all());
+        //validate the status.the leave has to either accepted or declined
+        $this->validate($request, [
+            'status' => 'required'
+        ]);
+
+        if($request->status == 'decline'){
+
+            //update the leave from the supervisors side
+            Leavestatus::create([
+                'leave_id' => $request->leave_id,
+                'approved_by' => auth()->user()->id,
+                'comment' => $request->comment
+
+            ]);
+
+             //update the status of the leave.
+            $leave = Leave::findOrFail($request->leave_id);
+            $leave->update([
+                'leave_status' => $request->status
+            ]);
+
+            //call the notification to the user who requested for the leave
+            //return statement
+            //dont update the the email
+        }
     }
 
     public function checkSettings($duration,$leaveType){
