@@ -9,6 +9,7 @@ use App\Leaveforward;
 use App\User;
 use App\Leavesetting;
 use App\Leavetracker;
+use App\Leavestatus;
 use App\Notifications\leaveStatusNotification;
 use App\Events\LeaveUpdateEvent;
 use Session;
@@ -34,18 +35,49 @@ class LeavesController extends Controller
     public  function leaveRequestForm($id, $leave_id){
         $notification = DB::table('notifications')
                         ->where('id', $id)->first();
-        // dd($notification->id);
         $leave = Leave::findOrFail($leave_id);
         return view('leaves.leaveRequest', compact('notification', 'leave'));
     }
 
     public function updateLeaveRequest(Request $request){
-        dd($request->all());
+        
         //validate the status.the leave has to either accepted or declined
         $this->validate($request, [
             'status' => 'required'
         ]);
 
+        //accept leave
+        if($request->status == 'accept'){
+            //update the leave from the supervisors side
+            Leavestatus::create([
+                'leave_id' => $request->leave_id,
+                'approved_by' => auth()->user()->id,
+                'comment' => $request->comment
+
+            ]);
+        //send the notification the the chief of staffs
+        
+        $supervisor->notify(new leaveStatusNotification($save_leave));
+        //getting the notification direct from the database.
+        $hack_notification = DB::table('notifications')
+        ->where('id', $request->notification_id)->first();
+
+            //trying to hack around  on the notification 
+            //this might be even close to the best way to mark the notification as read.Update later
+            foreach (auth()->user()->notifications as $notification) {
+            if($notification->id == $hack_notification->id){
+                $notification->markAsRead();
+            }
+            }
+
+
+            //call the notification to the user who requested for the leave
+            return redirect()->route('home')->with('success', 'You have successfully endorsed a leave request');
+            //return statement
+            //dont update the the email
+        }
+
+        //decline
         if($request->status == 'decline'){
 
             //update the leave from the supervisors side
@@ -58,16 +90,31 @@ class LeavesController extends Controller
 
              //update the status of the leave.
             $leave = Leave::findOrFail($request->leave_id);
+            
             $leave->update([
-                'leave_status' => $request->status
+                'leave_status' => 'declined'
             ]);
+            
+            //getting the notification direct from the database.
+            $hack_notification = DB::table('notifications')
+                        ->where('id', $request->notification_id)->first();
+            
+            //trying to hack around  on the notification 
+            //this might be even close to the best way to mark the notification as read.Update later
+            foreach (auth()->user()->notifications as $notification) {
+                if($notification->id == $hack_notification->id){
+                    $notification->markAsRead();
+                }
+            }
+
 
             //call the notification to the user who requested for the leave
+            return redirect()->route('home')->with('success', 'You have successfully cancelled a leave request');
             //return statement
             //dont update the the email
         }
+    
     }
-
     public function checkSettings($duration,$leaveType){
 
         $msg ='';

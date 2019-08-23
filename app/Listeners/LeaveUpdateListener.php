@@ -5,7 +5,7 @@ namespace App\Listeners;
 use App\Events\LeaveUpdateEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
+use App\Leaveactivity;
 class LeaveUpdateListener
 {
     /**
@@ -27,7 +27,7 @@ class LeaveUpdateListener
     public function handle(LeaveUpdateEvent $event)
     {
         
-        \App\LeaveActivity::create([
+        Leaveactivity::create([
             'leave_id' => $event->leave->id,
             'start_date' => $event->leave->leave_start,
             'end_date' => $event->leave->leave_end

@@ -11,7 +11,7 @@
 |
 */
 // Auth::logout();
-Auth::loginUsingId('a8459f10-c3f8-11e9-a0d3-6980d251f062', true);
+Auth::loginUsingId('03c649c0-c4a2-11e9-a185-7171548314d1', true);
 
 Auth::routes(['register' => false]);
 
