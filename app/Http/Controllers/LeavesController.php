@@ -11,10 +11,13 @@ use App\Leavesetting;
 use App\Leavetracker;
 use App\Leavestatus;
 use App\Notifications\leaveStatusNotification;
+use App\Notifications\acceptLeaveNotification;
+use App\Notifications\declineLeaveNotification;
 use App\Events\LeaveUpdateEvent;
 use Session;
 use Auth;
 use App\Financialyear;
+use App\Title;
 use DB;
 use Carbon\CarbonPeriod;
 use Carbon\Carbon;
@@ -33,6 +36,7 @@ class LeavesController extends Controller
     }
 
     public  function leaveRequestForm($id, $leave_id){
+        // dd(auth()->user()->id);
         $notification = DB::table('notifications')
                         ->where('id', $id)->first();
         $leave = Leave::findOrFail($leave_id);
@@ -40,7 +44,7 @@ class LeavesController extends Controller
     }
 
     public function updateLeaveRequest(Request $request){
-        
+        $chief_of_staff = Title::where('id', 6)->get()[0]->users[0];
         //validate the status.the leave has to either accepted or declined
         $this->validate($request, [
             'status' => 'required'
@@ -49,15 +53,15 @@ class LeavesController extends Controller
         //accept leave
         if($request->status == 'accept'){
             //update the leave from the supervisors side
+            $leave = Leave::findOrFail($request->leave_id);
             Leavestatus::create([
                 'leave_id' => $request->leave_id,
                 'approved_by' => auth()->user()->id,
                 'comment' => $request->comment
-
             ]);
         //send the notification the the chief of staffs
         
-        $supervisor->notify(new leaveStatusNotification($save_leave));
+        $chief_of_staff->notify(new acceptLeaveNotification($leave));
         //getting the notification direct from the database.
         $hack_notification = DB::table('notifications')
         ->where('id', $request->notification_id)->first();
@@ -72,6 +76,7 @@ class LeavesController extends Controller
 
 
             //call the notification to the user who requested for the leave
+           
             return redirect()->route('home')->with('success', 'You have successfully endorsed a leave request');
             //return statement
             //dont update the the email
@@ -109,55 +114,58 @@ class LeavesController extends Controller
 
 
             //call the notification to the user who requested for the leave
+
+            $leave->user->notify(new declineLeaveNotification($leave));
+
             return redirect()->route('home')->with('success', 'You have successfully cancelled a leave request');
             //return statement
             //dont update the the email
         }
     
     }
-    public function checkSettings($duration,$leaveType){
+    // public function checkSettings($duration,$leaveType){
 
-        $msg ='';
-        $bookable = [];
-        $settings = Leavesetting::where(['leave_type'=>$leaveType])->get(['bookable_days']);
-        foreach($settings as $setting){
-            array_push($bookable,$setting->bookable_days);
-        }
-        $bookable = $bookable[0];
-        switch ($leaveType){
-            case 'Annual':
-                if( $duration > $bookable){
-                    $msg .=' cannot exceed '.$bookable.' days'; 
-                }else{
-                    $msg .='Passed';
-                }
-                break;
-            case 'Maternity':
-                if( $duration != $bookable){
-                    $msg .=' allows only '.$bookable.' days';
-                }else{
-                    $msg .='Passed';
-                }
-            break;
-            case 'Paternity':
-                if( $duration != $bookable){
-                $msg .=' allows only '.$bookable.' days';
-            }else{
-                $msg .='Passed';
-            }
-            break;
-            case 'Compassionate':
-                if( $duration > $bookable){
-                    $msg .='allows only '.$bookable.' days';
-                }else{
-                    $msg .='Passed';
-                }
-            break;
-            default:
-            $msg .='Passed';
-        }
-        return $msg;
-    }
+    //     $msg ='';
+    //     $bookable = [];
+    //     $settings = Leavesetting::where(['leave_type'=>$leaveType])->get(['bookable_days']);
+    //     foreach($settings as $setting){
+    //         array_push($bookable,$setting->bookable_days);
+    //     }
+    //     $bookable = $bookable[0];
+    //     switch ($leaveType){
+    //         case 'Annual':
+    //             if( $duration > $bookable){
+    //                 $msg .=' cannot exceed '.$bookable.' days'; 
+    //             }else{
+    //                 $msg .='Passed';
+    //             }
+    //             break;
+    //         case 'Maternity':
+    //             if( $duration != $bookable){
+    //                 $msg .=' allows only '.$bookable.' days';
+    //             }else{
+    //                 $msg .='Passed';
+    //             }
+    //         break;
+    //         case 'Paternity':
+    //             if( $duration != $bookable){
+    //             $msg .=' allows only '.$bookable.' days';
+    //         }else{
+    //             $msg .='Passed';
+    //         }
+    //         break;
+    //         case 'Compassionate':
+    //             if( $duration > $bookable){
+    //                 $msg .='allows only '.$bookable.' days';
+    //             }else{
+    //                 $msg .='Passed';
+    //             }
+    //         break;
+    //         default:
+    //         $msg .='Passed';
+    //     }
+    //     return $msg;
+    // }
 
     public function index(){
         $leaves = Leave::where('user_id', auth()->user()->id)->get();
@@ -166,6 +174,7 @@ class LeavesController extends Controller
 
     public function store(Request $request)
     {
+        // this will always return an error exactly after seeding in new users.s
         $supervisor = User::findOrFail(auth()->user()->reportsTo);
         // dd($supervisor);
         //attach the finacial year to the leave.I found it easy this way
@@ -205,7 +214,6 @@ class LeavesController extends Controller
                 'leave_status'=>'pending',
                 'created_by'=>auth()->user()->id
             ]);
-
             //recording an activity any time a leave is requested
             event(new LeaveUpdateEvent($save_leave));
             $supervisor->notify(new leaveStatusNotification($save_leave));

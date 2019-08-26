@@ -13,6 +13,11 @@
                             <label>Account Name:</label>
                             <input type="text" name="account_name" id="account_name" class="form-control">
                             <input type="hidden" name="contact_id" id="contact_id">
+                            @if($errors->has('account_name'))
+                            <span class="text-danger">
+                                {{$errors->first('account_name')}}
+                            </span>
+                            @endif
                         </div>
                         <div class="col-md-3">
                             <label for="contact_country">Country</label>
@@ -20,6 +25,11 @@
                             <datalist id="countryLists">
                                 {{ getCountry()}}
                             </datalist>
+                            @if($errors->has('contact_country'))
+                            <span class="text-danger">
+                                {{$errors->first('contact_country')}}
+                            </span>
+                            @endif
                         </div>
                     </div>
                     <p><b>Address Info</b></p>
@@ -28,6 +38,11 @@
                         <div class="col-md-6">
                             <label>Full Address:</label>
                             <textarea name="full_address" id="full_address" class="form-control" rows="3"></textarea>
+                            @if($errors->has('full_address'))
+                            <span class="text-danger">
+                                {{$errors->first('full_address')}}
+                            </span>
+                            @endif
                         </div>
                         <div class="col-md-6">
                             <label>Alternate Address</label>
@@ -42,15 +57,30 @@
                             <label>Contact Person</label>
                             <input type="text" name="contact_person" id="contact_person" class="form-control"
                                 placeholder="Fullname">
+                                @if($errors->has('contact_person'))
+                                <span class="text-danger">
+                                    {{$errors->first('contact_person')}}
+                                </span>
+                                @endif
                         </div>
                         <div class="col-md-4">
                             <label>Email</label>
                             <input type="email" name="contact_email" id="contact_email" class="form-control"
                                 placeholder="email">
+                                @if($errors->has('contact_email'))
+                                <span class="text-danger">
+                                    {{$errors->first('contact_email')}}
+                                </span>
+                                @endif
                         </div>
                         <div class="col-md-4">
                             <label>Mobile Phone</label>
                             <input type="text" name="contact_phone" id="contact_phone" class="form-control">
+                            @if($errors->has('contact_phone'))
+                            <span class="text-danger">
+                                {{$errors->first('contact_phone')}}
+                            </span>
+                            @endif
                         </div>
                     </div>
                     <div class="form-row m-2">

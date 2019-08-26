@@ -9,6 +9,7 @@ use App\Team;
 use App\Task;
 use App\Contact;
 use App\User;
+use Countries;
 use App\OpportunityUser;
 use Carbon\Carbon;
 use App\Notifications\OpportunityCreated;
@@ -134,7 +135,8 @@ class OpportunitiesController extends Controller
 
         $teams = Team::all();
         $users = User::all();
-        return view('opportunities.create', compact('teams', 'users'));
+        $countries = Countries::all()->pluck('name.common');
+        return view('opportunities.create', compact('teams', 'users','countries'));
         
     }
 
@@ -171,6 +173,8 @@ class OpportunitiesController extends Controller
             'country'=>'required',
             'revenue'=>'nullable',
             'type'=>'required',
+            'assigned_to' => 'required',
+            'clients_name' => 'required',
             'lead_source'=>'required',
             'external_deadline'=>'required|date|after:internal_deadline',
             'internal_deadline'=>'required|date|after:today',
@@ -181,7 +185,7 @@ class OpportunitiesController extends Controller
 
         $run = Opportunity::create([
             'opportunity_name' => $data['opportunity_name'],
-            // 'contact_id' => $data['contact_id'],
+            'clients_name' => $data['clients_name'],
             'country' => $data['country'],
             'revenue' => $data['revenue'],
             // 'sales_stage' => $data['sales_stage'],
@@ -196,7 +200,7 @@ class OpportunitiesController extends Controller
             'created_by'=>Auth::user()->id
         ]);
         
-        return redirect()->route('opportunities.index')-> with('success', 'Opportunity created successfully');
+        return redirect()->route('opportunities.index')->with('success', 'You have successfully added an opportunity.Thank you!');
         // if(!$run){
         //     return ['The opportunity not created'];;
         // }else{

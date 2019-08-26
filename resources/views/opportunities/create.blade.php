@@ -8,8 +8,8 @@
                     @csrf
                     <div class="form-group">
                         <label for="opportunity_name">Opportunity Name:</label>
-                        <textarea name="opportunity_name" class="form-control form-control-sm" rows="2"
-                            placeholder="Enter opportunity" value="{{old('opportunity_name')}}"></textarea>
+                        <textarea name="opportunity_name" class="form-control {{ $errors->has('opportunity_name') ? ' is-invalid' : '' }} form-control-sm" rows="2"
+                            placeholder="Enter opportunity">{{old('opportunity_name')}}</textarea>
                         @if($errors->has('opportunity_name'))
                         <span class="text-danger">
                             {{$errors->first('opportunity_name')}}
@@ -21,38 +21,44 @@
                         <div class="form-group col-md-4">
                             <label for="inputType">Type</label>
                             <select id="inputType" name="type"
-                                class="form-control {{ $errors->has('business_number') ? ' is-invalid' : '' }} form-control-sm">
+                                class="form-control {{ $errors->has('type') ? ' is-invalid' : '' }} form-control-sm">
                                 <option value="">Choose...</option>
-                                <option value="0 {{old('business_number')}}">Existing Business</option>
-                                <option value="1 {{old('business_number')}}">New Business</option>
+                                @foreach(["Existing Business","New Business"] as $item )
+                                <option value="{{$item}}" {{old('type')==$item ? 'selected':''}}>{{$item}}</option>
+                                @endforeach
                             </select>
-                            @if($errors->has('business_number'))
+                            @if($errors->has('type'))
                             <span class="text-danger">
-                                {{$errors->first('business_number')}}
+                                {{$errors->first('type')}}
                             </span>
                              @endif
                         </div>
                         <div class="form-group col-md-4">
                             <label for="inputClient">Client Name</label>
                             <input type="text"
-                                class="form-control {{ $errors->has('client_name') ? ' is-invalid' : '' }} form-control-sm"
-                                name="client_name" placeholder="Enter Client name" value="{{old('client_name')}}">
-                                @if($errors->has('client_name'))
+                                class="form-control {{ $errors->has('clients_name') ? ' is-invalid' : '' }} form-control-sm"
+                                name="clients_name" placeholder="Enter Client name" value="{{old('clients_name')}}">
+                                @if($errors->has('clients_name'))
                                 <span class="text-danger">
-                                    {{$errors->first('client_name')}}
+                                    {{$errors->first('clients_name')}}
                                 </span>
                         @endif
                         </div>
                         <div class="form-group col-md-4">
                             <label for="inputCountry">Country</label>
-                            <input type="text"
-                                class="form-control {{ $errors->has('country') ? ' is-invalid' : '' }} form-control-sm "
-                                name="country" placeholder="Enter country name" value="{{old('country')}}">
+                            <select
+                                class="form-control select-multiple {{ $errors->has('country') ? ' is-invalid' : '' }} form-control-sm "
+                                name="country">
+                                <option value="">choose...</option>
+                                @foreach($countries as $country)
+                                <option value="{{$country}}" {{old('country')==$country ? 'selected':''}}>{{$country}}</option>
+                                @endforeach
+                            </select>
                                 @if($errors->has('country'))
                                 <span class="text-danger">
                                     {{$errors->first('country')}}
                                 </span>
-                        @endif
+                            @endif
                         </div>
                     </div>
 
@@ -96,7 +102,7 @@
                         <div class="form-group col-md-3">
                             <label for="inputClient">Leads Source</label>
                             <select id="inputSalesStage"
-                                class="form-control {{ $errors->has('lead_source') ? ' is-invalid' : '' }} form-control-sm "
+                                class="form-control select-multiple {{ $errors->has('lead_source') ? ' is-invalid' : '' }} form-control-sm "
                                 name="lead_source">
                                 <option value="">Choose...</option>
                                 @foreach(['Cold call', 'Existing customer', 'Self Generated', 'Employee', 'Partner',
@@ -104,7 +110,7 @@
                                 'Direct Mail', 'Conference', 'Trade Show', 'website', 'word of mouth', 'Email',
                                 'Compaign', 'other'] as
                                 $value => $item)
-                                <option value="{{$value}}" {{old('lead_source')==$item ? 'selected':''}}>{{$item}}
+                                <option value="{{$item}}" {{old('lead_source')==$item ? 'selected':''}}>{{$item}}
                                 </option>
                                 @endforeach
                             </select>
@@ -128,17 +134,17 @@
                         <div class="form-group col-md-3">
                             <label for="inputTeam">Team </label>
                             <select id="inputTeam"
-                                class="form-control {{ $errors->has('team') ? ' is-invalid' : '' }} form-control-sm"
+                                class="form-control select-multiple {{ $errors->has('team_id') ? ' is-invalid' : '' }} form-control-sm"
                                 name="team_id">
                                 <option value="">Choose...</option>
                                 @foreach(
                                 $teams as $team)
-                                <option value="{{$team->id}}">{{$team->team_name}}</option>
+                                <option value="{{$team->id}}" {{old('team_id')==$team->id ? 'selected':''}}>{{$team->team_name}}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('team'))
+                            @if($errors->has('team_id'))
                             <span class="text-danger">
-                                {{$errors->first('team')}}
+                                {{$errors->first('team_id')}}
                             </span>
                             @endif
                         </div>
@@ -161,12 +167,12 @@
                     <div class="form-group ">
                         <label for="assignees">Assigned To: </label>
                         <select multiple="multiple" name="assigned_to[]"
-                            class="form-control {{ $errors->has('assigned_to') ? ' is-invalid' : '' }} form-control-sm"
+                            class="form-control {{ $errors->has('assigned_to') ? ' is-invalid' : '' }} form-control-sm select-multiple"
                             id="assignees">
                             <option value="">Choose...</option>
                             @foreach(
                             $users as $user)
-                            <option value="{{$user->id}}">{{$user->name}}</option>
+                            <option value="{{$user->id}}" {{old('assigned_to')==$user->id ? 'selected':''}}>{{$user->name}}</option>
                             @endforeach
                         </select>
                         @if($errors->has('assigned_to'))

@@ -250,6 +250,9 @@
     }
     $('.panel-group').on('hidden.bs.collapse', toggleIcon);
     $('.panel-group').on('shown.bs.collapse', toggleIcon);
+    $(document).ready(function() {
+    $('.select-multiple').select2();
+});
     </script>
     <!-- slimscrollbar scrollbar JavaScript -->
     <script src="{{asset('plugins/vendors/ps/perfect-scrollbar.jquery.min.js') }}"></script>

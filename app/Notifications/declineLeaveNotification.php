@@ -10,15 +10,15 @@ use Illuminate\Notifications\Messages\MailMessage;
 class declineLeaveNotification extends Notification
 {
     use Queueable;
-
+    public $leave;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($leave)
     {
-        //
+        $this->leave = $leave;
     }
 
     /**
@@ -29,7 +29,7 @@ class declineLeaveNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -55,7 +55,14 @@ class declineLeaveNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'leave_id' => $this->leave->id,
+            'user_id' =>  $this->leave->user_id,
+            'financial_year' => $this->leave->financialyear_id,
+            'leavesetting'=> $this->leave->leavesetting_id,
+            'leave_start' => $this->leave->leave_start,
+            'leave_end' => $this->leave->leave_end,
+            'leave_detail' => $this->leave->leave_detail,
+            'duration' => $this->leave->duration
         ];
     }
 }
