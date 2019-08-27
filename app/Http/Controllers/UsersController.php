@@ -113,21 +113,38 @@ class UsersController extends Controller
     * Custom search engine
     */
 
-    public function search(Request $request)
-    {
-        $users = User::where(['team_id'=>$request->team_id])->get();
-        return $users;  
-    }
+    // public function search(Request $request)
+    // {
+    //     $users = User::where(['team_id'=>$request->team_id])->get();
+    //     return $users;  
+    // }
         
-    function getUsers(){
-        $llusers = User::pluck('name');
-        for($i=0; $i<sizeof($llusers); $i++)
-        {
-            echo '<option value="'.$llusers[$i].'">';
-        }
-        unset($llusers);
-    }
+    // function getUsers(){
+    //     $llusers = User::pluck('name');
+    //     for($i=0; $i<sizeof($llusers); $i++)
+    //     {
+    //         echo '<option value="'.$llusers[$i].'">';
+    //     }
+    //     unset($llusers);
+    // }
 
+    // public function deletedUsers(){
+    //     $users = User::onlyTrashed()->get();
+    //     return view('users.restore_users', compact('users'));
+    // }
+    // public function restoreUser($id){
+    //     $user= User::withTrashed()->findOrFail($id);
+    //     $user->restore();
+    //     if($user->restore()){
+    //         return redirect()->back()->with("success","You have Successfully Restored a User", "Good Luck!"); 
+    //     }
+    //     return redirect()->back()->with("success","Error occurred while Restoring A User");
+    // }
+    // public function permanentDestroy($id){
+    //     $user= User::withTrashed()->findOrFail($id);
+    //     $user->forceDelete();
+    //     return redirect()->back()->with("success","You have Permanently Deleted a User", "Bye Bye!");
+    // }
 
     public function edit(User $user)
     {

@@ -14,8 +14,8 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->primary('id');
+            $table->uuid('id')->primary();
+            // $table->primary('id');
             $table->string('staffId')->unique();
             $table->string('name');
             $table->string('gender');
@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('level_id');
             $table->string('reportsTo');
             $table->string('userStatus');
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
             $table->date('lastLogin')->nullable();

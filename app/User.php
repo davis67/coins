@@ -5,21 +5,32 @@ use DB;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
 use Webpatser\Uuid\Uuid;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
+    
+    use SoftDeletes;
     use Notifiable;
-
     public $incrementing = false;
-
     protected $guarded = [];
-
+    protected $keyType = 'string';
+    protected $primary_key = 'id';
+    
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
+    /**
+ * Get the route key for the model.
+ *
+ * @return string
+ */
+public function getRouteKeyName()
+{
+    return 'uuid';
+}
+    
     public static function boot()
     {
         parent::boot();
