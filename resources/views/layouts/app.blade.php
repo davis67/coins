@@ -204,7 +204,7 @@
                                 <ul aria-expanded="false" class="collapse">
                                     <li><a href="{{route('users.create')}}">Add</a></li>
                                     <li><a href={{route('users.index')}}>View Users</a></li>
-                                    <li><a href="demo-admin/minton/ecommerce-pro-list.html">restore/delete users</a>
+                                <li><a href="{{route('users.frozen')}}">Inactive Users</a>
                                     </li>
 
                                 </ul>
@@ -224,12 +224,14 @@
                         </div>
                     </div>
                 </main>
+                <footer class="alert alert-primary">
+                        <p class="text-center">@copyright 2019 AH Consulting Ltd</p>
+                   </footer>
             </div>
+            
         </div>
     </div>
-    <footer>
-        <p class="text-center">@copyright 2019 AH Consulting Ltd</p>
-    </footer>
+
     <!-- Scripts -->
 
     <script src="{{ asset("js/app.js") }}"></script>
@@ -291,6 +293,7 @@
     <script>
         $('#example23').DataTable();
     </script>
+    @include('sweet::alert')
 </body>
 
 </html>

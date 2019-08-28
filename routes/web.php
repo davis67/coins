@@ -130,13 +130,13 @@ Route::get('/teamusers/{team_id}', 'UsersController@search');
 
 //about restoring and deleting users
 
-Route::get('/users/index/accounts-are-frozen', 'UserController@deletedUsers')->name('users.frozen');
-// Route::get('/users/restore/{id}', 'UserController@restoreUser')->name('users.restore');
-//change password
-// Route::post('user/change-password', 'UserController@changePassword')->name('user.change_password');
-//softdelete a user
-// Route::delete('/users/destroy/{id}', 'UserController@destroy')->name('users.destroy');
-// Route::delete('/users/permanentdestroy/{id}', 'UserController@permanentDestroy')->name('users.permanentdestroy');
+Route::get('/users/index/accounts-are-frozen', 'UsersController@deletedUsers')->name('users.frozen');
+Route::get('/users/restore/{id}', 'UsersController@restoreUser')->name('users.restore');
+// change password
+Route::post('user/change-password', 'UsersController@changePassword')->name('user.change_password');
+// softdelete a user
+Route::delete('/users/destroy/{id}', 'UsersController@destroy')->name('users.destroy');
+Route::delete('/users/permanentdestroy/{id}', 'UsersController@permanentDestroy')->name('users.permanentdestroy');
 
 Route::resource('/associates', 'AssociatesController');
 Route::get('getassociates','AssociatesController@getassociates')->name('getassociates');

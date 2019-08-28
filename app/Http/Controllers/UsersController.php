@@ -13,6 +13,7 @@ use App\Assessment;
 use Auth;
 use DB;
 use Gate;
+use Alert;
 use Session;
 
 class UsersController extends Controller
@@ -54,7 +55,7 @@ class UsersController extends Controller
     
     public function store(Request $data)
     {
-        User::create([
+        $user = User::create([
             'staffId' => $data['staffId'],
             'name' => $data['name'],
             'gender' => $data['gender'],
@@ -67,7 +68,10 @@ class UsersController extends Controller
             'userStatus' => 'registered',
             'created_by'=>Auth::user()->id
             ]);
-        return ['User added succesfully'];
+        if($user){
+            alert()->success("You have added a new user", "Thank you!");
+        }
+        return redirect()->back();
     }
 
     public function show(User $user)
@@ -128,23 +132,26 @@ class UsersController extends Controller
     //     unset($llusers);
     // }
 
-    // public function deletedUsers(){
-    //     $users = User::onlyTrashed()->get();
-    //     return view('users.restore_users', compact('users'));
-    // }
-    // public function restoreUser($id){
-    //     $user= User::withTrashed()->findOrFail($id);
-    //     $user->restore();
-    //     if($user->restore()){
-    //         return redirect()->back()->with("success","You have Successfully Restored a User", "Good Luck!"); 
-    //     }
-    //     return redirect()->back()->with("success","Error occurred while Restoring A User");
-    // }
-    // public function permanentDestroy($id){
-    //     $user= User::withTrashed()->findOrFail($id);
-    //     $user->forceDelete();
-    //     return redirect()->back()->with("success","You have Permanently Deleted a User", "Bye Bye!");
-    // }
+    public function deletedUsers(){
+        $users = User::onlyTrashed()->get();
+        return view('users.restore_users', compact('users'));
+    }
+    public function restoreUser($id){
+        $user= User::withTrashed()->findOrFail($id);
+        $user->restore();
+        if($user->restore()){
+            alert()->success("You have Successfully Restored a User", "Good Luck!");
+            return redirect()->back(); 
+        }
+        alert()->success("Error occurred while Restoring A User");
+        return redirect()->back();
+    }
+    public function permanentDestroy($id){
+        $user= User::withTrashed()->findOrFail($id);
+        $user->forceDelete();
+        alert()->success("You have Permanently Deleted a User", "Bye Bye!");
+        return redirect()->back();
+    }
 
     public function edit(User $user)
     {
@@ -187,8 +194,18 @@ class UsersController extends Controller
         return['User Updated Successfully'];
     }
 
-    public function destroy(User $user)
+    public function destroy($id)
     {
+
+        $user = User::findOrFail($id);
+
+        if(auth()->user()->id ==$user->id){
+            Alert::error("We cannot freeze your account", "You are currently logged in")->autoclose(3000); 
+            return redirect()->back();
+        }
+
         $user->delete();
+        alert()->success("You have successfully suspended   a User", "Good Luck!");
+        return redirect()->back();
     }
 }

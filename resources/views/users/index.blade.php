@@ -8,7 +8,12 @@
         <a href="#" class="btn btn-outline-danger mb-2 btn-sm" data-toggle="modal" data-target="#addUser"><i
                 class="fas fa-user-plus"></i> Add User</a>
         @endif
-
+        @if (session('status'))
+        <div class="alert alert-success" role="alert">
+            {{ session('status') }}
+        </div>
+        @endif
+        <div class="table-responsive">
         <table class="table color-table table-bordered table-striped" id="example23">
             <thead>
                 <tr>
@@ -49,13 +54,20 @@
                             aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
                         <div class="dropdown-menu"> <a class="dropdown-item" data-toggle="modal" href=""
                                 data-target=".edit-member">Edit</a> <a class="dropdown-item"
-                                href="/users/{{$user->id}}">View</a> <a class="dropdown-item text-light-danger"
-                                href="#">Delete</a> </div>
+                                href="/users/{{$user->id}}">View</a>
+                        <form method="POST" action="{{route('users.destroy', $user->id)}}">
+                                @csrf
+                                @method('DELETE')
+                                <button class="dropdown-item text-light-danger"
+                                >Suspend User</button> 
+                                </form>
+                            </div>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
+        </div>
     </div>
 </div>
 </div>
