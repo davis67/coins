@@ -34,7 +34,7 @@ class CreateUsersTable extends Migration
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
 
-            $table->foreign('team_id')->references('id')->on('teams');
+            // $table->foreign('team_id')->references('id')->on('teams');
             $table->timestamps();
         });
     }

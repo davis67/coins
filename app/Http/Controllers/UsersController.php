@@ -9,6 +9,7 @@ use App\User;
 use App\Leave;
 use App\TaskUser;
 use App\Timesheet;
+// use App\Role;
 use App\Assessment;
 use Auth;
 use DB;
@@ -70,44 +71,47 @@ class UsersController extends Controller
         return ['User added succesfully'];
     }
 
-    public function show(User $user)
+    public function show($id)
     {
-        $year = $month = today();
-        $user = User::findOrFail($user->id);
-        $leaves = Leave::select('leaves.leave_start','leaves.leave_end','leavesetting_id','leaves.leave_status','leaves.leave_detail', DB::raw("SUM(leaves.duration) as duration"),'leavesettings.leave_type',)
-                    ->join('leavesettings','leaves.leavesetting_id','=','leavesettings.id')
-                    ->whereYear('leaves.leave_start', '=', $month)
-                    ->whereYear('leaves.created_at', '=', $month)
-                    ->where('leaves.user_id', $user->id)
-                    ->get();
-        $absent = $leaves->sum('duration');
+        // $year = $month = today();
+        // $user = User::findOrFail($user->id);
+        // $leaves = Leave::select('leaves.leave_start','leaves.leave_end','leavesetting_id','leaves.leave_status','leaves.leave_detail', DB::raw("SUM(leaves.duration) as duration"),'leavesettings.leave_type',)
+        //             ->join('leavesettings','leaves.leavesetting_id','=','leavesettings.id')
+        //             ->whereYear('leaves.leave_start', '=', $month)
+        //             ->whereYear('leaves.created_at', '=', $month)
+        //             ->where('leaves.user_id', $user->id)
+        //             ->get();
+        // $absent = $leaves->sum('duration');
 
-        //Timesheet
-        $opportunities = DB::table('users')
-                    ->join('task_user', 'task_user.user_id', '=', 'users.id')
-                    ->join('tasks', 'task_user.task_id', '=', 'tasks.id')
-                    ->join('deliverable_opportunity', 'tasks.deliverable_id', '=', 'deliverable_opportunity.deliverable_id')
-                    ->join('opportunities', 'deliverable_opportunity.opportunity_id', '=', 'opportunities.id')
-                    ->orderBy("opportunities.opportunity_name")
-                    ->where('task_user.user_id', $user->id)
-                    ->get();
+        // //Timesheet
+        // $opportunities = DB::table('users')
+        //             ->join('task_user', 'task_user.user_id', '=', 'users.id')
+        //             ->join('tasks', 'task_user.task_id', '=', 'tasks.id')
+        //             ->join('deliverable_opportunity', 'tasks.deliverable_id', '=', 'deliverable_opportunity.deliverable_id')
+        //             ->join('opportunities', 'deliverable_opportunity.opportunity_id', '=', 'opportunities.id')
+        //             ->orderBy("opportunities.opportunity_name")
+        //             ->where('task_user.user_id', $user->id)
+        //             ->get();
 
-        $timesummary = Timesheet::select('beneficiary', DB::raw("SUM(duration) as duration"))
-                                ->whereMonth('activity_date',now())
-                                ->where(['user_id'=>$user->id])
-                                ->groupBy('beneficiary')->get();
+        // $timesummary = Timesheet::select('beneficiary', DB::raw("SUM(duration) as duration"))
+        //                         ->whereMonth('activity_date',now())
+        //                         ->where(['user_id'=>$user->id])
+        //                         ->groupBy('beneficiary')->get();
 
-        $worked = $timesummary->sum('duration');
-        $timesheets = Timesheet::where(['user_id'=>$user->id])->whereMonth('activity_date',now())->get();
+        // $worked = $timesummary->sum('duration');
+        // $timesheets = Timesheet::where(['user_id'=>$user->id])->whereMonth('activity_date',now())->get();
         
         
 
-        $assessments = Assessment::selectRaw("targets.target_category AS category,assessments.assessment_score/targets.target_value*100 AS score")
-                                ->join('targets', 'assessments.target_id', '=', 'targets.id')
-                                ->where(['assessments.user_id'=>$user->id])
-                                ->groupBy('targets.target_category')
-                                ->get();
-        return view('users.show',compact('user','leaves','timesummary','timesheets','assessments','opportunities','worked','absent'));
+        // $assessments = Assessment::selectRaw("targets.target_category AS category,assessments.assessment_score/targets.target_value*100 AS score")
+        //                         ->join('targets', 'assessments.target_id', '=', 'targets.id')
+        //                         ->where(['assessments.user_id'=>$user->id])
+        //                         ->groupBy('targets.target_category')
+        //                         ->get();
+        // return view('users.show',compact('user','leaves','timesummary','timesheets','assessments','opportunities','worked','absent'));
+        $user = User::findOrFail($id);
+        
+        return view('users.show', compact('user'));
     }
     /*
     * Custom search engine
@@ -128,27 +132,28 @@ class UsersController extends Controller
     //     unset($llusers);
     // }
 
-    // public function deletedUsers(){
-    //     $users = User::onlyTrashed()->get();
-    //     return view('users.restore_users', compact('users'));
-    // }
-    // public function restoreUser($id){
-    //     $user= User::withTrashed()->findOrFail($id);
-    //     $user->restore();
-    //     if($user->restore()){
-    //         return redirect()->back()->with("success","You have Successfully Restored a User", "Good Luck!"); 
-    //     }
-    //     return redirect()->back()->with("success","Error occurred while Restoring A User");
-    // }
-    // public function permanentDestroy($id){
-    //     $user= User::withTrashed()->findOrFail($id);
-    //     $user->forceDelete();
-    //     return redirect()->back()->with("success","You have Permanently Deleted a User", "Bye Bye!");
-    // }
+    public function deletedUsers(){
+        $users = User::onlyTrashed()->get();
+        return view('users.restore_users', compact('users'));
+    }
+    public function restoreUser($id){
+        $user= User::withTrashed()->findOrFail($id);
+        $user->restore();
+        if($user->restore()){
+            return redirect()->back()->with("success","You have Successfully Restored a User", "Good Luck!"); 
+        }
+        return redirect()->back()->with("success","Error occurred while Restoring A User");
+    }
+    public function permanentDestroy($id){
+        $user= User::withTrashed()->findOrFail($id);
+        $user->forceDelete();
+        return redirect()->back()->with("success","You have Permanently Deleted a User", "Bye Bye!");
+    }
 
-    public function edit(User $user)
+    public function edit($id)
     {
-        return User::findOrFail($user->id);
+        $user = User::findOrFail($id);
+        return view('users.edit', compact('user'));
     }
 
     public function update(Request $request, User $user)
@@ -187,8 +192,10 @@ class UsersController extends Controller
         return['User Updated Successfully'];
     }
 
-    public function destroy(User $user)
+    public function destroy($id)
     {
+        $user = User::findOrFail($id);
         $user->delete();
+        return redirect()->back();  
     }
 }

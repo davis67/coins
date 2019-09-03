@@ -47,10 +47,19 @@
                     @endif
                     <td class="text-center text-light-blue"><a href="" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
-                        <div class="dropdown-menu"> <a class="dropdown-item" data-toggle="modal" href=""
-                                data-target=".edit-member">Edit</a> <a class="dropdown-item"
-                                href="/users/{{$user->id}}">View</a> <a class="dropdown-item text-light-danger"
-                                href="#">Delete</a> </div>
+                        <div class="dropdown-menu"> <a class="dropdown-item text-center text-primary"
+                                href="{{route('users.edit', $user->id)}}"><i class="p-2 fa fa-pencil"></i>Edit</a> <a
+                                class="dropdown-item text-center" href="{{route('users.show', $user->id)}}"><i
+                                    class="p-2 fas fa-eye"></i>View</a>
+                            <div class="dropdown-item text-danger">
+                                <form method="POST" action="{{route('users.destroy', $user->id)}}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn text-danger">
+                                        <i class="p-2 fas fa-trash"></i>Suspend</button>
+                                </form>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 @endforeach

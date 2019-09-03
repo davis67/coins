@@ -73,62 +73,13 @@
                         <div class="float-right pr-3">
                             <ul class="navbar-nav my-lg-0 float-right">
 
+                                {{-- <li aria-haspopup="true" aria-expanded="false" class="nav-item"><a
+                                        href="{{ route('leaves.index')}}" class="nav-link">Leave</a></li> --}}
                                 <li aria-haspopup="true" aria-expanded="false" class="nav-item"><a
-                                        href="{{ route('leaves.index')}}" class="nav-link">Leave</a></li>
-                                <li aria-haspopup="true" aria-expanded="false" class="nav-item"><a
-                                        href="{{route('teams.index')}}" class="nav-link">Teams</a></li>
+                                        href="{{route('teams.index')}}"
+                                        class="nav-link {{ Nav::isResource('teams') }}">Teams</a></li>
                                 <li aria-haspopup="true" aria-expanded="false" class="nav-item"><a href=""
                                         class="nav-link">Help</a></li>
-                                {{-- <li class="nav-item dropdown"> <a
-                                            class="nav-link dropdown-toggle waves-effect waves-dark" href=""
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
-                                                class="mdi mdi-bell"></i>
-                                            <div class="notify"> <span class="heartbit"></span> <span
-                                                    class="point"></span>
-                                            </div>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right mailbox animated fadeIn">
-                                            <ul>
-                                                <li>
-                                                    <div class="drop-title">You have <span class="highlighted">3
-                                                            new</span>
-                                                        Notifications</div>
-                                                </li>
-                                                <li>
-                                                    <div class="message-center">
-                                                        <!-- Message -->
-                                                        <a href="#">
-                                                            <div class="mail-content"> <i class="fas fa-envelope"></i> 2
-                                                                new
-                                                                messages <span
-                                                                    class="float-right text-light">15:07</span>
-                                                            </div>
-                                                        </a>
-                                                        <!-- Message -->
-                                                        <!-- Message -->
-                                                        <a href="#">
-                                                            <div class="mail-content"> <i class="fas fa-comment"></i> 1
-                                                                new
-                                                                comment <span
-                                                                    class="float-right text-light">11.08.2018</span>
-                                                            </div>
-                                                        </a>
-                                                        <!-- Message -->
-                                                        <a href="#">
-                                                            <div class="mail-content"> <i
-                                                                    class="fas fa-calendar-alt"></i> 2
-                                                                Events Soon <span
-                                                                    class="float-right text-light">10.08.2018</span>
-                                                            </div>
-                                                        </a> </div>
-                                                </li>
-                                                <li> <a class="nav-link text-center" href="javascript:void(0);">See all
-                                                        notifications </a> </li>
-                                            </ul>
-                                        </div>
-                                    </li> --}}
-                                <!-- Profile -->
-                                <!-- ============================================================== -->
                                 <li class="nav-item dropdown u-pro"> <a
                                         class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href=""
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
@@ -136,10 +87,16 @@
                                             class="" /><span class="circle-status"></span></a>
                                     <div class="dropdown-menu dropdown-menu-right animated fadeIn">
                                         <ul class="dropdown-user">
-                                            <li><a href="#"><i class="fas fa-user mr-1"></i> My Profile</a></li>
-                                            <li><a href="#"><i class="fas fa-cog mr-1"></i> Settings</a></li>
+                                            <li><a href="{{route('users.show', auth()->user()->id)}}"><i
+                                                        class="fas fa-user mr-1"></i> My Profile</a></li>
+                                            <li><a href="{{route('users.show', auth()->user()->id)}}"><i
+                                                        class="fas fa-cog mr-1"></i> Settings</a></li>
                                             <li role="separator" class="divider"></li>
-                                            <li><a href="#"><i class="fas fa-sign-in-alt mr-1"></i> Logout</a></li>
+                                            <li>
+                                                <a href="{{ route('logout') }}"
+                                                    onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i
+                                                        class="fas fa-sign-in-alt mr-1"></i> Logout</a>
+                                                @include('partials.logout')</li>
                                         </ul>
                                     </div>
                                 </li>
@@ -203,9 +160,12 @@
                             <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
                                         class="flaticon-restaurant"></i><span class="hide-menu">Users</span></a>
                                 <ul aria-expanded="false" class="collapse">
-                                    <li><a href="{{route('users.create')}}">Add</a></li>
-                                    <li><a href={{route('users.index')}}>View Users</a></li>
-                                    <li><a href="demo-admin/minton/ecommerce-pro-list.html">restore/delete users</a>
+                                    <li class="{{ Nav::isResource('users') }}"><a
+                                            href="{{route('users.create')}}">Add</a></li>
+                                    <li><a href={{route('users.index')}}>View
+                                            Users</a></li>
+                                    <li><a href="{{ route('users.frozen')}}">restore/delete
+                                            users</a>
                                     </li>
 
                                 </ul>

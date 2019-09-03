@@ -47,10 +47,14 @@
                     @endif
                     <td class="text-center text-light-blue"><a href="" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
-                        <div class="dropdown-menu"> <a class="dropdown-item" data-toggle="modal" href=""
-                                data-target=".edit-member">Edit</a> <a class="dropdown-item"
-                                href="/users/{{$user->id}}">View</a> <a class="dropdown-item text-light-danger"
-                                href="#">Delete</a> </div>
+                        <div class="dropdown-menu"> <a class="dropdown-item text-primary"
+                                href="{{route('users.restore', $user->id)}}">Restore User</a>
+                            <form method="POST" action="{{route('users.permanentdestroy', $user->id)}}">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn text-danger">Permanent
+                                    Delete</button>
+                            </form>
                     </td>
                 </tr>
                 @endforeach
