@@ -124,8 +124,8 @@ Route::post('/specialization/{specialization}', 'SpecializationsController@updat
 Route::post('/getSpecilization','SpecializationsController@getSpecilization')->name('getSpecilization');
 
 //Routing everything about users
-Route::resource('/users', 'UsersController');
-Route::post('/users/{user}', 'UsersController@update');
+Route::resource('users', 'UsersController');
+// Route::post('/users/{user}', 'UsersController@update');
 Route::get('/teamusers/{team_id}', 'UsersController@search');
 
 //about restoring and deleting users

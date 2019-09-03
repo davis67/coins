@@ -163,7 +163,8 @@
                     <nav class="sidebar-nav">
                         <ul id="sidebarnav">
                             <li class="clearfix"></li>
-                            <li class="nav-item"><a class="nav-link" href="{{route("home")}}"><i
+                            <li class="nav-item {{ Nav::isRoute('home') }}"><a class="nav-link"
+                                    href="{{route("home")}}"><i
                                         class="flaticon-desktop-computer-screen-with-rising-graph"></i><span
                                         class="hide-menu">Dashboard</span></a></li>
                             <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
