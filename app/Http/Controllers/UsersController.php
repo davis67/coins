@@ -156,8 +156,10 @@ class UsersController extends Controller
         return view('users.edit', compact('user'));
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
+        $user = User::findOrFail($id);
+      
          //validate the received data
          $data = $request->validate([
             'staffId' => 'required|string|max:10',

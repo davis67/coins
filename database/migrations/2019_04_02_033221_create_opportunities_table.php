@@ -28,7 +28,6 @@ class CreateOpportunitiesTable extends Migration
             $table->date('internal_deadline');
             $table->date('external_deadline');
             $table->unsignedBigInteger('team_id');
-            $table->integer('probability')->nullable();
             $table->string('created_by');
             $table->string('updated_by')->nullable();            
             $table->foreign('team_id')->references('id')->on('teams');

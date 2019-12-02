@@ -17,6 +17,6 @@ return [
     | the class defined here will be used if no other custom class is provided.
     |
     */
-    'default_class' => 'active',
+    'default_class' => 'text-blue-700 border-b border-blue-700',
 
 ];

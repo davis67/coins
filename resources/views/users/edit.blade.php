@@ -3,8 +3,9 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <form class="form-group" action="{{route('users.store')}}" method="POST">
+        <form class="form-group" action="{{route('users.update', $user->id)}}" method="POST">
             @csrf
+            @method('PUT')
             <h5><b>Staff Details</b></h5>
             <hr />
             <div class="row">

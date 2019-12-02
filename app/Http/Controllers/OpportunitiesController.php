@@ -173,13 +173,11 @@ class OpportunitiesController extends Controller
             'country'=>'required',
             'revenue'=>'nullable',
             'type'=>'required',
-            'assigned_to' => 'required',
             'clients_name' => 'required',
             'lead_source'=>'required',
             'external_deadline'=>'required|date|after:internal_deadline',
             'internal_deadline'=>'required|date|after:today',
-            'team_id'=>'required',
-            'probability'=>'nullable',
+            'team'=>'required',
             'funder'=>'required',
         ]);
 
@@ -193,8 +191,7 @@ class OpportunitiesController extends Controller
             'lead_source' => $data['lead_source'],
             'external_deadline' => $data['external_deadline'],
             'internal_deadline' => $data['internal_deadline'],
-            'team_id' => $data['team_id'],
-            'probability' => $data['probability'],
+            'team_id' => $data['team'],
             'funder' => $data['funder'],
             'om_number'=>$latest + 1,
             'created_by'=>Auth::user()->id

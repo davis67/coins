@@ -8,7 +8,7 @@
                     <h4 class="title text-center mt-3">Edit Profile</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('users.update', $user->id)}}" method="POST">
+                    <form class="form-group" action="{{route('users.update', $user->id)}}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="form-group row">

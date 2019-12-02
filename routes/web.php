@@ -14,6 +14,7 @@
 // Auth::loginUsingId("fdf3cda0-13f0-11e9-9a86-ab5a0fb32b10");
 Auth::loginUsingId("595131d0-c7f1-11e9-90f8-518a45dc92b0");
 Auth::routes(['register' => false]);
+// Auth::logout();
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name("home");
