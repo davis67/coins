@@ -286,22 +286,6 @@
     <!-- Scripts -->
 
     <script src="{{ asset("js/app.js") }}"></script>
-    <script>
-        function toggleIcon(e) {
-      $(e.target)
-        .prev('.card-link')
-        .find(".more-less")
-        .toggleClass('fa-plus fa-minus');
-    }
-    $('.panel-group').on('hidden.bs.collapse', toggleIcon);
-    $('.panel-group').on('shown.bs.collapse', toggleIcon);
-    $(document).ready(function() {
-    $('.select-multiple').select2();
-});
-    </script>
-    <script>
-        $('#example23').DataTable();
-    </script>
 </body>
 
 </html>
