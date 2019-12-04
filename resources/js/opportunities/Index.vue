@@ -7,7 +7,7 @@
       @rowClicked="getSingle"
     >
       <tableCol data-key="om_number" label="OM Number"></tableCol>
-      <tableCol data-key="clients_name" label="Client Number"></tableCol>
+      <tableCol data-key="clients_name" label="Client Name"></tableCol>
       <tableCol data-key="country" label="Country"></tableCol>
       <tableCol data-key="opportunity_name" label="Opportunity Name"></tableCol>
       <tableCol data-key="funder" label="Funded By"></tableCol>
@@ -44,13 +44,9 @@ export default {
     };
   },
   created() {
-    console.log(this.dataOpportunities);
+    
   },
   methods: {
-    toggleIsOpen() {
-      this.isOpen = !this.isOpen;
-      console.log("google", this.isOpen);
-    },
     getSingle(opportunity) {
       console.log(opportunity);
     }

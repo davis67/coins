@@ -30,5 +30,4 @@ window.hasOwnProp = function (obj, prop) {
 window.GlobalBus = new Vue();
 
 window.Flash = Flash;
-
 window.Confirmation = new Confirmation();

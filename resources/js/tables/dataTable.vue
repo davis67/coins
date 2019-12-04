@@ -1,9 +1,9 @@
 <template>
   <div class="w-full">
     <div class="w-full">
-      <div class="flex flex-between mb-2" v-if="title">
+      <div class="flex justify-between mb-2" v-if="title">
         <span></span>
-        <h4 class="card-title" v-text="title"></h4>
+        <h3 class="text-md" v-text="title"></h3>
         <span>
           <slot name="icons"></slot>
         </span>
@@ -87,7 +87,7 @@
               <td
                 class="table-cell px-3 py-4 text-center"
                 :colspan="columns.length + 1"
-              >No Items Were Found</td>
+              >No Records Were Found</td>
             </tr>
           </tbody>
           <tfoot v-if="$slots.foot && !results.isEmpty">
