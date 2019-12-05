@@ -11,7 +11,7 @@
       :name="name"
       v-model="form[name]"
       :placeholder="label | capitalize"
-      @keydown="clearError(form, name)"
+      @change="clearError(form, name)"
     />
     <bounce>
       <span class="text-xs text-red-600" v-if="hasError" v-text="firstError" />
@@ -26,7 +26,7 @@ export default {
     form: { required: true, type: Object },
     name: { required: true, type: String },
     label: { default: null, type: String },
-    type: { default: "text", type: String }
+    type: { default: "date", type: String }
   },
   mounted() {
     this.form.updateField(this.name, "");

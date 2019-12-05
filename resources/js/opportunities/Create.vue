@@ -1,64 +1,77 @@
 <template>
-  <form method="post" @submit.prevent="addOpportunity" class="container mx-auto mt-8 w-8/12">
-    <div class="flex flex-wrap -mx-3 mb-6">
-      <div class="w-full px-3">
-        <InputComponent :form="form" label="Opportunity Name" name="opportunity_name" />
+  <div>
+    <FlashComponent></FlashComponent>
+    <form method="post" @submit.prevent="addOpportunity" class="container mx-auto mt-8 w-8/12">
+      <div class="flex flex-wrap -mx-3 mb-6">
+        <div class="w-full px-3">
+          <InputComponent :form="form" label="Opportunity Name" name="opportunity_name" />
+        </div>
       </div>
-    </div>
-    <div class="flex flex-wrap -mx-3 mb-2">
-      <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-        <SelectComponent :form="form" label="Type" name="type" :options="options_type" />
+      <div class="flex flex-wrap -mx-3 mb-2">
+        <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+          <SelectComponent :form="form" label="Type" name="type" :options="options_type" />
+        </div>
+        <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+          <SelectComponent
+            :form="form"
+            label="Sales Stage"
+            name="sales_stage"
+            :options="sale_stage_option"
+          />
+        </div>
+        <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+          <SelectComponent :form="form" label="Country" name="country" :options="countries" />
+        </div>
+        <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+          <InputComponent :form="form" label="Client Name" name="clients_name" />
+        </div>
       </div>
-      <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-        <SelectComponent
-          :form="form"
-          label="Sales Stage"
-          name="sales_stage"
-          :options="sale_stage_option"
-        />
+      <div class="flex flex-wrap -mx-3 mb-6">
+        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <DateComponent
+            :form="form"
+            type="date"
+            label="Internal Dealine"
+            name="internal_deadline"
+          />
+        </div>
+        <div class="w-full md:w-1/2 px-3">
+          <DateComponent
+            :form="form"
+            type="date"
+            label="External Dealine"
+            name="external_deadline"
+          />
+        </div>
       </div>
-      <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-        <SelectComponent :form="form" label="Country" name="country" :options="countries" />
+      <div class="flex flex-wrap -mx-3 mb-6">
+        <div class="w-full px-3">
+          <SelectComponent :form="form" label="Team" name="team" :options="teams" />
+        </div>
       </div>
-      <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-        <InputComponent :form="form" label="Client Name" name="client_name" />
-      </div>
-    </div>
-    <div class="flex flex-wrap -mx-3 mb-6">
-      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-        <InputComponent :form="form" type="date" label="Internal Dealine" name="internal_deadline" />
-      </div>
-      <div class="w-full md:w-1/2 px-3">
-        <InputComponent :form="form" type="date" label="External Dealine" name="external_deadline" />
-      </div>
-    </div>
-    <div class="flex flex-wrap -mx-3 mb-6">
-      <div class="w-full px-3">
-        <SelectComponent :form="form" label="Team" name="team" :options="teams" />
-      </div>
-    </div>
 
-    <div class="flex flex-wrap -mx-3 mb-2">
-      <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-        <InputComponent :form="form" label="Funded By" name="funder" />
+      <div class="flex flex-wrap -mx-3 mb-2">
+        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+          <InputComponent :form="form" label="Funded By" name="funder" />
+        </div>
+        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+          <SelectComponent
+            :form="form"
+            label="Lead Source"
+            name="lead_source"
+            :options="leads_source_option"
+          />
+        </div>
+        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+          <InputComponent :form="form" label="Revenue" name="revenue" />
+        </div>
       </div>
-      <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-        <SelectComponent
-          :form="form"
-          label="Lead Source"
-          name="lead_source"
-          :options="leads_source_option"
-        />
-      </div>
-      <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-        <InputComponent :form="form" label="Revenue" name="revenue" />
-      </div>
-    </div>
 
-    <div class="py-6">
-      <submitButton :form="form" type="submit" text="Add Opportunity" />
-    </div>
-  </form>
+      <div class="py-6">
+        <submitButton :form="form" type="submit" text="Add Opportunity" />
+      </div>
+    </form>
+  </div>
 </template>
 <script>
 export default {
@@ -105,12 +118,12 @@ export default {
   created() {},
   methods: {
     addOpportunity() {
-      console.log("data");
       this.form
         .post("/opportunities")
         .then(data => {
-          console.log(data);
           this.$emit("created", data);
+          Flash.success("You have successfully added an Opportunity");
+          window.location = `/opportunities`;
         })
         .catch(errors => Flash.error("Something went wrong! please try again"));
     }

@@ -22,6 +22,7 @@ class Errors {
      */
     update(errors) {
         Vue.set(this, "errors", errors);
+        // console.log(errors)
         Flash.error("Something went wrong! please try again")
         return this;
     }
@@ -69,6 +70,8 @@ class Errors {
      * @return     {boolean}
      */
     any() {
+        console.log(Object.keys(this.errors).length)
+        console.log(Object.keys(this.errors))
         return Object.keys(this.errors).length > 0;
     }
 }

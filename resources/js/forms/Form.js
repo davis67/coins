@@ -30,7 +30,6 @@ class Form {
                     this.onSuccess();
                 })
                 .catch(errors => {
-                    console.log(errors)
                     reject(errors);
                     this.onFail(errors);
                 });
@@ -68,6 +67,7 @@ class Form {
     }
 
     post(url) {
+        console.log(this.data())
         return this.submit(url, "post", this.data());
     }
 

@@ -10,9 +10,8 @@ class Flash {
         Flash.fire(message, "bg-red-100 border border-red-400 text-red-700");
     }
 
-    static info(message) 
-    {
-        Flash.fire(message, "alert-info");
+    static info(message) {
+        Flash.fire(message, "bg-blue-100 border border-blue-400 text-blue-700");
     }
 }
 

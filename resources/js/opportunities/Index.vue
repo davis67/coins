@@ -43,9 +43,7 @@ export default {
       opportunities: this.dataOpportunities
     };
   },
-  created() {
-    
-  },
+  created() {},
   methods: {
     getSingle(opportunity) {
       console.log(opportunity);

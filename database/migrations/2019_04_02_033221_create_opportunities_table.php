@@ -23,13 +23,13 @@ class CreateOpportunitiesTable extends Migration
             $table->string('funder');
             $table->string('type');
             $table->string('sales_stage');
-            $table->double('revenue');
+            $table->double('revenue')->nullable();
             $table->string('lead_source');
             $table->date('internal_deadline');
             $table->date('external_deadline');
             $table->unsignedBigInteger('team_id');
             $table->string('created_by');
-            $table->string('updated_by')->nullable();            
+            $table->string('updated_by')->nullable();
             $table->foreign('team_id')->references('id')->on('teams');
             $table->foreign('created_by')->references('id')->on('users');
             $table->foreign('updated_by')->references('id')->on('users');
