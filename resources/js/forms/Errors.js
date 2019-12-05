@@ -70,8 +70,6 @@ class Errors {
      * @return     {boolean}
      */
     any() {
-        console.log(Object.keys(this.errors).length)
-        console.log(Object.keys(this.errors))
         return Object.keys(this.errors).length > 0;
     }
 }

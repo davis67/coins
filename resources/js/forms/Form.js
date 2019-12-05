@@ -53,7 +53,6 @@ class Form {
         if (hasOwnProp(errors, "errors")) {
             errors = errors.errors;
         }
-        // console.log(Flash.error("Something went wrong! Please try again."));
         this.errors.update(errors);
     }
     /**
@@ -67,7 +66,7 @@ class Form {
     }
 
     post(url) {
-        console.log(this.data())
+
         return this.submit(url, "post", this.data());
     }
 
