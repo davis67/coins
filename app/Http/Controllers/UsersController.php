@@ -15,6 +15,7 @@ use App\Assessment;
 use Auth;
 use DB;
 use Gate;
+use Alert;
 use Session;
 
 class UsersController extends Controller
