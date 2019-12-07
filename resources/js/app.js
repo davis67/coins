@@ -1,6 +1,6 @@
 import "./bootstrap";
 
-// import "./components";
+import "./components";
 import "./customComponents";
 import "./animations";
 import "./icons";

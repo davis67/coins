@@ -27,18 +27,22 @@
 </template>
 <script>
 export default {
-  props: ["dataUsers"],
   data() {
     return {
       isOpen: false,
-      users: this.dataUsers
+      users: {}
     };
   },
-  created() {},
+  created() {
+    this.fetchUsers();
+  },
   methods: {
     toggleIsOpen() {
       this.isOpen = !this.isOpen;
       console.log("google", this.isOpen);
+    },
+    async fetchUsers() {
+      await axios.get("/users/data").then(({ data }) => (this.users = data));
     },
     addingUser() {
       Confirmation.confirm("Do you want to Leave this Page?", "Continue").then(

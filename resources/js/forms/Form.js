@@ -87,6 +87,7 @@ class Form {
     updateField(field, value) {
         this.fields[field] = value;
         this[field] = value;
+        // console.log("fields", this.fields)
         return this;
     }
 }

@@ -45,9 +45,6 @@ export default {
   mounted() {
     this.form.updateField(this.name, "");
   },
-  created() {
-    console.log(this.options);
-  },
   computed: {
     value: {
       get() {

@@ -28,7 +28,7 @@ Route::get('/display/{current_year}', 'HomeController@display');
 //Routing everything about contacts
 Route::resource('/contacts', 'ContactsController');
 Route::post('/contacts/{contact}', 'ContactsController@update');
-Route::get('getcontacts','ContactsController@getcontacts')->name('getcontacts');
+Route::get('getcontacts', 'ContactsController@getcontacts')->name('getcontacts');
 Route::post('/listContacts', 'ContactsController@listContacts')->name('listContacts');
 
 //Routing everything about opportunities
@@ -36,20 +36,20 @@ Route::resource('opportunities', 'OpportunitiesController');
 Route::post('/opportunities/{opportunity}', 'OpportunitiesController@update');
 Route::get('/getOpportunity/{opportunity}', 'OpportunitiesController@getOpportunity')->name('getOpportunity');
 Route::post('/opportunityUser', 'OpportunitiesController@addConsultants')->name('opportunityUser');
-Route::delete('/removeConsultant/{id}','OpportunitiesController@removeConsultant')->name('removeConsultant');
-Route::post('/filterOpportunities','OpportunitiesController@filterOpportunities')->name('filterOpportunities');
+Route::delete('/removeConsultant/{id}', 'OpportunitiesController@removeConsultant')->name('removeConsultant');
+Route::post('/filterOpportunities', 'OpportunitiesController@filterOpportunities')->name('filterOpportunities');
 
 
 //Routing everything about projects
 Route::resource('/projects', 'ProjectsController');
 Route::post('/projects/{project}', 'ProjectsController@update');
-Route::post('/createProject','ProjectsController@createProject')->name('createProject');
+Route::post('/createProject', 'ProjectsController@createProject')->name('createProject');
 Route::post('/projectUser', 'ProjectsController@addConsultants')->name('projectUser');
 Route::post('/projectassociates', 'ProjectsController@addAssociates')->name('addAssociates');
 Route::post('/logs', 'ProjectsController@logs')->name('logs');
 Route::get('/getproject/{project}', 'ProjectsController@getproject')->name('getproject');
 Route::delete('/unassignConsultant/{consultant}', 'ProjectsController@removeConsultant')->name('unassignConsultant');
-Route::post('/filterProjects','ProjectsController@filterProjects')->name('filterProjects');
+Route::post('/filterProjects', 'ProjectsController@filterProjects')->name('filterProjects');
 
 //Routing everything about tasks
 Route::resource('/tasks', 'TasksController');
@@ -59,27 +59,28 @@ Route::post('tasks/{task}', 'TasksController@update');
 Route::resource('/timesheets', 'TimesheetsController');
 Route::post('/timesheets/{timesheets}', 'TimesheetsController@update');
 
-Route::post('/saveResponses','TasksController@saveResponses')->name('saveResponses');
+Route::post('/saveResponses', 'TasksController@saveResponses')->name('saveResponses');
 
 //Routing everything about partner firms
 Route::resource('/partners', 'PartnersController');
 
-//Routing evaluations 
-Route::resource('/evaluations','EvaluationsController');
+//Routing evaluations
+Route::resource('/evaluations', 'EvaluationsController');
 //Routing everything about leaves
 Route::resource('/leaves', 'LeavesController');
-Route::get('/delLeave/{leave}','LeavesController@destroy')->name('delLeave');
+Route::get('/delLeave/{leave}', 'LeavesController@destroy')->name('delLeave');
 Route::get('/leave/request-form/{nofification_id}/{leave}', 'LeavesController@leaveRequestForm')->name('leaveRequest');
 Route::post('/leave/request-form', 'LeavesController@updateLeaveRequest')->name('updateLeaveRequest');
 Route::resource('/leavesettings', 'LeavesettingsController');
 Route::get('/leavesettings', 'LeavesettingsController@create');
 Route::post('/leavesettings/{leavesetting}', 'LeavesettingsController@update')->name('targets');
-Route::resource('/leaveforwards','LeaveforwardsController');
+Route::resource('/leaveforwards', 'LeaveforwardsController');
 
 //Routing everything about scores
 Route::resource('/scores', 'ScoresController');
 
 //Routing everything about teams
+Route::get("/teams/data", "TeamsController@getAllTeams");
 Route::resource('/teams', 'TeamsController');
 Route::get('/myteam', 'TeamsController@myteam');
 Route::get('/getteamleader/{team}', 'TeamsController@getteamleader');
@@ -109,10 +110,10 @@ Route::resource('/documents', 'DocumentsController');
 //Routing everything about deliverables
 Route::resource('/deliverables', 'DeliverablesController');
 Route::post('/deliverables/{deliverable}', 'DeliverablesController@update');
-Route::post('/pickdeliverables','DeliverablesController@pickdeliverables');
-Route::post('/deliverableopportunities','DeliverablesController@deriverableOpportunities');
-Route::post('/deliverableopportunities/{deliverableopportunity}','DeliverablesController@deriverablesUpdate');
-Route::post('/deliverableprojects','DeliverablesController@deriverableProjects');
+Route::post('/pickdeliverables', 'DeliverablesController@pickdeliverables');
+Route::post('/deliverableopportunities', 'DeliverablesController@deriverableOpportunities');
+Route::post('/deliverableopportunities/{deliverableopportunity}', 'DeliverablesController@deriverablesUpdate');
+Route::post('/deliverableprojects', 'DeliverablesController@deriverableProjects');
 
 
 //Routing everything about expertise
@@ -122,10 +123,12 @@ Route::post('/expertise/{expertise}', 'ExpertiseController@update');
 //Routing everything about associate specializations
 Route::resource('/specialization', 'SpecializationsController');
 Route::post('/specialization/{specialization}', 'SpecializationsController@update');
-Route::post('/getSpecilization','SpecializationsController@getSpecilization')->name('getSpecilization');
+Route::post('/getSpecilization', 'SpecializationsController@getSpecilization')->name('getSpecilization');
 
 //Routing everything about users
+Route::get("/users/data", "UsersController@getAllUsers");
 Route::resource('users', 'UsersController');
+
 // Route::post('/users/{user}', 'UsersController@update');
 Route::get('/teamusers/{team_id}', 'UsersController@search');
 
@@ -140,7 +143,7 @@ Route::delete('/users/destroy/{id}', 'UsersController@destroy')->name('users.des
 Route::delete('/users/permanentdestroy/{id}', 'UsersController@permanentDestroy')->name('users.permanentdestroy');
 
 Route::resource('/associates', 'AssociatesController');
-Route::get('getassociates','AssociatesController@getassociates')->name('getassociates');
+Route::get('getassociates', 'AssociatesController@getassociates')->name('getassociates');
 Route::get('/getAssociate/{associate}', 'AssociatesController@getAssociate')->name('getAssociate');
 
 //Routing everything about comments
