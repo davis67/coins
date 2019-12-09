@@ -48,7 +48,7 @@ export default {
   methods: {
     flash() {
       this.isShowing = true;
-      setTimeout(done => (this.isShowing = false), 3000);
+      setTimeout(done => (this.isShowing = false), 6000);
     }
   }
 };

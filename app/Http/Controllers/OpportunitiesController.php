@@ -23,6 +23,7 @@ use Session;
 use Auth;
 use DB;
 use Gate;
+use PragmaRX\Countries\Package\Services\Countries as ServicesCountries;
 
 class OpportunitiesController extends Controller
 {
@@ -202,7 +203,6 @@ class OpportunitiesController extends Controller
         ]);
 
         return $run;
-        
     }
 
     /**
@@ -227,25 +227,25 @@ class OpportunitiesController extends Controller
 
         $opportunity_tasks = Task::join('deliverables', 'tasks.deliverable_id', '=', 'deliverables.id')
             ->join('deliverable_opportunity', 'tasks.deliverable_id', '=', 'deliverable_opportunity.deliverable_id')->get();
+        // dd($opportunity);
         return view('opportunities.show', compact('opportunity', 'deliverables', 'opportunity_tasks'));
     }
 
     public function edit($id)
     {
-        $opps = Opportunity::findOrFail($id);
-        $contact = json_decode(Contact::where(['id' => $opps->contact_id])->pluck('account_name'), true);
-        $opportunity = json_decode(Opportunity::findOrFail($id), true);
-        return $opportunity + $contact;
+        $opportunity = Opportunity::findOrFail($id);
+        $teams = Team::all();
+        $countries = Countries::all()->pluck('name.common');
+        return view("opportunities.edit", compact("opportunity", "teams", "countries"));
     }
 
     public function update(Request $request, Opportunity $opportunity)
     {
         $data = $request->validate([
             'opportunity_name' => 'required',
-            'contact_id' => 'required',
             'country' => 'required',
             'revenue' => 'nullable',
-            'sales_stage' => 'required',
+            // 'sales_stage' => 'required',
             'type' => 'required',
             'lead_source' => 'required',
             'external_deadline' => 'required',
@@ -257,16 +257,14 @@ class OpportunitiesController extends Controller
 
         $run = $opportunity->update([
             'opportunity_name' => $data['opportunity_name'],
-            'contact_id' => $data['contact_id'],
             'country' => $data['country'],
             'revenue' => $data['revenue'],
-            'sales_stage' => $data['sales_stage'],
+            // 'sales_stage' => $data['sales_stage'],
             'type' => $data['type'],
             'lead_source' => $data['lead_source'],
             'external_deadline' => $data['external_deadline'],
             'internal_deadline' => $data['internal_deadline'],
             'team_id' => $data['team_id'],
-            'probability' => $data['probability'],
             'funder' => $data['funder'],
             'updated_by' => Auth::user()->id
         ]);
@@ -324,7 +322,7 @@ class OpportunitiesController extends Controller
     {
         $opportunity = Opportunity::findOrFail($id);
         $opportunity->delete();
-        return redirect()->url('opportunities');
+        return "success";
     }
 
     public function filterOpportunities(Request $request)

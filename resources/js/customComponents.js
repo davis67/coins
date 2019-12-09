@@ -1,5 +1,6 @@
 import IndexOpportunities from "./opportunities/Index";
 import CreateOpportunities from "./opportunities/Create";
+import EditOpportunities from "./opportunities/Edit";
 import IndexTeams from "./teams/Index";
 import IndexUsers from "./users/Index";
 import CreateUsers from "./users/Create";
@@ -10,6 +11,7 @@ import FlashComponent from "./flash/FlashComponent";
 
 Vue.component("index-opportunities", IndexOpportunities)
 Vue.component("create-oppportunities", CreateOpportunities)
+Vue.component("edit-oppportunities", EditOpportunities)
 Vue.component("index-teams", IndexTeams)
 Vue.component("index-users", IndexUsers)
 Vue.component("create-users", CreateUsers)
