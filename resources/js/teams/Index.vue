@@ -1,11 +1,11 @@
 <template>
   <div>
     <FlashComponent></FlashComponent>
-    <modal-component :show.sync="isCreating">
+    <modal-component :size="small" :show.sync="isCreating">
       <span slot="modal-title">Create a New Team</span>
       <CreateTeams @team:created="registeredTeam" slot="modal-body"></CreateTeams>
     </modal-component>
-    <modal-component :show.sync="isEditing">
+    <modal-component :size="small" :show.sync="isEditing">
       <span slot="modal-title">Update an Existing Team</span>
       <EditTeam
         @team:updated="updatedTeam"

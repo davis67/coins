@@ -1,11 +1,9 @@
 <template>
   <Zoom>
-    <div
-      v-if="shouldShow"
-      class="border shadow-lg fadeIn fixed z-50 inset-0 overflow-auto flex w-full"
-    >
+    <div v-if="shouldShow" class="border shadow-lg fixed z-50 inset-0 overflow-auto flex w-full">
       <div
-        class="fixed shadow-inner shadow-lg max-w-md md:relative bottom-0 inset-x-0 align-top m-auto justify-end md:justify-center p-8 bg-white md:rounded w-full md:h-auto md:shadow flex flex-col"
+        class="fixed shadow-inner shadow-lg md:relative bottom-0 inset-x-0 m-auto justify-end md:justify-center p-8 bg-white md:h-auto md:shadow"
+        :class="modalSize"
       >
         <p class="text-xl leading-normal mb-8 text-left">
           <slot name="modal-title"></slot>
@@ -33,6 +31,7 @@
 <script>
 export default {
   props: {
+    size: { default: "small" },
     show: { type: Boolean, default: false }
   },
   data() {
@@ -54,6 +53,13 @@ export default {
         if (!value) {
           this.$emit("closed");
         }
+      }
+    },
+    modalSize: function() {
+      if (this.size === "small") {
+        return "lg:max-w-md";
+      } else {
+        return "";
       }
     }
   },

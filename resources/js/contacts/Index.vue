@@ -1,32 +1,43 @@
 <template>
   <div>
+    <modal-component :size="modalSize" :show.sync="isShowing">
+      <span slot="modal-title">View Contact Details</span>
+      <Show slot="modal-body" :contact="contact"></Show>
+    </modal-component>
     <data-table
       :data="contacts"
       title="Showing All Registered Contacts"
       :rowClickable="true"
-      @rowClicked="getSingle"
+      @rowClicked="getSingleContact"
     >
       <div class="btn-group" slot="icons">
-        <button
+        <a
+          style="cursor:pointer"
           class="inline-block leading-tight bg-blue-700 border border-blue-700 hover:bg-blue-700 px-3 py-2 text-white no-underline shadow-md"
-          @click.prevent="addingTeam = true"
-        >New Contact</button>
+          @click.prevent="addingTeam"
+        >New Contact</a>
       </div>
-      <tableCol data-key="associate_id" label="Associate"></tableCol>
-      <tableCol data-key="opportunity_id" label="Opportunity"></tableCol>
-      <tableCol data-key="description" label="Description"></tableCol>
+      <tableCol data-key="account_name" label="Account Name"></tableCol>
+      <tableCol data-key="country" label="Country"></tableCol>
+      <tableCol data-key="full_address" label="Full Address"></tableCol>
       <tableCol data-key="created_by" label="Added By"></tableCol>
     </data-table>
   </div>
 </template>
 <script>
+import Show from "./Show";
 export default {
   props: ["dataContacts"],
   data() {
     return {
-      isOpen: false,
-      contacts: this.dataContacts
+      isShowing: false,
+      modalSize: "large",
+      contacts: this.dataContacts,
+      contact: {}
     };
+  },
+  components: {
+    Show
   },
   created() {},
   methods: {
@@ -34,8 +45,12 @@ export default {
       this.isOpen = !this.isOpen;
       console.log("google", this.isOpen);
     },
-    getSingle(contact) {
-      console.log(contact);
+    addingTeam() {
+      window.location = "/contacts/create";
+    },
+    getSingleContact(contact) {
+      this.contact = contact;
+      this.isShowing = true;
     }
   }
 };

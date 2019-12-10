@@ -3,7 +3,7 @@
     <FlashComponent></FlashComponent>
     <div class="mx-auto w-full mt-4 justify-center align-center lg:flex">
       <form
-        class="w-2/4 bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4"
+        class="w-2/4 bg-white shadow-lg px-8 pt-6 pb-8 mb-4"
         method="post"
         @submit.prevent="addUser"
       >
