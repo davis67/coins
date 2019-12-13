@@ -56,9 +56,9 @@ export default {
   },
   methods: {
     updatefields(form) {
-      this.form.updateField("team_code", this.team.team_code);
-      this.form.updateField("team_name", this.team.team_name);
-      this.form.updateField("team_leader", this.team.team_leader);
+      form.updateField("team_code", this.team.team_code);
+      form.updateField("team_name", this.team.team_name);
+      form.updateField("team_leader", this.team.team_leader);
     },
     updateTeam(team) {
       this.form

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use App\Contact;
 use Countries;
 use Auth;
@@ -108,7 +109,9 @@ class ContactsController extends Controller
      */
     public function edit($id)
     {
-        return Contact::findOrFail($id);
+        $contact =  Contact::findOrFail($id);
+        $countries = Countries::all()->pluck('name.common');
+        return view("contacts.edit", compact("contact", "countries"));
     }
 
     /**
@@ -122,7 +125,7 @@ class ContactsController extends Controller
     {
         //return $request;
         //validate the received data
-        $data = $request->validate([
+        $this->validate($request, [
             'account_name' => 'nullable|string',
             'contact_country' => 'required|string',
             'full_address' => 'nullable|string',
@@ -136,23 +139,19 @@ class ContactsController extends Controller
         ]);
 
         $run = $contact->update([
-            'account_name' => $data['account_name'],
-            'country' => $data['contact_country'],
-            'full_address' => $data['full_address'],
-            'alternate_address' => $data['alternate_address'],
-            'contact_person' => $data['contact_person'],
-            'contact_email' => $data['contact_email'],
-            'contact_phone' => $data['contact_phone'],
-            'alternative_person' => $data['alternative_person'],
-            'alternative_person_email' => $data['alternative_person_email'],
-            'alternative_person_phone' => $data['alternative_person_phone'],
+            'account_name' => $request->account_name,
+            'country' => $request->contact_country,
+            'full_address' => $request->full_address,
+            'alternate_address' => $request->alternate_address,
+            'contact_person' => $request->contact_person,
+            'contact_email' => $request->contact_email,
+            'contact_phone' => $request->contact_phone,
+            'alternative_person' => $request->alternative_person,
+            'alternative_person_email' => $request->alternative_person_email,
+            'alternative_person_phone' => $request->alternative_person_phone,
             'updated_by' => Auth::user()->id
         ]);
-        if (!$run) {
-            return ['error' => 'Contact not updated'];
-        } else {
-            return ['Contact updated successfully'];
-        }
+        return Response::json($run);
     }
 
     /**
@@ -164,5 +163,6 @@ class ContactsController extends Controller
     public function destroy(contact $contact)
     {
         $contact->delete();
+        return "success";
     }
 }

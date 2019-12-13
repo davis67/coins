@@ -2,7 +2,7 @@
   <Zoom>
     <div v-if="shouldShow" class="border shadow-lg fixed z-50 inset-0 overflow-auto flex w-full">
       <div
-        class="fixed shadow-inner shadow-lg md:relative bottom-0 inset-x-0 m-auto justify-end md:justify-center p-8 bg-white md:h-auto md:shadow"
+        class="fixed shadow-inner shadow-lg md:relative bottom-0 inset-x-0 m-auto justify-end md:justify-center p-8 bg-white md:h-auto"
         :class="modalSize"
       >
         <p class="text-xl leading-normal mb-8 text-left">
@@ -57,9 +57,9 @@ export default {
     },
     modalSize: function() {
       if (this.size === "small") {
-        return "lg:max-w-md";
+        return "max-w-md";
       } else {
-        return "";
+        return "max-w-lg";
       }
     }
   },

@@ -53,6 +53,8 @@ class ServicelinesTableSeeder extends Seeder
             ['id' => 38,'beneficiary'=>'Administration','service_code'=>311, 'service_name' => 'Time off', 'created_by' => $user],
             ['id' => 39,'beneficiary'=>'Administration','service_code'=>312, 'service_name' => 'Meetings', 'created_by' => $user],
             ['id' => 40,'beneficiary'=>'Administration','service_code'=>314, 'service_name' => 'Public Holiday', 'created_by' => $user],
+            ['id' => 41,'beneficiary'=>'Business Development','service_code'=>99998, 'service_name' => 'Project Code for Business Development', 'created_by' => $user],
+            ['id' => 42,'beneficiary'=>'Administration Work','service_code'=>99999, 'service_name' => 'Project Code for Administration Work', 'created_by' => $user],
         ];
         foreach($servicelines as $serviceline){
             Serviceline::create($serviceline);

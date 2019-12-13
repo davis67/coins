@@ -27,9 +27,6 @@ Route::get('/display/{current_year}', 'HomeController@display');
 
 //Routing everything about contacts
 Route::resource('/contacts', 'ContactsController');
-Route::post('/contacts/{contact}', 'ContactsController@update');
-Route::get('getcontacts', 'ContactsController@getcontacts')->name('getcontacts');
-Route::post('/listContacts', 'ContactsController@listContacts')->name('listContacts');
 
 //Routing everything about opportunities
 Route::resource('opportunities', 'OpportunitiesController');
@@ -91,8 +88,8 @@ Route::resource('/titles', 'TitlesController');
 Route::post('/titles/{title}', 'TitlesController@update');
 
 //Routing everything about roles
-Route::resource('/roles', 'RolesController');
-Route::post('/roles/{roles}', 'RolesController@update');
+// Route::resource('/roles', 'RolesController');
+// Route::post('/roles/{roles}', 'RolesController@update');
 
 //Routing everything about holidays
 Route::resource('/holidays', 'HolidaysController');
