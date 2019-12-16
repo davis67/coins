@@ -22,6 +22,8 @@ use App\Charts\CoinChart;
 use Session;
 use Auth;
 use DB;
+use App\Http\Resources\Opportunity as OpportunityResource;
+
 use Gate;
 use PragmaRX\Countries\Package\Services\Countries as ServicesCountries;
 
@@ -35,8 +37,8 @@ class OpportunitiesController extends Controller
 
     public function index()
     {
-
-        $opportunities = Opportunity::getAll();
+        // dd(auth()->user()->team->team_code);
+        $opportunities = OpportunityResource::collection(Opportunity::all());
         // dd($opportunities);
         // if(Gate::allows('isAdmin')){
 
@@ -138,7 +140,7 @@ class OpportunitiesController extends Controller
 
     public function create()
     {
-
+        $this->authorize("create", Opportunity::class);
         $teams = Team::all();
         $users = User::all();
         $countries = Countries::all()->pluck('name.common');

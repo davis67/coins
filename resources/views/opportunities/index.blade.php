@@ -12,11 +12,12 @@
                         List Opportunities
                     </a>
 
-
+                    @can('create', App\Opportunity::class)
                     <a href="{{route('opportunities.create')}}"
                         class="appearance-none py-4 {{ Nav::isRoute('opportunities.create', NULL, $activeClass= 'text-blue-700 border-blue-700 border-b ') }} text-grey-700 border-b border-transparent hover:border-grey-700 mr-6">
                         Add New Opportunity
                     </a>
+                    @endcan
 
 
                     <a class="appearance-none py-4 text-grey-700 border-b border-transparent hover:border-grey-700">
@@ -86,7 +87,7 @@
                     </div>
                 </div>
                 <div class="w-11/12 py-8 mx-auto">
-                    <index-opportunities :data-opportunities="{{$opportunities}}"></index-opportunities>
+                    <index-opportunities :data-opportunities="{{json_encode($opportunities) }}"></index-opportunities>
                 </div>
             </div>
         </div>

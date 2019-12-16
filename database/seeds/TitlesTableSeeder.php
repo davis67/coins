@@ -24,9 +24,9 @@ class TitlesTableSeeder extends Seeder
             ['id' => 11, 'created_by' => 'fdf3cda0-13f0-11e9-9a86-ab5a0fb32b10', 'name' => 'Assistant Manager', 'description' => 'Reporting to Manager'],
             ['id' => 12, 'created_by' => 'fdf3cda0-13f0-11e9-9a86-ab5a0fb32b10', 'name' => 'Consultant I', 'description' => 'Reporting to Assistant Manager'],
             ['id' => 13, 'created_by' => 'fdf3cda0-13f0-11e9-9a86-ab5a0fb32b10', 'name' => 'Consultant II', 'description' => 'Reporting to Consultant I'],
-            ['id' => 14, 'created_by' => 'fdf3cda0-13f0-11e9-9a86-ab5a0fb32b10', 'name' => 'Consultant III', 'description' => 'Reporting toConsultant II'],
+            ['id' => 14, 'created_by' => 'fdf3cda0-13f0-11e9-9a86-ab5a0fb32b10', 'name' => 'Consultant III', 'description' => 'Reporting to Consultant II'],
             ['id' => 15, 'created_by' => 'fdf3cda0-13f0-11e9-9a86-ab5a0fb32b10', 'name' => 'Intern', 'description' => 'Reporting to Consultant III'],
-            ['id' => 16, 'created_by' => 'fdf3cda0-13f0-11e9-9a86-ab5a0fb32b10', 'name' => 'Administrator', 'description' => 'The inventor.'],
+            ['id' => 16, 'created_by' => 'fdf3cda0-13f0-11e9-9a86-ab5a0fb32b10', 'name' => 'Administrator', 'description' => 'The inventor, the creator superpower,.'],
         ];
         foreach($titles as $title){
             Title::create($title);
