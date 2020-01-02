@@ -24,8 +24,12 @@
                                 <path
                                     d="M16.4 9H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zm0 4H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zM3.6 7h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1z" />
                             </svg>
+                            <svg class="fill-current text-white h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/></svg>
                         </div>
-                        <div class="w-1/2 md:w-auto text-center text-white text-2xl font-medium">
+                        <div class="hidden w-1/2 md:w-auto text-center text-white text-2xl font-medium lg:block">
+                            Consultancy Information System(COINS)
+                        </div>
+                        <div class="w-1/2 md:w-auto text-center text-white text-2xl font-medium lg:hidden">
                             COINS
                         </div>
                         <div class="w-1/4 md:w-auto md:flex text-right">
@@ -34,7 +38,7 @@
                                     src="https://avatars0.githubusercontent.com/u/4323180?s=460&v=4" alt="">
                             </div>
                             <div class="hidden md:block md:flex md:items-center ml-2">
-                                <span class="text-white text-sm mr-1">DAVIS AGABA</span>
+                                <span class="text-white text-sm mr-1">{{auth()->user()->name}}</span>
                                 <div>
                                     <svg class="fill-current text-white h-4 w-4 block opacity-50"
                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -47,12 +51,12 @@
                     </div>
                 </div>
             </div>
-            <div class="hidden bg-blue-700 md:block md:bg-white md:border-b">
-                <div class="container mx-auto px-4">
+            <div class="bg-blue-700 md:block md:bg-white md:border-b">
+                <div class="container mx-auto md:px-2 px-4">
                     <div class="md:flex">
                         <div class="flex -mb-px mr-8">
                             <a href="{{route('home')}}"
-                                class="no-underline text-white opacity-50 md:text-gray-700 md:opacity-100 flex items-center {{ Nav::isRoute('home', NULL, $activeClass= 'text-blue-700 border-b border-blue-700') }} py-4 border-b border-transparent hover:opacity-100 md:hover:border-gray-700">
+                                class="no-underline  opacity-50  lg:opacity-100 flex items-center {{ Nav::isRoute('home') }} text-white lg:text-gray-700 py-4 border-b border-transparent hover:opacity-100 md:hover:border-gray-700">
                                 <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24">
                                     <path fill-rule="evenodd"
@@ -62,7 +66,7 @@
                         </div>
                         <div class="flex -mb-px mr-8">
                             <a href="{{route('opportunities.index')}}"
-                                class="no-underline {{ Nav::isResource('opportunities', NULL, $activeClass = 'text-blue-700 border-b border-blue-700') }} text-white opacity-50 md:text-gray-700 md:opacity-100 flex items-center py-4 border-b border-transparent hover:opacity-100 md:hover:border-gray-700">
+                                class="no-underline {{ Nav::isResource('opportunities') }} text-white lg:text-gray-700 opacity-50 md:opacity-100 flex items-center py-4 border-b border-transparent hover:opacity-100 md:hover:border-gray-700">
                                 <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24">
                                     <path d="M8 7h10V5l4 3.5-4 3.5v-2H8V7zm-6 8.5L6 12v2h10v3H6v2l-4-3.5z"
@@ -71,7 +75,7 @@
                         </div>
                         <div class="flex -mb-px mr-8">
                             <a href="{{route('documents.index')}}"
-                                class="no-underline text-white opacity-50 md:text-gray-700 md:opacity-100 flex items-center py-4 border-b border-transparent hover:opacity-100 md:hover:border-gray-700">
+                                class="no-underline {{ Nav::isResource('documents') }} text-white opacity-50 md:text-gray-700 md:opacity-100 flex items-center py-4 border-b border-transparent hover:opacity-100 md:hover:border-gray-700">
                                 <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24">
                                     <path
@@ -81,7 +85,7 @@
                         </div>
                         <div class="flex -mb-px mr-8">
                             <a href="{{route('teams.index')}}"
-                                class="no-underline text-white opacity-50 md:text-gray-700 md:opacity-100 flex items-center py-4 border-b border-transparent hover:opacity-100 md:hover:border-gray-700">
+                                class="no-underline {{ Nav::isResource('teams') }} text-white opacity-50 md:text-gray-700 md:opacity-100 flex items-center py-4 border-b border-transparent hover:opacity-100 md:hover:border-gray-700">
                                 <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24">
                                     <path
@@ -91,7 +95,7 @@
                         </div>
                         <div class="flex -mb-px mr-8">
                             <a href="{{route('users.index')}}"
-                                class="no-underline text-white opacity-50 md:text-gray-700 md:opacity-100 flex items-center py-4 border-b border-transparent hover:opacity-100 md:hover:border-gray-700">
+                                class="no-underline {{ Nav::isResource('users') }} text-white opacity-50 md:text-gray-700 md:opacity-100 flex items-center py-4 border-b border-transparent hover:opacity-100 md:hover:border-gray-700">
                                 <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24">
                                     <path
@@ -101,7 +105,7 @@
                         </div>
                         <div class="flex -mb-px mr-8">
                             <a href="{{route('contacts.index')}}"
-                                class="no-underline text-white opacity-50 md:text-gray-700 md:opacity-100 flex items-center py-4 border-b border-transparent hover:opacity-100 md:hover:border-gray-700">
+                                class="no-underline {{ Nav::isResource('contacts') }} text-white opacity-50 md:text-gray-700 md:opacity-100 flex items-center py-4 border-b border-transparent hover:opacity-100 md:hover:border-gray-700">
                                 <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24">
                                     <path
@@ -111,7 +115,7 @@
                         </div>
                         <div class="flex -mb-px">
                             <a href="#"
-                                class="no-underline text-white opacity-50 md:text-gray-700 md:opacity-100 flex items-center py-4 border-b border-transparent hover:opacity-100 md:hover:border-gray-700">
+                                class="no-underline text-white opacity-50 md:text-gray-700 md:opacity-100 flex items-center py-4 border-b  border-transparent hover:opacity-100 md:hover:border-gray-700">
                                 <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24">
                                     <path
@@ -124,147 +128,7 @@
             </div>
         </div>
         @yield("content")
-        {{-- <div id="main-wrapper">
-        <header class="topbar">
-            <div class="container">
-                <nav class="navbar top-navbar navbar-expand-md navbar-light">
-                    <div class="navbar-header"> <a class="navbar-brand" href="">
 
-                            <b>
-                                <img src="{{ asset("/files/ahlogo.png") }}" alt="AH Consulting Ltd" class="dark-logo"
-        />
-
-        <img src='{{ asset("/files/ahlogo.png") }}' alt="AH Consulting Ltd" class="light-logo" />
-        </b>
-        AH Consulting Ltd
-        </a>
-    </div>
-    <div class="top-bar-main">
-        <div class="float-left">
-            <ul class="navbar-nav">
-                <li class="nav-item "><a
-                        class="nav-link navbar-toggler sidebartoggler waves-effect waves-dark float-right"
-                        href="javascript:void(0)"><span class="navbar-toggler-icon"></span></a></li>
-                <li class="nav-item hidden-xs-down app-search">
-                    <input type="text" class="form-control float-left" placeholder="Type for search...">
-                </li>
-            </ul>
-        </div>
-
-        <div class="float-right pr-3">
-            <ul class="navbar-nav my-lg-0 float-right">
-
-                <li aria-haspopup="true" aria-expanded="false" class="nav-item"><a href="{{route('teams.index')}}"
-                        class="nav-link {{ Nav::isResource('teams') }}">Teams</a></li>
-                <li aria-haspopup="true" aria-expanded="false" class="nav-item"><a href="" class="nav-link">Help</a>
-                </li>
-                <li class="nav-item dropdown u-pro"> <a
-                        class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href=""
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                            src="{{ asset("assets/imgs/users/download.jpeg") }}" alt="user" class="" /><span
-                            class="circle-status"></span></a>
-                    <div class="dropdown-menu dropdown-menu-right animated fadeIn">
-                        <ul class="dropdown-user">
-                            <li><a href="{{route('users.show', auth()->user()->id)}}"><i class="fas fa-user mr-1"></i>
-                                    My Profile</a></li>
-                            <li><a href="{{route('users.show', auth()->user()->id)}}"><i class="fas fa-cog mr-1"></i>
-                                    Settings</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li>
-                                <a href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i
-                                        class="fas fa-sign-in-alt mr-1"></i> Logout</a>
-                                @include('partials.logout')</li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="clearfix"></div>
-    </div>
-    </nav>
-    </div>
-    </header>
-    <div class="container">
-        <aside class="left-sidebar">
-            <ul class="nav-bar navbar-inverse">
-                <li class="nav-item"> <a
-                        class="nav-link navbar-toggler sidebartoggler hidden-sm-down waves-effect waves-dark float-right"
-                        href="javascript:void(0)"><span class="navbar-toggler-icon"></span></a> </li>
-            </ul>
-
-            <div class="scroll-sidebar">
-
-                <nav class="sidebar-nav">
-                    <ul id="sidebarnav">
-                        <li class="clearfix"></li>
-                        <li class="nav-item {{ Nav::isRoute('home') }}"><a class="nav-link" href="{{route("home")}}"><i
-                                    class="flaticon-desktop-computer-screen-with-rising-graph"></i><span
-                                    class="hide-menu">Dashboard</span></a></li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
-                                    class="flaticon-calendar"></i><span class="hide-menu">Opportunities</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{route('opportunities.index')}}">Show All</a></li>
-                                <li><a href="{{route('opportunities.create')}}">Create </a></li>
-                            </ul>
-                        </li>
-                        <li><a href="{{route('projects.index')}}"><i class="flaticon-mail"></i> <span
-                                    class="hide-menu"></span>Projects</span></a>
-                        </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
-                                    class="flaticon-speech"></i><span class="hide-menu">Contacts</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{route('contacts.index')}}">view contacts</a></li>
-                                <li><a href="{{route('contacts.create')}}">Add New</a></li>
-                            </ul>
-                        </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
-                                    class="flaticon-forms"></i><span class="hide-menu">Associates</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{route('associates.index')}}">view associates</a></li>
-                                <li><a href="{{route('associates.create')}}">Add New</a></li>
-                            </ul>
-                        </li>
-
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
-                                    class="flaticon-restaurant"></i><span class="hide-menu">Saved Reports</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="demo-admin/minton/ecommerce-dashboard.html">Current Month</a></li>
-                                <li><a href="demo-admin/minton/ecommerce-pro-list.html">Quarter Year</a></li>
-                                <li><a href="demo-admin/minton/ecommerce-add-new.html">Full Year</a></li>
-                            </ul>
-                        </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
-                                    class="flaticon-restaurant"></i><span class="hide-menu">Users</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li class="{{ Nav::isResource('users') }}"><a href="{{route('users.create')}}">Add</a>
-                                </li>
-                                <li><a href={{route('users.index')}}>View
-                                        Users</a></li>
-                                <li><a href="{{ route('users.frozen')}}">restore/delete
-                                        users</a>
-                                </li>
-
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-
-            </div>
-
-        </aside>
-        <div class="page-wrapper">
-            <main role="main" class="container-fluid">
-
-                <div class="row">
-                    <div class="col-md-12 col-lg-12">
-                        @yield("content")
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div>
-    </div> --}}
     </div>
     <footer>
         <div class="bg-white border-t">

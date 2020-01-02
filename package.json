@@ -29,6 +29,7 @@
         "font-awesome": "^4.7.0",
         "moment": "^2.24.0",
         "numeral": "^2.0.6",
+        "postcss-preset-env": "^6.7.0",
         "select2": "^4.0.8",
         "sweetalert2": "^9.4.1",
         "tailwindcss": "^1.1.4",

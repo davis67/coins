@@ -1,6 +1,6 @@
 <template>
   <nav class="flex justify-between px-2 py-2">
-    <span class="px-3 text-xl text-gray-600 py-2">
+    <span class="px-3 text-md lg:text-lg text-gray-700 py-2">
       Showing Up to
       {{ paginator.uptoItems | currency }}
       results out of

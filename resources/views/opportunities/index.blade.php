@@ -1,35 +1,43 @@
 @extends('layouts.app')
 @section('content')
-<div class="flex-grow container mx-auto sm:px-4 pt-6 pb-8">
+<div class="flex-grow container mx-auto md:px-4 pt-6 pb-8">
     <div class="bg-white border-t border-b sm:border-l sm:border-r sm:rounded shadow mb-6">
-        <div class="border-b px-6">
+        <div class="border-b md:px-6 py-4 px-4 lg:pb-0">
             <div class="flex justify-between -mb-px">
-                <div class="text-blue-700 py-4 text-lg">Opportunities</div>
+                <div class="hidden text-blue-700 py-4 text-lg">Opportunities</div>
                 <div class="lg:flex">
-
                     <a href="{{route('opportunities.index')}}"
-                        class="appearance-none py-4 {{ Nav::isRoute('opportunities.index', NULL, $activeClass= 'text-blue-700 border-blue-700 border-b ') }} mr-6">
+                        class="appearance-none py-4 {{ Nav::isRoute('opportunities.index', NULL, $activeClass= 'text-blue-700 border-blue-700 border-b ') }} mr-6 lg:hidden">
+                        List 
+                    </a>
+                    <a href="{{route('opportunities.index')}}"
+                        class="hidden appearance-none py-4 {{ Nav::isRoute('opportunities.index', NULL, $activeClass= 'text-blue-700 border-blue-700 border-b ') }} mr-6 lg:block">
                         List Opportunities
                     </a>
 
-                    @can('create', App\Opportunity::class)
+                    {{-- @can('create', App\Opportunity::class) --}}
                     <a href="{{route('opportunities.create')}}"
-                        class="appearance-none py-4 {{ Nav::isRoute('opportunities.create', NULL, $activeClass= 'text-blue-700 border-blue-700 border-b ') }} text-grey-700 border-b border-transparent hover:border-grey-700 mr-6">
+                        class="appearance-none py-4 {{ Nav::isRoute('opportunities.create', NULL, $activeClass= 'text-blue-700 border-blue-700 border-b ') }} text-grey-700 border-b border-transparent hover:border-grey-700 mr-6 lg:hidden">
+                        Add 
+                    </a>
+                    <a href="{{route('opportunities.create')}}"
+                        class="hidden appearance-none py-4 {{ Nav::isRoute('opportunities.create', NULL, $activeClass= 'text-blue-700 border-blue-700 border-b ') }} text-grey-700 border-b border-transparent hover:border-grey-700 mr-6 lg:block">
                         Add New Opportunity
                     </a>
-                    @endcan
+                    {{-- @endcan --}}
 
 
                     <a class="appearance-none py-4 text-grey-700 border-b border-transparent hover:border-grey-700">
                         Summary
                     </a>
+                    
 
                 </div>
             </div>
         </div>
         <div class="text-gray-700 mb-2">
             <div class="bg-white border-t border-b sm:border-l sm:border-r sm:rounded shadow mb-6">
-                <div class="flex items-center px-6 lg:hidden">
+                {{-- <div class="flex items-center px-6 lg:hidden">
                     <div class="flex-grow flex-no-shrink py-6">
                         <div class="text-grey-700er mb-2">
                             <span class="text-2xl align-top">CA$</span>
@@ -53,8 +61,8 @@
                             </svg>
                         </div>
                     </div>
-                </div>
-                <div class="hidden lg:flex">
+                </div> --}}
+                {{-- <div class="hidden lg:flex">
                     <div class="w-1/3 text-center py-8">
                         <div class="border-r">
                             <div class="text-gray-700er mb-2">
@@ -85,7 +93,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="w-11/12 py-8 mx-auto">
                     <index-opportunities :data-opportunities="{{json_encode($opportunities) }}"></index-opportunities>
                 </div>

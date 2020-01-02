@@ -9,13 +9,13 @@
         </span>
       </div>
 
-      <div class="flex align-items-center mb-2 justify-between">
+      <div class="flex items-center   mb-2 justify-between">
         <!-- <slot></slot> -->
 
-        <div class="flex justify-between align-items-center">
-          <span class="mx-2 font-size-2 text-dark">Show</span>
+        <div class="flex justify-between items-center">
+          <span class="mx-2 font-size-1 md:font-size-2 text-dark">Show</span>
           <select
-            class="block appearance-none bg-white border border-gray-700 py-1 px-2 pr-8 rounded focus:outline-none focus:bg-white focus:border-gray-500"
+            class="block appearance-none md:font-size-1 bg-white border border-gray-700 py-1 px-2 pr-2 md:pr-8 rounded focus:outline-none focus:bg-white focus:border-gray-500"
             @change="changePerPage"
           >
             <option>5</option>
@@ -24,9 +24,9 @@
             <option>50</option>
             <option>100</option>
           </select>
-          <span class="mx-2 font-size-2 text-dark">entries</span>
+          <span class="mx-2 font-size-2 hidden text-dark lg:block">entries</span>
         </div>
-        <span class="font-size-2" v-if="results.totalItems">
+        <span class="hidden font-size-2 md:font-size-1 md:block" v-if="results.totalItems">
           Page
           <span class="text-primary">
             {{
@@ -42,7 +42,7 @@
         </span>
         <input
           type="search"
-          class="block appearance-none bg-white border border-gray-700 py-3 px-2 pr-8 rounded focus:outline-none focus:bg-white focus:border-gray-500"
+          class="block  appearance-none bg-white border border-gray-700 py-1 px-1 pr-8 rounded focus:outline-none focus:bg-white focus:border-gray-500 w-3/4 ml-2 lg:w-auto lg:py-3 lg:px-2"
           placeholder="search ....."
           v-model="query"
         />
@@ -55,7 +55,7 @@
               <th class="px-2 py-4">#</th>
               <th
                 class="text-sm table-cell text-gray-700"
-                v-for="(column, index) in columns"
+                v-for="(column, index) in visibleColumns"
                 :key="index"
                 v-text="column.label"
                 :class="column.cellClass"
@@ -169,6 +169,9 @@ export default {
     }
   },
   computed: {
+    visibleColumns(){
+        return this.columns.filter(column => !column.hidden);
+    },
     hasSomeData() {
       if (Array.isArray(this.data)) {
         return this.data.length > 0;

@@ -10,14 +10,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    
+
     use SoftDeletes;
     use Notifiable;
     public $incrementing = false;
     protected $guarded = [];
     protected $keyType = 'string';
     protected $primary_key = 'id';
-    
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
@@ -30,7 +30,7 @@ public function getRouteKeyName()
 {
     return 'uuid';
 }
-    
+
     public static function boot()
     {
         parent::boot();
@@ -62,7 +62,7 @@ public function getRouteKeyName()
      *
      * @var array
      */
-    
+
     protected $hidden = [
         'password', 'remember_token',
     ];
@@ -72,7 +72,7 @@ public function getRouteKeyName()
         return $this->belongsToMany('App\Task')->where('task_status','!=','Done')->orWhere('task_status','!=','Completed');
 
     }
-    
+
     public function doneTasks(){
         return $this->belongsToMany('App\Task')->where('task_status','Done')->orWhere('task_status','Completed');
 
@@ -87,6 +87,11 @@ public function getRouteKeyName()
         return $this->hasMany('App\Comment');
 
     }
+
+    public function permission(){
+        return $this->hasOne(Permission::class);
+    }
+
     public function assessments(){
 
         return $this->hasMany('App\Assessment')->selectRaw("targets.target_category AS category,assessments.assessment_score/targets.target_value*100 AS score")

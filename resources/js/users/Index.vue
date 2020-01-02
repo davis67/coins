@@ -1,10 +1,14 @@
 <template>
   <div>
+    <modal-component :size="large" :show.sync="isViewing">
+      <span slot="modal-title">Choose a preferred action</span>
+      <Action @user:actioned="ActionTriggered" :data-user="user" slot="modal-body"></Action>
+    </modal-component>
     <data-table
       :data="users"
       title="Showing All Registered Users"
       :rowClickable="true"
-      @rowClicked="getSingle"
+      @rowClicked="getSingleUser"
     >
       <div class="btn-group" slot="icons">
         <button
@@ -26,11 +30,16 @@
   </div>
 </template>
 <script>
+import Action from "./Action";
 export default {
+  components: { Action },
   data() {
     return {
       isOpen: false,
-      users: {}
+      isViewing: false,
+      large: false,
+      users: {},
+      user: {}
     };
   },
   created() {
@@ -42,12 +51,18 @@ export default {
       console.log("google", this.isOpen);
     },
     async fetchUsers() {
-      await axios.get("/users/data").then(({ data }) => (this.users = data));
+      await axios
+        .get("/users/data")
+        .then(({ data: { data } }) => (this.users = data));
     },
     addingUser() {
       Confirmation.confirm("Do you want to Leave this Page?", "Continue").then(
         done => (window.location = `/users/create`)
       );
+    },
+    async getSingleUser(user) {
+      this.isViewing = true;
+      this.user = user;
     }
   }
 };

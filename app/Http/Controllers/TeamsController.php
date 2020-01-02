@@ -13,7 +13,7 @@ use DB;
 use Session;
 use Gate;
 use Auth;
-
+use App\Http\Resources\Team as TeamResource;
 class TeamsController extends Controller
 {
     /**
@@ -33,7 +33,7 @@ class TeamsController extends Controller
 
     public function getAllTeams()
     {
-        $teams = Team::all();
+        $teams = TeamResource::collection(Team::all());
         return $teams;
     }
 

@@ -5,7 +5,7 @@
         class="fixed shadow-inner shadow-lg md:relative bottom-0 inset-x-0 m-auto justify-end md:justify-center p-8 bg-white md:h-auto"
         :class="modalSize"
       >
-        <p class="text-xl leading-normal mb-8 text-left">
+        <p class="text-xl leading-normal mb-8 mr-4 flex justify-center align-top text-left">
           <slot name="modal-title"></slot>
         </p>
         <div class="inline-flex justify-center">

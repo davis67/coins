@@ -78,7 +78,7 @@ export default {
     async fetchUsers() {
       await axios
         .get("/users/data")
-        .then(({ data }) => (this.options_users = data));
+        .then(({ data: { data } }) => (this.options_users = data));
     }
   }
 };

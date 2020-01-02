@@ -26,6 +26,9 @@ export default {
       return this.columns.filter(column => !column.hidden);
     }
   },
+  created() {
+    console.log("column", this.columns);
+  },
   methods: {
     onClick() {
       if (this.rowClickable) {

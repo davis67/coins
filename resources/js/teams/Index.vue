@@ -80,7 +80,10 @@ export default {
       this.isEditing = false;
     },
     async fetchTeams() {
-      await axios.get("/teams/data").then(({ data }) => (this.teams = data));
+      await axios
+        .get("/teams/data")
+        .then(({ data: { data } }) => (this.teams = data));
+      console.log(this.teams);
     }
   }
 };

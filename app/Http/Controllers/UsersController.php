@@ -17,6 +17,7 @@ use DB;
 use Gate;
 use Alert;
 use Session;
+use App\Http\Resources\User as UserResource;
 
 class UsersController extends Controller
 {
@@ -33,7 +34,7 @@ class UsersController extends Controller
 
     public function getAllUsers()
     {
-        $users = User::all();
+        $users = UserResource::collection(User::all());
         return $users;
     }
 
@@ -132,28 +133,10 @@ class UsersController extends Controller
         //                         ->groupBy('targets.target_category')
         //                         ->get();
         // return view('users.show',compact('user','leaves','timesummary','timesheets','assessments','opportunities','worked','absent'));
-        $user = User::findOrFail($id);
+        $user = new UserResource(User::findOrFail($id));
 
         return view('users.show', compact('user'));
     }
-    /*
-    * Custom search engine
-    */
-
-    // public function search(Request $request)
-    // {
-    //     $users = User::where(['team_id'=>$request->team_id])->get();
-    //     return $users;
-    // }
-
-    // function getUsers(){
-    //     $llusers = User::pluck('name');
-    //     for($i=0; $i<sizeof($llusers); $i++)
-    //     {
-    //         echo '<option value="'.$llusers[$i].'">';
-    //     }
-    //     unset($llusers);
-    // }
 
     public function deletedUsers()
     {

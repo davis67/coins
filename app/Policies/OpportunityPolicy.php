@@ -53,7 +53,7 @@ class OpportunityPolicy
      */
     public function create(User $user)
     {
-        return $user->team->team_code === 'BDS';
+        return  $user->permission->canCreateOpportunity === true;
     }
 
     /**
@@ -65,7 +65,7 @@ class OpportunityPolicy
      */
     public function update(User $user, Opportunity $opportunity)
     {
-        //
+        return $user->permission->canEditOpportunity ===  true;
     }
 
     /**

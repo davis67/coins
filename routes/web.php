@@ -155,3 +155,7 @@ Route::post('/targets/{target}', 'TargetsController@update');
 Route::resource('/assessments', 'AssessmentsController');
 
 Route::get('/send/send_feedback', 'HomeController@sendFeedback');
+
+
+//permissions
+Route::resource("/permissions", "PermissionController");
