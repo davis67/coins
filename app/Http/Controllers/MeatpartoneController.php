@@ -14,7 +14,8 @@ class MeatpartoneController extends Controller
      */
     public function index()
     {
-        //
+        $partonedata = Meatpartone::all();
+        return view("meats.partone.index", compact("partonedata"));
     }
 
     /**

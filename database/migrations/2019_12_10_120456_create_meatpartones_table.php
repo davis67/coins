@@ -16,15 +16,8 @@ class CreateMeatpartonesTable extends Migration
         Schema::create('meatpartones', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('part');
-            $table->string('perfomance_metrix');
+            $table->string('performance_dimension');
             $table->string('weight');
-            $table->string('perfomance_area');
-            $table->string('description');
-            $table->string('measurement');
-            $table->string('target_perfomance');
-            $table->string('self_assessment');
-            $table->string('supervisor_assessment');
-            $table->string('score');
             $table->timestamps();
         });
     }

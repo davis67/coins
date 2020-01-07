@@ -41,16 +41,12 @@
                             <span class="text-sm font-medium text-gray-900">Part 1</span>
                             <span class="text-xs font-semibold text-gray-700">36</span>
                         </a>
-                        <a href="#" class="flex justify-between items-center px-4 py-1 rounded-lg">
-                            <span class="text-sm font-medium text-gray-700">Part 2</span>
-                            <span class="text-xs font-semibold text-gray-700">2</span>
-                        </a>
                         <a href="#" class="flex justify-between items-center px-4 py-1 rounded-lg ">
-                            <span class="text-sm font-medium text-gray-700">Part 3 && Part 4</span>
+                            <span class="text-sm font-medium text-gray-700">Part 2/Part 3/ Part 4</span>
                             <span class="text-xs font-semibold text-gray-700">1</span>
                         </a>
                         <a href="#" class="flex justify-between items-center px-4 py-1 rounded-lg ">
-                            <span class="text-sm font-medium text-gray-700">Part 5 && Part 6</span>
+                            <span class="text-sm font-medium text-gray-700">Part 5 /Part 6</span>
                             <!-- <span class="text-xs font-semibold text-gray-700">14</span> -->
                         </a>
                     </div>
@@ -174,37 +170,49 @@
                                     <div class="mt-2">
                                         <div>
                                             <div  class="block p-5 bg-white rounded-md shadow">
-                                                <div class="flex justify-between">
-                                                    <p class="text-sm flex items-center font-medium leading-snug text-gray-900">Please add the school details to register groups</p>
-                                                    <span>
-                                                    <a href="" class="-ml-1 flex mt-2 items-center text-sm font-medium border shadow py-2 px-2 text-gray-600">
-                                                            <svg class="h-5 w-5 text-gray-500" viewBox="0 0 24 24" fill="none">
-                                                                <path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 7v10m5-5H7"/>
-                                                            </svg>
-                                                            <span class="ml-1">Add New School</span>
-                                                        </a>
-                                                    </span>
-                                                </div>
                                                 <div class="mt-2">
-                                                    <table>
-                                                        <thead>
-                                                            <th></th>
-                                                            <th></th>
-                                                            <th></th>
-                                                        </thead>
-                                                        <tbody>
 
+                                                    @foreach($partonedata as $data)
+                                                    <details class="border px-2 py-2 m-3">
+                                                        <summary class="px-4">
+                                                        <div class="flex text-sm  text-gray-600">
+                                                            <div>
+                                                                <span class="text-lg text-gray-800">Performance Dimension</span>
+                                                                <p>{{$data->performance_dimension}}</p>
+                                                            </div>
+                                                            <div>
+                                                                <span class="text-lg text-gray-800">Weight</span>
+                                                                <p>{{$data->weight}}%</p>
+                                                            </div>
+                                                        </div>
+
+
+                                                        </summary>
+                                                        <table class="table-auto">
+                                                            <thead>
+                                                                <th>#</th>
+                                                                <th class="text-sm">Description</th>
+                                                                <th class="text-sm">Measurement</th>
+                                                                <th class="text-sm">Target Performance</th>
+                                                                <th class="text-sm">Self Assessment</th>
+                                                                <th class="text-sm">Supervisor Assessment</th>
+                                                            </thead>
+                                                        @foreach($data->performance_dimensions as $dimension)
                                                             <tbody>
-                                                                @foreach($partonedata as $data)
-                                                                <tr>
-                                                                    <td>{{$data->performance_dimension}}</td>
-                                                                    <td>{{$data->weight}}</td>
-                                                                    <td>{{$data->performance_dimension}}</td>
-                                                                </tr>
-                                                                @endforeach
+                                                            <td class="text-sm">{{$dimension->id}}</td>
+                                                            <td class="text-sm">{{$dimension->description}}</td>
+                                                            <td class="text-sm">{{$dimension->measurement}}</td>
+                                                            <td class="text-center">{{$dimension->target_performance}}</td>
+                                                            <td class="text-center">{{$dimension->self_assessment}}</td>
+                                                            <td class="text-center">{{$dimension->supervisor_assessment}}</td>
                                                             </tbody>
-                                                        </tbody>
-                                                    </table>
+                                                        @endforeach
+                                                        </table>
+                                                    </details>
+
+                                                    @endforeach
+
+                                                </table>
                                                 </div>
                                                 </div>
                                             </div>

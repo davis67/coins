@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
         $this->call([
             LevelsTableSeeder::class,
             TitlesTableSeeder::class,
@@ -24,5 +25,8 @@ class DatabaseSeeder extends Seeder
             PermissionsSeeder::class
             // FinancialyearTableSeeder::class
         ]);
+        factory(App\Meatpartone::class, 4)->create();
+        factory(App\Performance_metrics_details::class, 20)->create();
+
     }
 }

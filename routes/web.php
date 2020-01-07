@@ -161,6 +161,7 @@ Route::get('/send/send_feedback', 'HomeController@sendFeedback');
 Route::resource("/permissions", "PermissionController");
 
 /*meat*/
+Route::resource("partone", "MeatpartoneController");
 Route::get("/meats", function(){
     return view("meat");
 });
