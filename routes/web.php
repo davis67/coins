@@ -12,7 +12,7 @@
 */
 // Auth::logout();
 // Auth::loginUsingId("fdf3cda0-13f0-11e9-9a86-ab5a0fb32b10");
-Auth::loginUsingId("595131d0-c7f1-11e9-90f8-518a45dc92b0");
+// Auth::loginUsingId("595131d0-c7f1-11e9-90f8-518a45dc92b0");
 Auth::routes(['register' => false]);
 // Auth::logout();
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
@@ -161,7 +161,5 @@ Route::get('/send/send_feedback', 'HomeController@sendFeedback');
 Route::resource("/permissions", "PermissionController");
 
 /*meat*/
-Route::resource("partone", "MeatpartoneController");
-Route::get("/meats", function(){
-    return view("meat");
-});
+Route::resource("users.partone", "MeatpartoneController");
+Route::resource("assessment", "PartoneassessmentController");

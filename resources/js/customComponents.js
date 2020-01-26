@@ -9,7 +9,7 @@ import EditContacts from "./contacts/Edit";
 import CreateContacts from "./contacts/Create";
 import IndexDocuments from "./documents/Index";
 import FlashComponent from "./flash/FlashComponent";
-
+import Partone from "./meats/partone";
 
 Vue.component("index-opportunities", IndexOpportunities)
 Vue.component("create-oppportunities", CreateOpportunities)
@@ -20,5 +20,6 @@ Vue.component("create-users", CreateUsers)
 Vue.component("index-contacts", IndexContacts)
 Vue.component("create-contacts", CreateContacts)
 Vue.component("edit-contact", EditContacts)
+Vue.component("part-one", Partone)
 Vue.component("index-documents", IndexDocuments)
 Vue.component("FlashComponent", FlashComponent)

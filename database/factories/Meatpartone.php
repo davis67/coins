@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(App\Meatpartone::class, function (Faker $faker) {
     return [
         'part' => 1,
-        "performance_dimension" => $faker->text,
+        "performance_dimension" => $faker->sentence,
         "weight" => 25
     ];
 });

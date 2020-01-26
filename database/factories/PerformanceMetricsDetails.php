@@ -7,11 +7,9 @@ use Faker\Generator as Faker;
 
 $factory->define(Performance_metrics_details::class, function (Faker $faker) {
     return [
-        'description' => $faker->paragraph,
-        'measurement' => $faker->paragraph,
+        'description' => $faker->sentence,
+        'measurement' => $faker->sentence,
         'target_performance' => 5,
-        'self_assessment' => rand(1,5),
-        'supervisor_assessment' => rand(1,5),
         "meatpartone_id" => rand(1, 4)
     ];
 });

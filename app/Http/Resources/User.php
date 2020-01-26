@@ -14,7 +14,7 @@ class User extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray([
+        return [
             "id" => $this->id,
             'staffId' => $this->staffId,
             'name' => $this->name,
@@ -27,6 +27,6 @@ class User extends JsonResource
             'team_code' => $this->team->team_code,
             "permission_id" => $this->permission->id,
             'reportsTo' => $this->reportsTo,
-        ]);
+        ];
     }
 }

@@ -15,12 +15,8 @@ class CreateMeatparttwosTable extends Migration
     {
         Schema::create('meatparttwos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('perfomance_metrix');
-            $table->string('code');
-            $table->string('opprtunity');
-            $table->string('exceptional_tasks_perfomed');
-            $table->string('results_achieved');
-
+            $table->string("part");
+            $table->string('performance_metrix');
             $table->timestamps();
         });
     }

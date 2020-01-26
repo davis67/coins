@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMeatpartthreesTable extends Migration
+class CreatePartoneassessmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateMeatpartthreesTable extends Migration
      */
     public function up()
     {
-        Schema::create('meatpartthrees', function (Blueprint $table) {
+        Schema::create('partoneassessments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('part');
-            $table->string('perfomance_dimension');
+            $table->string('self_assessment');
+            $table->string('supervisor_assessment');
+            $table->integer("performance_metrics_id");
+            $table->integer("dimension_id");
+            $table->integer("user_id");
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ class CreateMeatpartthreesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('meatpartthrees');
+        Schema::dropIfExists('partoneassessments');
     }
 }

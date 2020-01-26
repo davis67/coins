@@ -24,7 +24,11 @@
                                 <path
                                     d="M16.4 9H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zm0 4H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zM3.6 7h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1z" />
                             </svg>
-                            <svg class="fill-current text-white h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/></svg>
+                            <svg class="fill-current text-white h-8 w-8" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20">
+                                <path
+                                    d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z" />
+                                </svg>
                         </div>
                         <div class="hidden w-1/2 md:w-auto text-center text-white text-2xl font-medium lg:block">
                             Consultancy Information System(COINS)
@@ -114,7 +118,7 @@
                             </a>
                         </div>
                         <div class="flex -mb-px mr-8">
-                            <a href="{{route('contacts.index')}}"
+                            <a href="{{route('users.partone.index', auth()->user()->id)}}"
                                 class="no-underline {{ Nav::isResource('contacts') }} text-white opacity-50 md:text-gray-700 md:opacity-100 flex items-center py-4 border-b border-transparent hover:opacity-100 md:hover:border-gray-700">
                                 <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24">

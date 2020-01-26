@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePerformanceMetricsDetailsTable extends Migration
+class CreateParttwoPerformancesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreatePerformanceMetricsDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('performance_metrics_details', function (Blueprint $table) {
+        Schema::create('parttwo_performances', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('description');
-            $table->string('measurement');
-            $table->string('target_performance');
-            $table->integer("meatpartone_id");
+            $table->string('code');
+            $table->integer("meatparttwo_id");
+            $table->string('opportunity');
+            $table->string('exceptional_tasks_perfomed');
+            $table->string('results_achieved');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreatePerformanceMetricsDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('performance_metrics_details');
+        Schema::dropIfExists('parttwo_performances');
     }
 }

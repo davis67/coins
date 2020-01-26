@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Meatpartone;
+use App\User;
 use Illuminate\Http\Request;
-
+use App\Http\Resources\Partone as PartoneResource;
 class MeatpartoneController extends Controller
 {
     /**
@@ -12,10 +13,11 @@ class MeatpartoneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $partonedata = Meatpartone::all();
-        return view("meats.partone.index", compact("partonedata"));
+        $user = User::findOrFail($id);
+        $partonedata = PartoneResource::collection(Meatpartone::all());
+        return view("meats.partone.index", compact("partonedata", "user"));
     }
 
     /**
