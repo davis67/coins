@@ -118,7 +118,7 @@
                             </a>
                         </div>
                         <div class="flex -mb-px mr-8">
-                            <a href="{{route('users.partone.index', auth()->user()->id)}}"
+                            <a href="{{route('partone.index', auth()->user()->id)}}"
                                 class="no-underline {{ Nav::isResource('contacts') }} text-white opacity-50 md:text-gray-700 md:opacity-100 flex items-center py-4 border-b border-transparent hover:opacity-100 md:hover:border-gray-700">
                                 <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24">

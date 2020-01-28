@@ -161,5 +161,7 @@ Route::get('/send/send_feedback', 'HomeController@sendFeedback');
 Route::resource("/permissions", "PermissionController");
 
 /*meat*/
-Route::resource("users.partone", "MeatpartoneController");
+Route::post("users/{id}/partone/{partone}/{dimension}", "MeatpartoneController@store")->name("partone.store");
+Route::get("users/{id}/partone", "MeatpartoneController@index")->name("partone.index");
+// Route::resource("users.partone", "MeatpartoneController");
 Route::resource("assessment", "PartoneassessmentController");

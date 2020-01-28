@@ -17,7 +17,7 @@ class CreatePerformanceMetricsDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->string('description');
             $table->string('measurement');
-            $table->string('target_performance');
+            $table->integer('target_performance');
             $table->integer("meatpartone_id");
             $table->timestamps();
         });

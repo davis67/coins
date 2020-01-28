@@ -10,7 +10,7 @@
                 <div class="mt-2">
                     {{-- <part-one :partonedata="{{json_encode($partonedata)}}" :user="{{$user}}"></part-one> --}}
                     @foreach($partonedata as $partone)
-                    <details class="border px-2 py-2 m-3">
+                    <details class="border px-2 py-2 m-3" open>
                         <summary class="px-4">
                             <div class="flex text-sm text-gray-600">
                                 <div>
@@ -36,26 +36,21 @@
                             </thead>
 
                             <tbody>
-                                @foreach($partone->performanceDimensions as $dimension)
-                                <tr>
-                                    <td class="text-sm">{{$dimension->description}}</td>
-                                    <td class="text-sm">{{$dimension->measurement}}</td>
-                                    <td class="text-center">{{$dimension->target_performance}}</td>
-                                    <td class="text-center" colspan="2">
-                                        <form method="post">
-                                            <input type="number" class="w-12 text-center border" name="self_assessment"
-                                                v-model="self_assessment" autofocus />
-                                            <input type="hidden" name="user_id" value="{{$user->id}}" />
-                                            <input type="hidden" name="performance_metrics_id"
-                                                value="{{$partone->id}}" />
-                                            <input type="hidden" name="dimension_id" value="{{$dimension->id}}" />
-                                            <input type="number" class="w-12 text-center border"
-                                                name="supervisor_assessment" v-model="supervisor_assessment" />
-                                            <button type="submit"
-                                                class="bg-red-800 hover:bg-red-600 text-xs px-1 py-1 text-white">Add</button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                @foreach($partone->performance_dimensions as $dimension)
+                                    <tr>
+                                        <td class="text-sm">{{$dimension->description}}</td>
+                                        <td class="text-sm">{{$dimension->measurement}}</td>
+                                        <td class="text-center">{{$dimension->target_performance}}</td>
+                                        @if($dimension->assessment == null)
+                                        <td class="text-center" colspan="2">    
+                                            @include("meats.partone.assessment.form")
+                                        </td>
+                                        @else
+                                        <td class="text-center" colspan="2">    
+                                            @include("meats.partone.assessment.updateform")
+                                        </td>
+                                        @endif
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>

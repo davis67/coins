@@ -15,11 +15,10 @@ class CreatePartoneassessmentsTable extends Migration
     {
         Schema::create('partoneassessments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('self_assessment');
-            $table->string('supervisor_assessment');
-            $table->integer("performance_metrics_id");
-            $table->integer("dimension_id");
-            $table->integer("user_id");
+            $table->integer('self_assessment');
+            $table->integer('supervisor_assessment');
+            $table->integer("performance_metrics_details_id");
+            $table->string("user_id");
             $table->timestamps();
         });
     }

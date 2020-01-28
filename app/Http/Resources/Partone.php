@@ -19,10 +19,10 @@ class Partone extends JsonResource
 
         return [
             'id'=> $this->id,
-            'partone' =>$this->part,
-            'performance_dimensions' => PerformancedimensionResource::collection($this->performanceDimensions),
+            'part' =>$this->part,
+            'weight' => $this->weight,
             'performance_dimension' => $this->performance_dimension,
-            'weight' => $this->weight
+            'performance_dimensions' => PerformancedimensionResource::collection($this->performancedimensions),
         ];
     }
 }

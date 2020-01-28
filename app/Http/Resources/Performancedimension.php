@@ -19,6 +19,7 @@ class Performancedimension extends JsonResource
             'description'=>$this->description,
             'measurement'=>$this->measurement,
             'target_performance'=>$this->target_performance,
+            "assessment" => $this->assessment,
             'meatpartone_id'=>$this->meatpartone_id
         ];
     }
