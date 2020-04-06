@@ -7,18 +7,18 @@ use App\Team;
 use App\User;
 use App\Target;
 use App\Assessment;
+use App\Http\Resources\TeamsCollection;
 use App\Timesheet;
 use App\TaskUser;
 use DB;
 use Session;
 use Gate;
 use Auth;
-use App\Http\Resources\Team as TeamResource;
 
 class TeamsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * constructor.
      *
      * @return \Illuminate\Http\Response
      */
@@ -26,28 +26,26 @@ class TeamsController extends Controller
     {
         $this->middleware('auth');
     }
+    /**
+     * Display the index page.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
 
         return view("teams.index");
     }
 
+
     /**
-     * Create a new team.
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        return view('teams.create');
-    }
-
-
-
     public function getAllTeams()
     {
-        $teams = TeamResource::collection(Team::all());
-        return $teams;
+        return new TeamsCollection(Team::all());
     }
 
     public function assessmentSummary($team)

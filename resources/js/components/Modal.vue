@@ -2,12 +2,15 @@
     <Zoom>
         <modal
             :name="name"
-            classes="shadow-lg rounded-md lg:fixed z-50 w-48 lg:w-full inset-0 overflow-auto"
+            :adaptive="true"
+            :resizable="true"
+            classes="shadow-lg rounded-md lg:fixed z-50 items-center lg:w-full inset-0 overflow-auto"
             height="auto"
+            :width="width"
         >
             <div class="border flex w-full">
                 <div
-                    class="fixed md:relative bottom-0 m-auto justify-end md:justify-center p-8 bg-white md:h-auto"
+                    class="md:relative bottom-0 m-auto justify-end md:justify-center p-8 bg-white md:h-auto"
                 >
                     <p
                         class="text-xl leading-normal mb-8 mr-4 flex justify-center align-top text-left"
@@ -18,7 +21,7 @@
                         <slot name="modal-body"></slot>
                     </div>
                     <span
-                        @click="close"
+                        @click="$modal.hide(name)"
                         class="absolute top-0 right-0 pt-4 px-4"
                     >
                         <svg
@@ -46,27 +49,31 @@ export default {
     data() {
         return {
             modal: true,
+            windowSize: window.innerWidth,
         };
     },
     computed: {
-        shouldShow: {
-            get() {
-                return this.show;
-            },
-
-            set(value) {
-                this.$emit("update:show", value);
-                if (!value) {
-                    this.$emit("closed");
-                }
-            },
+        width: function () {
+            return this.windowSize >= 768 ? 600 : 300;
         },
-        modalSize: function () {
-            if (this.size === "small") {
-                return "max-w-md";
-            } else {
-                return "max-w-lg";
-            }
+    },
+    created() {
+        window.addEventListener("resize", () => {
+            this.windowSize = window.innerWidth;
+        });
+    },
+    watch: {
+        windowSize: function (value, oldValue) {
+            console.log("oldvalue", oldValue);
+            value = window.innerWidth;
+            this.windowSize = value;
+            console.log("new", this.windowSize);
+            console.log("width", this.width);
+            return this.windowSize;
+        },
+        width: function (value, oldValue) {
+            console.log("newWidth", value);
+            return value;
         },
     },
 

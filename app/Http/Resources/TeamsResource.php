@@ -4,7 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\User;
-class Team extends JsonResource
+
+class TeamsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,11 +16,10 @@ class Team extends JsonResource
     public function toArray($request)
     {
         return [
-            "team_name"=>$this->team_name,
-            "team_code"=> $this->team_code,
-            "team_leader"=>($this->team_leader) ?User::findOrFail($this->team_leader)->name:null,
-            "created_at"=>$this->created_at,
-            "updated_at"=>$this->updated_by,
+            "team_name" => $this->team_name,
+            "team_code" => $this->team_code,
+            "created_at" => $this->created_at,
+            "updated_at" => $this->updated_by,
         ];
     }
 }

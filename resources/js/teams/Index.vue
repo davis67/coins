@@ -2,7 +2,6 @@
     <div>
         <FlashComponent></FlashComponent>
         <modal-component
-            :size="small"
             :show.sync="isCreating"
             :name="create_team_modal"
         >
@@ -15,7 +14,7 @@
             ></CreateTeams>
         </modal-component>
         <modal-component
-            :size="small"
+            :name="edit_team_modal"
             :show.sync="isEditing"
         >
             <span slot="modal-title"
@@ -36,7 +35,7 @@
         >
             <div class="btn-group" slot="icons">
                 <button
-                    class="inline-block leading-tight bg-blue-700 border border-blue-700 hover:bg-blue-700 px-3 py-2 text-white no-underline shadow-md"
+                    class="inline-block leading-tight bg-red-800 border border-red-700 hover:bg-red-700 text-sm lg:text-md px-2 md:px-3 py-1 md:py-2 text-white no-underline shadow-md"
                     @click.prevent="
                         $modal.show('create_team_modal')
                     "
@@ -55,6 +54,7 @@
             <tableCol
                 data-key="team_leader"
                 label="Team Leader"
+                :hidden="true"
             ></tableCol>
         </data-table>
     </div>
@@ -73,6 +73,7 @@ export default {
             isCreating: false,
             isEditing: false,
             create_team_modal: "create_team_modal",
+            edit_team_modal: "edit_team_modal",
             teams: {},
             team: {},
         };
@@ -114,13 +115,16 @@ export default {
             this.isEditing = false;
         },
         async fetchTeams() {
-            await axios
-                .get("/teams/data")
-                .then(
-                    ({ data: { data } }) =>
-                        (this.teams = data),
-                );
-            console.log(this.teams);
+            try {
+                let teams = await axios.get("/teams/data");
+                this.teams = teams.data.data;
+            } catch (error) {
+                console.log(this.teams);
+            }
+            // .then(
+            //     ({ data: { data } }) =>
+            //         (this.teams = data),
+            // );
         },
     },
 };

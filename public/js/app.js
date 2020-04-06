@@ -1818,6 +1818,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     name: {
@@ -1826,28 +1829,34 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      modal: true
+      modal: true,
+      windowSize: window.innerWidth
     };
   },
   computed: {
-    shouldShow: {
-      get: function get() {
-        return this.show;
-      },
-      set: function set(value) {
-        this.$emit("update:show", value);
+    width: function width() {
+      return this.windowSize >= 768 ? 600 : 300;
+    }
+  },
+  created: function created() {
+    var _this = this;
 
-        if (!value) {
-          this.$emit("closed");
-        }
-      }
+    window.addEventListener("resize", function () {
+      _this.windowSize = window.innerWidth;
+    });
+  },
+  watch: {
+    windowSize: function windowSize(value, oldValue) {
+      console.log("oldvalue", oldValue);
+      value = window.innerWidth;
+      this.windowSize = value;
+      console.log("new", this.windowSize);
+      console.log("width", this.width);
+      return this.windowSize;
     },
-    modalSize: function modalSize() {
-      if (this.size === "small") {
-        return "max-w-md";
-      } else {
-        return "max-w-lg";
-      }
+    width: function width(value, oldValue) {
+      console.log("newWidth", value);
+      return value;
     }
   },
   methods: {
@@ -3562,6 +3571,59 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3723,6 +3785,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["paginator"],
@@ -3825,6 +3904,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["columns", "row", "rowClickable"],
@@ -3838,8 +3922,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  created: function created() {
-    console.log("column", this.columns);
+  created: function created() {// console.log("column", this.columns);
   },
   methods: {
     onClick: function onClick() {
@@ -4216,6 +4299,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       isCreating: false,
       isEditing: false,
       create_team_modal: "create_team_modal",
+      edit_team_modal: "edit_team_modal",
       teams: {},
       team: {}
     };
@@ -4308,25 +4392,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var teams;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _context4.next = 2;
-                return axios.get("/teams/data").then(function (_ref) {
-                  var data = _ref.data.data;
-                  return _this4.teams = data;
-                });
-
-              case 2:
-                console.log(_this4.teams);
+                _context4.prev = 0;
+                _context4.next = 3;
+                return axios.get("/teams/data");
 
               case 3:
+                teams = _context4.sent;
+                _this4.teams = teams.data.data;
+                _context4.next = 10;
+                break;
+
+              case 7:
+                _context4.prev = 7;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_this4.teams);
+
+              case 10:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4);
+        }, _callee4, null, [[0, 7]]);
       }))();
     }
   }
@@ -48713,9 +48804,12 @@ var render = function() {
         {
           attrs: {
             name: _vm.name,
+            adaptive: true,
+            resizable: true,
             classes:
-              "shadow-lg rounded-md lg:fixed z-50 w-48 lg:w-full inset-0 overflow-auto",
-            height: "auto"
+              "shadow-lg rounded-md lg:fixed z-50 items-center lg:w-full inset-0 overflow-auto",
+            height: "auto",
+            width: _vm.width
           }
         },
         [
@@ -48724,7 +48818,7 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "fixed md:relative bottom-0 m-auto justify-end md:justify-center p-8 bg-white md:h-auto"
+                  "md:relative bottom-0 m-auto justify-end md:justify-center p-8 bg-white md:h-auto"
               },
               [
                 _c(
@@ -48748,7 +48842,11 @@ var render = function() {
                   "span",
                   {
                     staticClass: "absolute top-0 right-0 pt-4 px-4",
-                    on: { click: _vm.close }
+                    on: {
+                      click: function($event) {
+                        return _vm.$modal.hide(_vm.name)
+                      }
+                    }
                   },
                   [
                     _c(
@@ -51348,23 +51446,29 @@ var render = function() {
       { staticClass: "w-full" },
       [
         _vm.title
-          ? _c("div", { staticClass: "flex justify-between mb-2" }, [
-              _c("span"),
-              _vm._v(" "),
+          ? _c("div", { staticClass: "flex lg:justify-between mb-2" }, [
               _c("h3", {
-                staticClass: "text-md",
+                staticClass: "text-sm flex-3 md:text-lg",
                 domProps: { textContent: _vm._s(_vm.title) }
               }),
               _vm._v(" "),
-              _c("span", [_vm._t("icons")], 2)
+              _c(
+                "span",
+                { staticClass: "flex-1 mr-1 text-right" },
+                [_vm._t("icons")],
+                2
+              )
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c("div", { staticClass: "flex items-center   mb-2 justify-between" }, [
+        _c("div", { staticClass: "flex items-center mb-2 justify-between" }, [
           _c("div", { staticClass: "flex justify-between items-center" }, [
             _c(
               "span",
-              { staticClass: "mx-2 font-size-1 md:font-size-2 text-dark" },
+              {
+                staticClass:
+                  "mx-2 font-size-1 md:font-size-2 text-sm md:text-lg text-dark"
+              },
               [_vm._v("Show")]
             ),
             _vm._v(" "),
@@ -51376,9 +51480,9 @@ var render = function() {
                 on: { change: _vm.changePerPage }
               },
               [
-                _c("option", [_vm._v("5")]),
+                _c("option", { attrs: { selected: "" } }, [_vm._v("5")]),
                 _vm._v(" "),
-                _c("option", { attrs: { selected: "" } }, [_vm._v("10")]),
+                _c("option", [_vm._v("10")]),
                 _vm._v(" "),
                 _c("option", [_vm._v("25")]),
                 _vm._v(" "),
@@ -51400,20 +51504,20 @@ var render = function() {
                 "span",
                 { staticClass: "hidden font-size-2 md:font-size-1 md:block" },
                 [
-                  _vm._v("\n        Page\n        "),
+                  _vm._v("\n                Page\n                "),
                   _c("span", { staticClass: "text-primary" }, [
                     _vm._v(
-                      "\n          " +
+                      "\n                    " +
                         _vm._s(_vm._f("currency")(_vm.results.currentPage)) +
-                        "\n        "
+                        "\n                "
                     )
                   ]),
-                  _vm._v("\n        of\n        "),
+                  _vm._v("\n                of\n                "),
                   _c("span", { staticClass: "text-primary" }, [
                     _vm._v(
-                      "\n          " +
+                      "\n                    " +
                         _vm._s(_vm._f("currency")(_vm.results.lastPage)) +
-                        "\n        "
+                        "\n                "
                     )
                   ])
                 ]
@@ -51430,7 +51534,7 @@ var render = function() {
               }
             ],
             staticClass:
-              "block  appearance-none bg-white border border-gray-700 py-1 px-1 pr-8 rounded focus:outline-none focus:bg-white focus:border-gray-500 w-3/4 ml-2 lg:w-auto lg:py-3 lg:px-2",
+              "block appearance-none bg-white border border-gray-700 py-1 px-1 pr-8 rounded focus:outline-none focus:bg-white focus:border-gray-500 w-3/4 ml-2 lg:w-auto lg:py-3 lg:px-2",
             attrs: { type: "search", placeholder: "search ....." },
             domProps: { value: _vm.query },
             on: {
@@ -51451,7 +51555,7 @@ var render = function() {
             _c(
               "table",
               {
-                staticClass: "table-auto w-full shadow-md rounded",
+                staticClass: "table-auto w-full rounded",
                 class: { "table-hover": _vm.rowClickable }
               },
               [
@@ -51460,7 +51564,7 @@ var render = function() {
                     "tr",
                     {
                       staticClass:
-                        "text-left bg-gray-300 border-b border-grey uppercase"
+                        "text-left bg-gray-100 border-t-2 border-b-2 border-gray-600 uppercase"
                     },
                     [
                       _c("th", { staticClass: "px-2 py-4" }, [_vm._v("#")]),
@@ -51487,7 +51591,7 @@ var render = function() {
                           "tr",
                           {
                             staticClass:
-                              "accordion border-b border-grey-light hover:bg-gray-100"
+                              "accordion border-b border-gray-100 hover:bg-gray-100"
                           },
                           [
                             _c(
@@ -51501,9 +51605,9 @@ var render = function() {
                                   staticClass: "fa fa-spin fa-spinner"
                                 }),
                                 _vm._v(
-                                  "\n              " +
+                                  "\n                            " +
                                     _vm._s(_vm.searchText) +
-                                    " ............\n            "
+                                    "\n                            ............\n                        "
                                 )
                               ]
                             )
@@ -51529,9 +51633,9 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n            " +
+                            "\n                        " +
                               _vm._s(_vm.results.startingIndex + index) +
-                              ".\n          "
+                              ".\n                    "
                           )
                         ]
                       )
@@ -51542,7 +51646,7 @@ var render = function() {
                           "tr",
                           {
                             staticClass:
-                              "accordion border-b border-grey-light hover:bg-gray-100"
+                              "accordion border-b border-gray-100 hover:bg-gray-100"
                           },
                           [
                             _c(
@@ -51551,7 +51655,11 @@ var render = function() {
                                 staticClass: "table-cell px-3 py-4 text-center",
                                 attrs: { colspan: _vm.columns.length + 1 }
                               },
-                              [_vm._v("No Records Were Found")]
+                              [
+                                _vm._v(
+                                  "\n                            No Records Were Found\n                        "
+                                )
+                              ]
                             )
                           ]
                         )
@@ -51599,13 +51707,13 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("nav", { staticClass: "flex justify-between px-2 py-2" }, [
-    _c("span", { staticClass: "px-3 text-md lg:text-lg text-gray-700 py-2" }, [
+    _c("span", { staticClass: "px-3 text-sm lg:text-lg text-gray-800 py-2" }, [
       _vm._v(
-        "\n    Showing Up to\n    " +
+        "\n        Showing Up to\n        " +
           _vm._s(_vm._f("currency")(_vm.paginator.uptoItems)) +
-          "\n    results out of\n    " +
+          "\n        results out of\n        " +
           _vm._s(_vm._f("currency")(_vm.paginator.totalItems)) +
-          "\n  "
+          "\n    "
       )
     ]),
     _vm._v(" "),
@@ -51613,8 +51721,7 @@ var render = function() {
       ? _c(
           "ul",
           {
-            staticClass:
-              "flex list-reset border border-grey-light rounded w-auto"
+            staticClass: "flex list-reset border border-gray-200 rounded w-auto"
           },
           [
             _c(
@@ -51628,13 +51735,9 @@ var render = function() {
                   "a",
                   {
                     staticClass:
-                      "block hover:text-gray-400 hover:bg-blue text-blue border-r border-grey-light px-3 py-2",
+                      "block hover:text-gray-400 hover:bg-blue text-blue border-r border-gray-200 px-3 py-2",
                     attrs: { href: "#", "aria-label": "Previous" },
-                    on: {
-                      click: function($event) {
-                        --_vm.paginator.currentPage
-                      }
-                    }
+                    on: { click: _vm.paginator.currentPage }
                   },
                   [
                     _c("span", { attrs: { "aria-hidden": "true" } }, [
@@ -51661,7 +51764,7 @@ var render = function() {
                       "a",
                       {
                         staticClass:
-                          "block hover:text-gray-400 hover:bg-blue text-blue border-r border-grey-light px-3 py-2",
+                          "block hover:text-gray-400 hover:bg-blue text-blue border-r border-gray-200 px-3 py-2",
                         attrs: { href: "#" },
                         on: {
                           click: function($event) {
@@ -51768,7 +51871,12 @@ var render = function() {
       on: { click: _vm.onClick }
     },
     [
-      _c("td", { staticClass: "table-cell px-3 py-4" }, [_vm._t("default")], 2),
+      _c(
+        "td",
+        { staticClass: "table-cell px-3 py-4", class: {} },
+        [_vm._t("default")],
+        2
+      ),
       _vm._v(" "),
       _vm._l(_vm.visibleColumns, function(column, index) {
         return _c("table-cell", {
@@ -52041,11 +52149,7 @@ var render = function() {
       _c(
         "modal-component",
         {
-          attrs: {
-            size: _vm.small,
-            show: _vm.isCreating,
-            name: _vm.create_team_modal
-          },
+          attrs: { show: _vm.isCreating, name: _vm.create_team_modal },
           on: {
             "update:show": function($event) {
               _vm.isCreating = $event
@@ -52069,7 +52173,7 @@ var render = function() {
       _c(
         "modal-component",
         {
-          attrs: { size: _vm.small, show: _vm.isEditing },
+          attrs: { name: _vm.edit_team_modal, show: _vm.isEditing },
           on: {
             "update:show": function($event) {
               _vm.isEditing = $event
@@ -52116,7 +52220,7 @@ var render = function() {
                 "button",
                 {
                   staticClass:
-                    "inline-block leading-tight bg-blue-700 border border-blue-700 hover:bg-blue-700 px-3 py-2 text-white no-underline shadow-md",
+                    "inline-block leading-tight bg-red-800 border border-red-700 hover:bg-red-700 text-sm lg:text-md px-2 md:px-3 py-1 md:py-2 text-white no-underline shadow-md",
                   on: {
                     click: function($event) {
                       $event.preventDefault()
@@ -52138,7 +52242,11 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("tableCol", {
-            attrs: { "data-key": "team_leader", label: "Team Leader" }
+            attrs: {
+              "data-key": "team_leader",
+              label: "Team Leader",
+              hidden: true
+            }
           })
         ],
         1
@@ -67132,7 +67240,7 @@ var Paginator = /*#__PURE__*/function () {
    */
   function Paginator() {
     var items = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-    var perPage = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
+    var perPage = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 5;
     var currentPage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
 
     _classCallCheck(this, Paginator);
