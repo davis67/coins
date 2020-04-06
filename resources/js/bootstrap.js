@@ -1,30 +1,36 @@
 import vue from "vue";
 
 import axios from "axios";
+import VModal from "vue-js-modal";
 import Flash from "./flash/Flash";
-import {
-    Confirmation
-} from "./flash/Confirmation";
+import { Confirmation } from "./flash/Confirmation";
 
 window.Vue = vue;
 
+Vue.use(VModal);
 window.axios = axios;
 
-window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+window.axios.defaults.headers.common["X-Requested-With"] =
+    "XMLHttpRequest";
 
-let token = document.head.querySelector('meta[name="csrf-token"]');
+let token = document.head.querySelector(
+    'meta[name="csrf-token"]',
+);
 
 if (token) {
-    window.axios.defaults.headers.common["X-CSRF-TOKEN"] = token.content;
+    window.axios.defaults.headers.common["X-CSRF-TOKEN"] =
+        token.content;
 } else {
     console.error(
-        "CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token"
+        "CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token",
     );
 }
 
-
 window.hasOwnProp = function (obj, prop) {
-    return obj && Object.prototype.hasOwnProperty.call(obj, prop);
+    return (
+        obj &&
+        Object.prototype.hasOwnProperty.call(obj, prop)
+    );
 };
 
 window.GlobalBus = new Vue();

@@ -225,7 +225,7 @@ class HomeController extends Controller
             'opportunityTeam',
             'opportunityStage',
             'opportunityStatus',
-            'opportunityCountry',
+            'opportunityCountry'
         ));
     }
 

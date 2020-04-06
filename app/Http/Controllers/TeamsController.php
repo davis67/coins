@@ -14,6 +14,7 @@ use Session;
 use Gate;
 use Auth;
 use App\Http\Resources\Team as TeamResource;
+
 class TeamsController extends Controller
 {
     /**
@@ -30,6 +31,18 @@ class TeamsController extends Controller
 
         return view("teams.index");
     }
+
+    /**
+     * Create a new team.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('teams.create');
+    }
+
+
 
     public function getAllTeams()
     {
@@ -76,7 +89,7 @@ class TeamsController extends Controller
                         ->join('opportunity_user', 'opportunity_user.opportunity_id', '=', 'opportunities.id')
                         ->where(['opportunities.type' => $type, 'opportunities.sales_stage' => $stage, 'opportunity_user.user_id' => $user->id])
                         ->get();
-                    $stage = strtolower(implode(explode(' ', $stage),));
+                    $stage = strtolower(implode(explode(' ', $stage)));
                     $summary[$index][$type][$stage] = $opportunities->count();
                 endforeach;
             endforeach;
@@ -85,6 +98,11 @@ class TeamsController extends Controller
         return $summary;
     }
 
+    /**
+     * Persist a new team.
+     *
+     * @return mixed
+     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -93,14 +111,7 @@ class TeamsController extends Controller
             'team_leader' => 'nullable'
         ]);
 
-        $team = Team::create([
-            'team_name' => $data['team_name'],
-            'team_code' => $data['team_code'],
-            'team_leader' => $data['team_leader'],
-            'created_by' => Auth::user()->id
-        ]);
-
-        return ['Team Created successfully'];
+        Team::create($data);
     }
 
     public function show(Team $team)
