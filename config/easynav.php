@@ -18,6 +18,6 @@ return [
     | the class defined here will be used if no other custom class is provided.
     |
     */
-    'default_class' => 'text-red-800 border-b-2 border-red-800',
+    'default_class' => 'text-red-800 ml-2 border-b-2 border-red-800',
 
 ];

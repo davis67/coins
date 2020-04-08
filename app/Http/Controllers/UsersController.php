@@ -16,8 +16,10 @@ use Auth;
 use DB;
 use Gate;
 use Alert;
+use App\Http\Requests\UserRequest;
 use Session;
 use App\Http\Resources\User as UserResource;
+use App\Http\Resources\UsersCollection;
 
 class UsersController extends Controller
 {
@@ -34,105 +36,25 @@ class UsersController extends Controller
 
     public function getAllUsers()
     {
-        $users = UserResource::collection(User::all());
-        return $users;
-    }
-
-    protected function validator(array $data)
-    {
-
-        return Validator::make($data, [
-            'staffId' => 'required|string|max:10',
-            'name' => 'required|string|max:20',
-            'gender' => 'required|string|max:10',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-            'mobilePhone' => 'required|string|max:20',
-            'alternativePhone' => 'required|string|max:20',
-            'user_team_id' => 'required|integer',
-            'role_id' => 'required|integer',
-            'reportsTo' => 'required|string',
-            'userStatus' => 'required|string|max:20',
-        ]);
+        return new UsersCollection(User::all());
     }
 
     public function create()
     {
-
         $users = User::all();
         $teams = Team::all();
         $titles = Title::all();
         return view('users.create', compact('users', 'titles', 'teams'));
     }
 
-    public function store(Request $data)
+    public function store(UserRequest $request)
     {
-        $this->validate($data, [
-            'staffId' => "unique:users|required",
-            'name' => "required",
-            'gender' => "required",
-            'email' => "required|unique:users",
-            'mobilePhone' => "required|digits:10|regex:/07\d{8}/|unique:users",
-            'alternativePhone' => "nullable|digits:10|regex:/07\d{8}/|unique:users",
-            'team_id' => "required",
-            'title_id' => "required",
-            'reportsTo' => "required",
-            'userStatus' => 'nullable',
-        ]);
-        $user = User::create([
-            'staffId' => $data['staffId'],
-            'name' => $data['name'],
-            'gender' => $data['gender'],
-            'email' => $data['email'],
-            'password' => Hash::make('AHC@secret'),
-            'mobilePhone' => $data['mobilePhone'],
-            'alternativePhone' => $data['alternativePhone'],
-            'team_id' => $data['team_id'],
-            'reportsTo' => $data['reportsTo'],
-            'userStatus' => 'registered',
-            'created_by' => Auth::user()->id
-        ]);
+        $user = User::create($request->validated());
         return $user;
     }
 
     public function show($id)
     {
-        // $year = $month = today();
-        // $user = User::findOrFail($user->id);
-        // $leaves = Leave::select('leaves.leave_start','leaves.leave_end','leavesetting_id','leaves.leave_status','leaves.leave_detail', DB::raw("SUM(leaves.duration) as duration"),'leavesettings.leave_type',)
-        //             ->join('leavesettings','leaves.leavesetting_id','=','leavesettings.id')
-        //             ->whereYear('leaves.leave_start', '=', $month)
-        //             ->whereYear('leaves.created_at', '=', $month)
-        //             ->where('leaves.user_id', $user->id)
-        //             ->get();
-        // $absent = $leaves->sum('duration');
-
-        // //Timesheet
-        // $opportunities = DB::table('users')
-        //             ->join('task_user', 'task_user.user_id', '=', 'users.id')
-        //             ->join('tasks', 'task_user.task_id', '=', 'tasks.id')
-        //             ->join('deliverable_opportunity', 'tasks.deliverable_id', '=', 'deliverable_opportunity.deliverable_id')
-        //             ->join('opportunities', 'deliverable_opportunity.opportunity_id', '=', 'opportunities.id')
-        //             ->orderBy("opportunities.opportunity_name")
-        //             ->where('task_user.user_id', $user->id)
-        //             ->get();
-
-        // $timesummary = Timesheet::select('beneficiary', DB::raw("SUM(duration) as duration"))
-        //                         ->whereMonth('activity_date',now())
-        //                         ->where(['user_id'=>$user->id])
-        //                         ->groupBy('beneficiary')->get();
-
-        // $worked = $timesummary->sum('duration');
-        // $timesheets = Timesheet::where(['user_id'=>$user->id])->whereMonth('activity_date',now())->get();
-
-
-
-        // $assessments = Assessment::selectRaw("targets.target_category AS category,assessments.assessment_score/targets.target_value*100 AS score")
-        //                         ->join('targets', 'assessments.target_id', '=', 'targets.id')
-        //                         ->where(['assessments.user_id'=>$user->id])
-        //                         ->groupBy('targets.target_category')
-        //                         ->get();
-        // return view('users.show',compact('user','leaves','timesummary','timesheets','assessments','opportunities','worked','absent'));
         $user = new UserResource(User::findOrFail($id));
 
         return view('users.show', compact('user'));

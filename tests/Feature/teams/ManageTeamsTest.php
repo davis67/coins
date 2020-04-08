@@ -18,7 +18,6 @@ class ManageTeamsTest extends TestCase
 
     public function a_user_can_create_a_team()
     {
-        $this->withoutExceptionHandling();
         $this->actingAs(factory(User::class)->create());
         $this->post('/teams', $attributes = factory(Team::class)->raw())->assertOk();
         $this->assertDatabaseHas('teams', $attributes);

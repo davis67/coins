@@ -2628,6 +2628,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2687,6 +2691,29 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/debounce */ "./node_modules/lodash/debounce.js");
 /* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_debounce__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4546,6 +4573,91 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["dataTitles", "dataUsers", "dataTeams"],
   data: function data() {
@@ -4594,6 +4706,37 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -50136,7 +50279,7 @@ var render = function() {
       _vm.label
         ? _c("label", {
             staticClass:
-              "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+              "block  tracking-wide text-gray-700 text-xs font-bold mb-2",
             domProps: { textContent: _vm._s(_vm.label) }
           })
         : _vm._e(),
@@ -50287,7 +50430,7 @@ var render = function() {
       _vm.label
         ? _c("label", {
             staticClass:
-              "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+              "block  tracking-wide text-gray-700 text-xs font-bold mb-2",
             domProps: { textContent: _vm._s(_vm.label) }
           })
         : _vm._e(),
@@ -50431,7 +50574,7 @@ var render = function() {
       "button",
       {
         staticClass:
-          "inline-block leading-tight bg-blue-700 border border-blue-700 hover:bg-blue-700 uppercase px-3 py-3 text-white no-underline",
+          "inline-block leading-tight bg-red-800 border border-red-800 hover:bg-red-800 px-2 py-2 text-white no-underline",
         class: _vm.btnClass,
         attrs: { type: _vm.type, disabled: _vm.isDisabled }
       },
@@ -52358,28 +52501,46 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "w-full mx-auto justify-center items-center" },
     [
       _c("FlashComponent"),
       _vm._v(" "),
       _c(
-        "div",
+        "form",
         {
-          staticClass: "mx-auto w-full mt-4 justify-center align-center lg:flex"
+          staticClass: "mx-auto px-4 w-10/12 pt-6 pb-8 mb-4",
+          attrs: { method: "post" },
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.addUser($event)
+            }
+          }
         },
         [
-          _c(
-            "form",
-            {
-              staticClass: "w-2/4 bg-white shadow-lg px-8 pt-6 pb-8 mb-4",
-              attrs: { method: "post" },
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  return _vm.addUser($event)
-                }
-              }
-            },
-            [
+          _c("div", { staticClass: "mt-2 px-4 py-2" }, [
+            _c("p", { staticClass: "text-lg" }, [
+              _vm._v("Company Information")
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "text-sm text-gray-500" }, [
+              _vm._v(
+                "This iformation is given to you by the\n                company"
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "mb-4" },
+              [
+                _c("InputComponent", {
+                  attrs: { form: _vm.form, label: "Staff Name", name: "name" }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "mb-4 flex" }, [
               _c(
                 "div",
                 { staticClass: "mb-4" },
@@ -52397,75 +52558,30 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "mb-4" },
-                [
-                  _c("InputComponent", {
-                    attrs: { form: _vm.form, label: "Staff Name", name: "name" }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "mb-4" },
+                { staticClass: " ml-3 mb-4" },
                 [
                   _c("InputComponent", {
                     attrs: { form: _vm.form, label: "Email", name: "email" }
                   })
                 ],
                 1
-              ),
-              _vm._v(" "),
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mt-2 px-4 py-2" }, [
+            _c("p", { staticClass: "text-lg" }, [_vm._v("Other Information")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "text-sm text-gray-500" }, [
+              _vm._v(
+                "This information is given to you by the\n                company"
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mb-4 flex w-full" }, [
               _c(
                 "div",
-                { staticClass: "mb-6" },
-                [
-                  _c("SelectComponent", {
-                    attrs: {
-                      form: _vm.form,
-                      label: "Gender",
-                      name: "gender",
-                      options: _vm.options_gender
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "mb-6" },
-                [
-                  _c("InputComponent", {
-                    attrs: {
-                      form: _vm.form,
-                      label: "Telephone ",
-                      name: "mobilePhone"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "mb-6" },
-                [
-                  _c("InputComponent", {
-                    attrs: {
-                      form: _vm.form,
-                      label: "Telephone 2",
-                      name: "alternativePhone"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "mb-6" },
+                { staticClass: "flex-1" },
                 [
                   _c("SelectComponent", {
                     attrs: {
@@ -52481,7 +52597,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "mb-6" },
+                { staticClass: "ml-2 flex-1" },
                 [
                   _c("SelectComponent", {
                     attrs: {
@@ -52497,7 +52613,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "mb-6" },
+                { staticClass: "ml-2 flex-1" },
                 [
                   _c("SelectComponent", {
                     attrs: {
@@ -52509,11 +52625,88 @@ var render = function() {
                   })
                 ],
                 1
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: " px-4 py-4 " }, [
+            _c("p", { staticClass: "text-lg" }, [
+              _vm._v("Personal Information")
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "text-sm text-gray-500" }, [
+              _vm._v(
+                "This information is given to you by the\n                company"
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "mb-6" },
+              [
+                _c("InputComponent", {
+                  attrs: { form: _vm.form, label: "Address", name: "address" }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "mb-4 flex w-full" }, [
+              _c(
+                "div",
+                {},
+                [
+                  _c("InputComponent", {
+                    attrs: {
+                      form: _vm.form,
+                      label: "Telephone ",
+                      name: "mobilePhone"
+                    }
+                  })
+                ],
+                1
               ),
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "flex items-center justify-between" },
+                { staticClass: "ml-2" },
+                [
+                  _c("InputComponent", {
+                    attrs: {
+                      form: _vm.form,
+                      label: "Telephone 2",
+                      name: "alternativePhone"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "ml-2" },
+                [
+                  _c("SelectComponent", {
+                    attrs: {
+                      form: _vm.form,
+                      label: "Gender",
+                      name: "gender",
+                      options: _vm.options_gender
+                    }
+                  })
+                ],
+                1
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "flex items-center border-t-2 border-gray-300" },
+            [
+              _c(
+                "div",
+                { staticClass: "mt-2" },
                 [
                   _c("submitButton", {
                     attrs: {
@@ -52524,7 +52717,9 @@ var render = function() {
                   })
                 ],
                 1
-              )
+              ),
+              _vm._v(" "),
+              _vm._m(0)
             ]
           )
         ]
@@ -52533,7 +52728,24 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mt-2 ml-2" }, [
+      _c(
+        "button",
+        {
+          staticClass:
+            "inline-block leading-tight text-red-800 border border-red-800 hover:text-red-700 px-3 py-2 bg-white no-underline",
+          attrs: { type: "button" }
+        },
+        [_vm._v("\n                    Cancel\n                ")]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -52605,7 +52817,7 @@ var render = function() {
                 "button",
                 {
                   staticClass:
-                    "inline-block leading-tight bg-red-700 border border-red-700 hover:bg-red-500 px-3 py-2 text-white no-underline shadow-md",
+                    "inline-block leading-tight text-red-800 border border-red-800 hover:text-red-700 px-3 py-2 bg-white no-underline shadow-md",
                   on: {
                     click: function($event) {
                       $event.preventDefault()
@@ -52613,14 +52825,14 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Archived Users")]
+                [_vm._v("\n                Archived Users\n            ")]
               ),
               _vm._v(" "),
               _c(
                 "button",
                 {
                   staticClass:
-                    "inline-block leading-tight bg-blue-700 border border-blue-700 hover:bg-blue-700 px-3 py-2 text-white no-underline shadow-md",
+                    "inline-block leading-tight bg-red-800 border border-red-800 hover:bg-red-700 px-3 py-2 text-white no-underline shadow-md",
                   on: {
                     click: function($event) {
                       $event.preventDefault()
@@ -52628,7 +52840,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("New User")]
+                [_vm._v("\n                New User\n            ")]
               )
             ]
           ),
