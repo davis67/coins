@@ -3702,6 +3702,7 @@ __webpack_require__.r(__webpack_exports__);
         rows.push(new _Row__WEBPACK_IMPORTED_MODULE_5__["default"](this.data[row], this.columns));
       }
 
+      console.log("rows", rows);
       this.rows = rows;
       this.results.items = rows; //this.$set(this.results, "items", rows);
     },
@@ -3711,7 +3712,8 @@ __webpack_require__.r(__webpack_exports__);
       this.searchText = false;
       this.results.items = this.rows.filter(function (row) {
         return row.passesFilter(_this.query);
-      }); //console.log(this.results.items);
+      });
+      console.log(this.results.items);
     }, 300),
     changePerPage: function changePerPage(event) {
       this.results.perPage = event.target.value;
@@ -4150,6 +4152,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["team"],
   data: function data() {
@@ -4159,6 +4185,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   created: function created() {
+    console.log("team-ccjnscdcnscnscnscns", this.team);
     this.updatefields(this.form);
     this.fetchUsers();
   },
@@ -4173,16 +4200,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       form.updateField("team_name", this.team.team_name);
       form.updateField("team_leader", this.team.team_leader);
     },
-    updateTeam: function updateTeam(team) {
+    updateTeam: function updateTeam() {
       var _this = this;
 
-      this.form.put("/teams/".concat(team.id)).then(function (data) {
+      this.form.put("/teams/".concat(this.team.team_id)).then(function (data) {
         _this.$emit("team:updated", data);
       })["catch"](function (errors) {
         return Flash.error("Something went wrong! please try again");
       });
     },
-    deleteTeam: function deleteTeam(team) {
+    cancelOperation: function cancelOperation() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -4190,15 +4217,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return Confirmation.confirm("This action is irreversible", "Are you sure about this operation?").then(function (done) {
-                  return axios["delete"]("/teams/" + team.id).then(function (response) {});
-                });
+                _this2.$emit("operation:cancelled");
 
-              case 2:
-                _this2.$emit("team:deleted", team);
-
-              case 3:
+              case 1:
               case "end":
                 return _context.stop();
             }
@@ -4246,6 +4267,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Create__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Create */ "./resources/js/teams/Create.vue");
 /* harmony import */ var _Edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Edit */ "./resources/js/teams/Edit.vue");
+/* harmony import */ var _tables_Paginator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../tables/Paginator */ "./resources/js/tables/Paginator.js");
+/* harmony import */ var _tables_links__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../tables/links */ "./resources/js/tables/links.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -4313,12 +4336,266 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     CreateTeams: _Create__WEBPACK_IMPORTED_MODULE_1__["default"],
-    EditTeam: _Edit__WEBPACK_IMPORTED_MODULE_2__["default"]
+    EditTeam: _Edit__WEBPACK_IMPORTED_MODULE_2__["default"],
+    PaginationLinks: _tables_links__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     return {
@@ -4327,22 +4604,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       isEditing: false,
       create_team_modal: "create_team_modal",
       edit_team_modal: "edit_team_modal",
-      teams: {},
+      teams: [],
+      query: "",
+      rows: [],
       team: {}
     };
   },
   created: function created() {
+    console.log(this.teams);
     this.fetchTeams();
   },
   methods: {
+    beforeOpen: function beforeOpen(team) {
+      this.team = team;
+      this.$modal.show("edit_team_modal", {
+        team: "team"
+      });
+    },
+    changePerPage: function changePerPage(event) {
+      this.teams.perPage = event.target.value;
+    },
     getTeam: function getTeam(team) {
       this.isEditing = true;
       this.team = team;
-    },
-    toggleButton: function toggleButton() {
-      console.log("clicked");
-      this.isCreating = true;
-      return this.isCreating;
     },
     registeredTeam: function registeredTeam(team) {
       var _this = this;
@@ -4381,10 +4665,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this2.fetchTeams();
 
               case 3:
-                // or vue.set(this.teams, team.id, team)
-                _this2.isEditing = false;
+                _context2.next = 5;
+                return _this2.$modal.hide("edit_team_modal");
 
-              case 4:
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -4392,7 +4676,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    deletedTeam: function deletedTeam(team) {
+    cancelEditing: function cancelEditing() {
+      this.$modal.hide("edit_team_modal");
+    },
+    deleteTeam: function deleteTeam(team) {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
@@ -4400,14 +4687,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                Flash.success("You have successfully archived Team");
-                _context3.next = 3;
+                _context3.next = 2;
+                return Confirmation.confirm("This action is irreversible", "Do you want to delete a team?").then(function (done) {
+                  return axios["delete"]("/teams/" + team.team_id).then(function (response) {});
+                })["catch"](function (error) {
+                  console.log(error);
+                });
+
+              case 2:
+                _context3.next = 4;
                 return _this3.fetchTeams();
 
-              case 3:
-                _this3.isEditing = false;
-
               case 4:
+                // or vue.set(this.teams, team.id, team)
+                Flash.success("You have successfully deleted a team"), _this3.$emit("team:deleted", team);
+
+              case 5:
               case "end":
                 return _context3.stop();
             }
@@ -4430,22 +4725,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
                 teams = _context4.sent;
-                _this4.teams = teams.data.data;
-                _context4.next = 10;
+                _this4.teams = new _tables_Paginator__WEBPACK_IMPORTED_MODULE_3__["default"](teams.data.data);
+                _this4.rows = _this4.teams.items;
+                _context4.next = 11;
                 break;
 
-              case 7:
-                _context4.prev = 7;
+              case 8:
+                _context4.prev = 8;
                 _context4.t0 = _context4["catch"](0);
-                console.log(_this4.teams);
+                console.log(_context4.t0);
 
-              case 10:
+              case 11:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, null, [[0, 7]]);
+        }, _callee4, null, [[0, 8]]);
       }))();
+    },
+    performFilter: function performFilter(teams) {
+      var _this5 = this;
+
+      return teams.filter(function (row) {
+        return Object.keys(row).some(function (key) {
+          return String(row[key]).toLowerCase().indexOf(_this5.query.toLowerCase()) > -1;
+        });
+      });
+    }
+  },
+  computed: {
+    filteredTeams: function filteredTeams() {
+      this.teams.items = this.rows;
+
+      if (this.query) {
+        return this.performFilter(this.teams.items);
+      }
+
+      return this.teams.items;
+    },
+    pagination: function pagination() {
+      var teams = this.teams;
+      teams.items = this.filteredTeams;
+      return teams;
     }
   }
 });
@@ -50069,7 +50390,7 @@ var render = function() {
                 _c(
                   "svg",
                   {
-                    staticClass: "fill-current h-6 w-6 text-red-500",
+                    staticClass: "fill-current h-6 w-6 text-white",
                     attrs: {
                       role: "button",
                       xmlns: "http://www.w3.org/2000/svg",
@@ -52170,7 +52491,7 @@ var render = function() {
             on: {
               submit: function($event) {
                 $event.preventDefault()
-                return _vm.updateTeam(_vm.team)
+                return _vm.updateTeam()
               }
             }
           },
@@ -52225,7 +52546,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "flex items-center justify-between" },
+              { staticClass: "flex items-center" },
               [
                 _c("submitButton", {
                   attrs: {
@@ -52239,19 +52560,15 @@ var render = function() {
                   "button",
                   {
                     staticClass:
-                      "inline-block leading-tight bg-red-700 border border-red-700 hover:bg-red-700 uppercase px-3 py-3 text-white no-underline",
+                      "inline-block leading-tight ml-2 bg-white border border-red-700 hover:text-red-700  px-2 py-2 text-red-800 no-underline",
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
-                        return _vm.deleteTeam(_vm.team)
+                        return _vm.cancelOperation()
                       }
                     }
                   },
-                  [
-                    _vm._v(
-                      "\n                    Delete a Team\n                "
-                    )
-                  ]
+                  [_vm._v("\n         Cancel\n        ")]
                 )
               ],
               1
@@ -52291,17 +52608,10 @@ var render = function() {
       _vm._v(" "),
       _c(
         "modal-component",
-        {
-          attrs: { show: _vm.isCreating, name: _vm.create_team_modal },
-          on: {
-            "update:show": function($event) {
-              _vm.isCreating = $event
-            }
-          }
-        },
+        { attrs: { name: _vm.create_team_modal } },
         [
           _c("span", { attrs: { slot: "modal-title" }, slot: "modal-title" }, [
-            _vm._v("Create a New Team")
+            _vm._v("Create a\n      New\n      Team")
           ]),
           _vm._v(" "),
           _c("CreateTeams", {
@@ -52316,23 +52626,19 @@ var render = function() {
       _c(
         "modal-component",
         {
-          attrs: { name: _vm.edit_team_modal, show: _vm.isEditing },
-          on: {
-            "update:show": function($event) {
-              _vm.isEditing = $event
-            }
-          }
+          attrs: { name: _vm.edit_team_modal },
+          on: { "before-open": _vm.beforeOpen }
         },
         [
           _c("span", { attrs: { slot: "modal-title" }, slot: "modal-title" }, [
-            _vm._v("Update an Existing Team")
+            _vm._v("Update an\n      Existing\n      Team")
           ]),
           _vm._v(" "),
           _c("EditTeam", {
             attrs: { slot: "modal-body", team: _vm.team },
             on: {
               "team:updated": _vm.updatedTeam,
-              "team:deleted": _vm.deletedTeam
+              "operation:cancelled": _vm.cancelEditing
             },
             slot: "modal-body"
           })
@@ -52340,17 +52646,117 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "data-table",
-        {
-          attrs: {
-            data: _vm.teams,
-            title: "Showing All Registered Teams",
-            rowClickable: true
-          },
-          on: { rowClicked: _vm.getTeam }
-        },
-        [
+      _c("div", { staticClass: "flex flex-col" }, [
+        _c("div", { staticClass: "flex justify-between" }, [
+          _c("div", { staticClass: "mb-6" }, [
+            _c("nav", { staticClass: "sm:hidden" }, [
+              _c(
+                "a",
+                {
+                  staticClass:
+                    "flex items-center text-sm leading-5 font-medium text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out",
+                  attrs: { href: "#" }
+                },
+                [
+                  _c(
+                    "svg",
+                    {
+                      staticClass:
+                        "flex-shrink-0 -ml-1 mr-1 h-5 w-5 text-gray-400",
+                      attrs: { fill: "currentColor", viewBox: "0 0 20 20" }
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          "fill-rule": "evenodd",
+                          d:
+                            "M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z",
+                          "clip-rule": "evenodd"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v("\n            Back\n          ")
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "nav",
+              {
+                staticClass:
+                  "hidden sm:flex items-center text-sm leading-5 font-medium"
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out",
+                    attrs: { href: "#" }
+                  },
+                  [_vm._v("Home")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "svg",
+                  {
+                    staticClass: "flex-shrink-0 mx-2 h-5 w-5 text-gray-400",
+                    attrs: { fill: "currentColor", viewBox: "0 0 20 20" }
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        "fill-rule": "evenodd",
+                        d:
+                          "M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z",
+                        "clip-rule": "evenodd"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out",
+                    attrs: { href: "#" }
+                  },
+                  [_vm._v("Teams")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "svg",
+                  {
+                    staticClass: "flex-shrink-0 mx-2 h-5 w-5 text-gray-400",
+                    attrs: { fill: "currentColor", viewBox: "0 0 20 20" }
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        "fill-rule": "evenodd",
+                        d:
+                          "M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z",
+                        "clip-rule": "evenodd"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out",
+                    attrs: { href: "#" }
+                  },
+                  [_vm._v("view\n            all\n            teams")]
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
           _c(
             "div",
             {
@@ -52371,34 +52777,297 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("\n                New Team\n            ")]
+                [_vm._v("\n          New Team\n        ")]
               )
             ]
-          ),
-          _vm._v(" "),
-          _c("tableCol", {
-            attrs: { "data-key": "team_name", label: "Team Name" }
-          }),
-          _vm._v(" "),
-          _c("tableCol", {
-            attrs: { "data-key": "team_code", label: "Team Code" }
-          }),
-          _vm._v(" "),
-          _c("tableCol", {
-            attrs: {
-              "data-key": "team_leader",
-              label: "Team Leader",
-              hidden: true
-            }
-          })
-        ],
-        1
-      )
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200"
+              },
+              [
+                _c("div", { staticClass: "flex justify-between mb-4" }, [
+                  _c(
+                    "div",
+                    { staticClass: "flex justify-between items-center" },
+                    [
+                      _c(
+                        "span",
+                        {
+                          staticClass:
+                            "mx-2 font-size-1 md:font-size-2 text-dark"
+                        },
+                        [_vm._v("Show")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          staticClass:
+                            "block appearance-none md:font-size-1 bg-white border border-gray-700 py-1 px-2 md:pr-8 rounded focus:outline-none focus:bg-white focus:border-gray-500",
+                          on: { change: _vm.changePerPage }
+                        },
+                        [
+                          _c("option", { attrs: { selected: "" } }, [
+                            _vm._v("5")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("10")]),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("25")]),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("50")]),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("100")]),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("All")])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          staticClass:
+                            "mx-2 font-size-2 hidden text-dark lg:block"
+                        },
+                        [_vm._v("Entries")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "hidden lg:block" }, [
+                    _vm._v("\n            Page\n            "),
+                    _c("span", [_vm._v(_vm._s(_vm.pagination.currentPage))]),
+                    _vm._v("\n            of\n            "),
+                    _c("span", [_vm._v(_vm._s(_vm.pagination.lastPage))])
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.query,
+                        expression: "\n              query\n            "
+                      }
+                    ],
+                    staticClass:
+                      "block appearance-none bg-white border border-gray-700 py-1 px-1 pr-8 rounded focus:outline-none focus:bg-white focus:border-gray-500 w-3/4 ml-2 lg:w-auto lg:py-2 lg:px-2",
+                    attrs: { type: "search", placeholder: "Search..." },
+                    domProps: { value: _vm.query },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.query = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("table", { staticClass: "min-w-full" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    { staticClass: "bg-white" },
+                    _vm._l(_vm.pagination.collection, function(team, index) {
+                      return _c(
+                        "tr",
+                        { key: team.id, staticClass: "hover:bg-gray-100" },
+                        [
+                          _c(
+                            "td",
+                            {
+                              staticClass:
+                                "px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium text-gray-900"
+                            },
+                            [
+                              _vm._v(
+                                "\n                " +
+                                  _vm._s(index + 1) +
+                                  "\n              "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass:
+                                "px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500"
+                            },
+                            [
+                              _vm._v(
+                                "\n                " +
+                                  _vm._s(team.team_name) +
+                                  "\n              "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass:
+                                "px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500"
+                            },
+                            [
+                              _vm._v(
+                                "\n                " +
+                                  _vm._s(team.team_code) +
+                                  "\n              "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass:
+                                "px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500"
+                            },
+                            [
+                              _vm._v(
+                                "\n                " +
+                                  _vm._s(team.team_leader) +
+                                  "\n              "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass:
+                                "px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium"
+                            },
+                            [
+                              _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "text-indigo-00 hover:text-indigo-900 focus:outline-none focus:underline mr-2",
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.beforeOpen(team)
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fas fa-pen" })]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "text-red-800 hover:text-red-700 focus:outline-none focus:underline",
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.deleteTeam(team)
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fas fa-trash" })]
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    }),
+                    0
+                  )
+                ]),
+                _vm._v(" "),
+                _c("pagination-links", { attrs: { paginator: _vm.pagination } })
+              ],
+              1
+            )
+          ]
+        )
+      ])
     ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c(
+          "th",
+          {
+            staticClass:
+              "px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+          },
+          [_vm._v("\n                #\n              ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass:
+              "px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+          },
+          [
+            _vm._v(
+              "\n                Team\n                Name\n              "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass:
+              "px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+          },
+          [
+            _vm._v(
+              "\n                Team\n                Code\n              "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass:
+              "px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+          },
+          [
+            _vm._v(
+              "\n                Team\n                Leader\n              "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c("th", {
+          staticClass: "px-6 py-3 border-b border-gray-200 bg-gray-50"
+        })
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -52702,7 +53371,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "flex items-center border-t-2 border-gray-300" },
+            { staticClass: "flex items-center border-t-2 border-gray-400" },
             [
               _c(
                 "div",
@@ -52817,7 +53486,7 @@ var render = function() {
                 "button",
                 {
                   staticClass:
-                    "inline-block leading-tight text-red-800 border border-red-800 hover:text-red-700 px-3 py-2 bg-white no-underline shadow-md",
+                    "inline-block leading-tight text-red-800 border border-red-800 hover:text-red-700 px-3 py-2 bg-white no-underline",
                   on: {
                     click: function($event) {
                       $event.preventDefault()

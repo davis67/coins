@@ -16,10 +16,11 @@ class TeamsResource extends JsonResource
     public function toArray($request)
     {
         return [
+            "team_id" => $this->id,
             "team_name" => $this->team_name,
             "team_code" => $this->team_code,
             "created_at" => $this->created_at,
-            "updated_at" => $this->updated_by,
+            "updated_at" => $this->updated_at,
         ];
     }
 }

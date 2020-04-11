@@ -120,7 +120,7 @@
                             <!-- pass the current numbering to the table row -->
                             {{
                                 results.startingIndex +
-                                index
+                                    index
                             }}.
                         </table-row>
                         <tr
@@ -209,17 +209,18 @@ export default {
                     new Row(this.data[row], this.columns),
                 );
             }
+            console.log("rows", rows);
             this.rows = rows;
             this.results.items = rows;
 
             //this.$set(this.results, "items", rows);
         },
-        search: debounce(function () {
+        search: debounce(function() {
             this.searchText = false;
             this.results.items = this.rows.filter((row) =>
                 row.passesFilter(this.query),
             );
-            //console.log(this.results.items);
+            console.log(this.results.items);
         }, 300),
 
         changePerPage(event) {

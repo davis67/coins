@@ -1,14 +1,14 @@
 @extends('layouts.app')
 @section('content')
 <div class="flex-grow container mx-auto md:px-4 pt-6 pb-8">
-    <div class="bg-white border-t border-b sm:border-l sm:border-r sm:rounded shadow mb-6">
+    <div class="bg-white border-t border-b sm:border-l sm:border-r shadow mb-6">
         <div class="border-b md:px-6 py-4 px-4 lg:pb-0">
             <div class="flex justify-between -mb-px">
                 <div class="hidden text-blue-700 py-4 text-lg">Opportunities</div>
                 <div class="lg:flex">
                     <a href="{{route('opportunities.index')}}"
                         class="appearance-none py-4 {{ Nav::isRoute('opportunities.index', NULL, $activeClass= 'text-blue-700 border-blue-700 border-b ') }} mr-6 lg:hidden">
-                        List 
+                        List
                     </a>
                     <a href="{{route('opportunities.index')}}"
                         class="hidden appearance-none py-4 {{ Nav::isRoute('opportunities.index', NULL, $activeClass= 'text-blue-700 border-blue-700 border-b ') }} mr-6 lg:block">
@@ -18,7 +18,7 @@
                     {{-- @can('create', App\Opportunity::class) --}}
                     <a href="{{route('opportunities.create')}}"
                         class="appearance-none py-4 {{ Nav::isRoute('opportunities.create', NULL, $activeClass= 'text-blue-700 border-blue-700 border-b ') }} text-grey-700 border-b border-transparent hover:border-grey-700 mr-6 lg:hidden">
-                        Add 
+                        Add
                     </a>
                     <a href="{{route('opportunities.create')}}"
                         class="hidden appearance-none py-4 {{ Nav::isRoute('opportunities.create', NULL, $activeClass= 'text-blue-700 border-blue-700 border-b ') }} text-grey-700 border-b border-transparent hover:border-grey-700 mr-6 lg:block">
@@ -30,7 +30,7 @@
                     <a class="appearance-none py-4 text-grey-700 border-b border-transparent hover:border-grey-700">
                         Summary
                     </a>
-                    
+
 
                 </div>
             </div>

@@ -62,11 +62,43 @@ class ManageTeamsTest extends TestCase
     public function a_user_can_view_all_teams()
     {
 
-        $this->withoutExceptionHandling();
+
         $this->actingAs(factory(User::class)->create());
         $attributes = factory(Team::class)->create();
         $this->get('/teams/data')
             ->assertSee($attributes->team_name)
             ->assertSee($attributes->team_code);
+    }
+
+    /**
+     * @test
+     */
+
+    public function a_user_can_update_a_team()
+    {
+
+        $user = factory(User::class)->create();
+        $team = factory(Team::class)->create();
+        $this->actingAs($user);
+        $attributes = ["team_name" => 'changed', "team_code" => "changed", "team_leader" => "changed"];
+        $this->patch($team->path(), $attributes)
+            ->assertSee($attributes['team_name'])
+            ->assertSee($attributes['team_code'])
+            ->assertSee($attributes['team_leader'])
+            ->assertOk();
+    }
+
+    /**
+     * @test
+     */
+
+    public function a_user_can_delete_a_team()
+    {
+        $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $team = factory(Team::class)->create();
+        $this->actingAs($user);
+        $this->delete($team->path());
+        $this->assertDatabaseMissing('teams', $team->only('id'));
     }
 }

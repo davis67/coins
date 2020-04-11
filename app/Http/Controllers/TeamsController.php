@@ -131,13 +131,10 @@ class TeamsController extends Controller
             'team_code' => 'required',
             'team_leader' => 'nullable',
         ]);
+        $data['updated_by'] = auth()->user()->id;
 
-        $team->update([
-            'team_name' => $data['team_name'],
-            'team_code' => $data['team_code'],
-            'team_leader' => $data['team_leader'],
-            'updated_by' => Auth::user()->id
-        ]);
+        $team->update($data);
+
         return $team;
     }
 

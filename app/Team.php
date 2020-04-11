@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Team extends Model
 {
-    protected $fillable = ['team_name', 'team_code', 'created_by', 'updated_by'];
+    protected $fillable = ['team_name', 'team_code', 'team_leader', 'created_by', 'updated_by'];
 
     public function users()
     {
@@ -14,10 +14,10 @@ class Team extends Model
         return $this->hasMany('App\User');
     }
 
-    public function leader()
+    public function path()
     {
 
-        return $this->belongsTo('App\User')->join('teams', 'teams.team_leader', '=', 'users.id');
+        return '/teams/' . $this->id;
     }
 
     public function targets()

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="flex-grow container mx-auto h-full sm:px-4 pt-6 pb-8">
-    <div class="bg-white border-t border-b sm:border-l sm:border-r sm:rounded shadow mb-6">
+    <div class="bg-white border-t border-b sm:border-l sm:border-r  shadow mb-6">
         <div class="border-b px-6">
             <div class="flex justify-between -mb-px">
                 <div class="text-blue-700 py-4 text-lg">Opportunities</div>

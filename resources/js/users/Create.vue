@@ -111,7 +111,7 @@
                 </div>
             </div>
             <div
-                class="flex items-center border-t-2 border-gray-300"
+                class="flex items-center border-t-2 border-gray-400"
             >
                 <div class="mt-2">
                     <submitButton

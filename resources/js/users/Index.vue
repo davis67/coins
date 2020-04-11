@@ -21,7 +21,7 @@
         >
             <div class="btn-group" slot="icons">
                 <button
-                    class="inline-block leading-tight text-red-800 border border-red-800 hover:text-red-700 px-3 py-2 bg-white no-underline shadow-md"
+                    class="inline-block leading-tight text-red-800 border border-red-800 hover:text-red-700 px-3 py-2 bg-white no-underline"
                     @click.prevent="addingTeam = true"
                 >
                     Archived Users
