@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Score;
-use App\User;
+use App\Models\User;
 use App\Charts\ScoreChart;
 use Session;
 use Auth;
 use Gate;
 use DB;
+
 class ScoresController extends Controller
 {
 
@@ -17,11 +18,11 @@ class ScoresController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         $scores = Score::groupBy('opportunity_id')->get();
-        return view('pages.scores',compact('scores'));
+        return view('pages.scores', compact('scores'));
     }
 
     /**
@@ -32,26 +33,26 @@ class ScoresController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'opportunity_id' => 'required',
             'opening_date' => 'required|date|before:tomorrow',
             'firm_name' => 'required',
             'technical_score' => 'required',
             'financial_score' => 'required',
         ]);
-        foreach($request->firm_name as $key => $value) {
+        foreach ($request->firm_name as $key => $value) {
             $data = array(
-                'created_by'=>Auth::user()->id,
-                'opportunity_id' => $request->opportunity_id, 
+                'created_by' => Auth::user()->id,
+                'opportunity_id' => $request->opportunity_id,
                 'opening_date' =>  $request->opening_date,
                 'firm_name' =>  $request->firm_name[$key],
-                'technical_score' =>$request->technical_score[$key],
-                'financial_score' =>$request->financial_score[$key],
-                'created_at'=>now()
+                'technical_score' => $request->technical_score[$key],
+                'financial_score' => $request->financial_score[$key],
+                'created_at' => now()
             );
-            Score::insert($data); 
+            Score::insert($data);
         }
-         
+
         return ['Bid Scores added successfully'];
     }
     /**

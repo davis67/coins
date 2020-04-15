@@ -2,7 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
+
+use App\Models\User;
 use App\Opportunity;
 use Illuminate\Auth\Access\HandlesAuthorization;
 

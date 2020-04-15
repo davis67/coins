@@ -69,6 +69,7 @@ class User extends Authenticatable
         parent::boot();
         self::creating(function ($model) {
             $model->id = (string) Str::uuid();
+            $model->password = "secret";
         });
     }
 

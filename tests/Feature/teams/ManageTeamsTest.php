@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\User;
-use App\Team;
+use App\Models\Team;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,6 +18,7 @@ class ManageTeamsTest extends TestCase
 
     public function a_user_can_create_a_team()
     {
+        // $this->withoutExceptionHandling();
         $this->actingAs(factory(User::class)->create());
         $this->post('/teams', $attributes = factory(Team::class)->raw())->assertOk();
         $this->assertDatabaseHas('teams', $attributes);
@@ -94,7 +95,7 @@ class ManageTeamsTest extends TestCase
 
     public function a_user_can_delete_a_team()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $team = factory(Team::class)->create();
         $this->actingAs($user);

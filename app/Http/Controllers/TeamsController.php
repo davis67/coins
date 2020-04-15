@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Team;
-use App\User;
+use App\Models\Team;
+use App\Models\User;
 use App\Target;
 use App\Assessment;
 use App\Http\Resources\TeamsCollection;

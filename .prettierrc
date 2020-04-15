@@ -3,5 +3,5 @@
     "singleQuote": false,
     "arrowParens": "always",
     "printWidth": 20,
-    "trailingComma": "off"
+    "trailingComma": "none"
 }

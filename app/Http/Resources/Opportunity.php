@@ -3,7 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\User;
+use App\Models\User;
+
 class Opportunity extends JsonResource
 {
     /**
@@ -18,18 +19,18 @@ class Opportunity extends JsonResource
             "id" => $this->id,
             "om_number" => $this->om_number,
             "opportunity_name" => $this->opportunity_name,
-            "clients_name" =>$this->clients_name,
+            "clients_name" => $this->clients_name,
             "country" => $this->country,
             "funder" => $this->funder,
             "type" => $this->type,
-            "sales_stage" =>$this->sales_stage,
+            "sales_stage" => $this->sales_stage,
             "revenue" => $this->revenue,
             "team_code" => $this->team->team_code,
             "team_name" => $this->team->team_name,
-            "lead_source" =>$this->lead_source,
-            "internal_deadline" =>$this->internal_deadline,
+            "lead_source" => $this->lead_source,
+            "internal_deadline" => $this->internal_deadline,
             "external_deadline" => $this->external_deadline,
-            "created_by" =>User::findOrFail($this->created_by)->name
+            "created_by" => User::findOrFail($this->created_by)->name
         ];
     }
 }

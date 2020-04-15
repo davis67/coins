@@ -3,7 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\User;
+use App\Models\User;
+
 class Performancedimension extends JsonResource
 {
     /**
@@ -15,12 +16,12 @@ class Performancedimension extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'=>$this->id,
-            'description'=>$this->description,
-            'measurement'=>$this->measurement,
-            'target_performance'=>$this->target_performance,
+            'id' => $this->id,
+            'description' => $this->description,
+            'measurement' => $this->measurement,
+            'target_performance' => $this->target_performance,
             "assessment" => $this->assessment,
-            'meatpartone_id'=>$this->meatpartone_id
+            'meatpartone_id' => $this->meatpartone_id
         ];
     }
 }

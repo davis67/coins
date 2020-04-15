@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Opportunity;
 use App\Project;
-use App\Team;
+use App\Models\Team;
 use App\Task;
 use App\Contact;
-use App\User;
+use App\Models\User;
 use Countries;
 use App\OpportunityUser;
 use Carbon\Carbon;
@@ -187,10 +187,12 @@ class OpportunitiesController extends Controller
                 ]);
 
                 $team_leader = Team::where('id', '=', $request->team_id)->pluck('team_leader')->first();
-                if (!User::find($team_leader)) { } else {
+                if (!User::find($team_leader)) {
+                } else {
                     User::find($team_leader)->notify(new OpportunityWon($project));
                 }
-            } else { }
+            } else {
+            }
             return ['Opportunity successfully created'];
         }
     }

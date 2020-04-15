@@ -9,7 +9,7 @@ use App\User;
 use App\Leave;
 use App\TaskUser;
 use App\Timesheet;
-use App\Team;
+use App\Models\Team;
 use App\Title;
 use App\Assessment;
 use Auth;

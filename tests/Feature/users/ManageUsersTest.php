@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\User;
+
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,7 +19,7 @@ class ManageUsersTest extends TestCase
 
     public function an_administrator_can_create_users()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         $this->actingAs(factory(User::class)->create());
         $attributes = factory(User::class)->raw();
         $this->post('/users', $attributes)
@@ -26,7 +27,7 @@ class ManageUsersTest extends TestCase
             ->assertSee($attributes['staffId']);
 
         $this->assertTrue(
-            Hash::check('password', User::whereName($attributes['name'])
+            Hash::check('secret', User::whereName($attributes['name'])
                 ->first()
                 ->password)
         );
@@ -38,7 +39,7 @@ class ManageUsersTest extends TestCase
 
     public function an_administrator_can_view_all_users()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         $this->actingAs(factory(User::class)->create());
         $attributes = factory(User::class)->create();
         $this->get('/users/data')

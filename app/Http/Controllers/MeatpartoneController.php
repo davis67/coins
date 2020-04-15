@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Meatpartone;
-use App\User;
+use App\Models\User;
 use App\Partoneassessment;
 use Illuminate\Http\Request;
 use App\Http\Resources\Partone as PartoneResource;
 use App\Http\Resources\PartoneCollection as PartoneResourceCollection;
+
 class MeatpartoneController extends Controller
 {
     /**
@@ -42,20 +43,20 @@ class MeatpartoneController extends Controller
     public function store(Request $request, $id, $partone, $dimension)
     {
 
-        $self_assessment = "self_assessment".$partone.$dimension;
-        $supervisor_assessment = "supervisor_assessment".$partone.$dimension;
+        $self_assessment = "self_assessment" . $partone . $dimension;
+        $supervisor_assessment = "supervisor_assessment" . $partone . $dimension;
         $this->validate($request, [
             $self_assessment  => "required|integer|between:0,5",
             $supervisor_assessment => "required|integer|between:0,5"
         ]);
 
-        
+
         $part = Partoneassessment::create([
             'self_assessment' => $request->$self_assessment,
             'supervisor_assessment' => $request->$supervisor_assessment,
             "performance_metrics_details_id" => $request->performance_metrics_id,
             "user_id" => $request->user_id
-            ]);
+        ]);
 
         return redirect()->back();
     }
