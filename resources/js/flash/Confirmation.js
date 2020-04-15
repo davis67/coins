@@ -20,8 +20,8 @@ class Confirmation {
             type: "info",
             confirmButtonText: "Yes",
             cancelButtonText: "No, cancel!",
-            confirmButtonClass: "inline-block leading-tight bg-blue-700 border border-blue-700 hover:bg-blue-700 px-3 py-2 text-white no-underline shadow-md",
-            cancelButtonClass: "ml-3 inline-block leading-tight bg-red-700 border border-red-700 hover:bg-red-500 px-3 py-2 text-white no-underline shadow-md",
+            confirmButtonClass: "inline-block leading-tight bg-red-800 border border-red-800 hover:bg-red-700 focus:outline-none px-3 py-2 text-white no-underline shadow-md",
+            cancelButtonClass: "ml-3 inline-block leading-tight bg-white border border-red-700 hover:text-red-600 px-3 py-2 text-red-800 no-underline shadow-md",
             buttonsStyling: false,
             ...additions
         };

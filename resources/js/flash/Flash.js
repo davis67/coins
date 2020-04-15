@@ -11,7 +11,7 @@ class Flash {
     }
 
     static info(message) {
-        Flash.fire(message, "bg-blue-100 border border-blue-400 text-blue-700");
+        Flash.fire(message, "bg-orange-100 border border-orange-400 text-white");
     }
 }
 
