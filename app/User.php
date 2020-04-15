@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Opportunity;
 use DB;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -203,11 +204,16 @@ class User extends Authenticatable
         return $this->belongsTo('App\Level');
     }
 
-    public function opportunities()
-    {
+    /**
+	 * Get all opportunities created by the user.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function opportunities()
+	{
+		return $this->hasMany(Opportunity::class, 'created_by')->latest('updated_at');
+	}
 
-        return $this->belongsToMany('App\Opportunity');
-    }
     public function approvedUsers()
     {
         return $this->hasMany('App\Opportunity')->where('approved', 1)->orderBy('email');

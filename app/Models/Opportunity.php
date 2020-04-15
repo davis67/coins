@@ -1,31 +1,88 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
-use Webpatser\Uuid\Uuid;
-
+use Illuminate\Support\Str;
 use DB;
+use App\User;
 
 class Opportunity extends Model
 {
+
+    /**
+     * The attributes that are mass assignable
+     * @var array
+     */
+    protected $fillable = [
+        'opportunity_name',
+        'om_number',
+        'country',
+        'revenue',
+        'type',
+        'clients_name',
+        'lead_source',
+        'sales_stage',
+        'external_deadline',
+        'internal_deadline',
+        'team',
+        'funder',
+        'created_by',
+        'updated_by',
+        'team_id'
+    ];
+
+    /**
+     * The ID attribute should be a string
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
+     * The ID should not increment
+     * @var string
+     *
+     */
     public $incrementing = false;
 
-    protected $guarded = [];
+    /**
+     * The ID should be the primary key
+     * @var string
+     *
+     */
+    protected $primary_key = 'id';
 
-    public static function boot()
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
     {
+        return 'uuid';
+    }
 
+    /**
+     * Hook the UUID as ID attribute during the creation process of the model
+     */
+
+    protected static function boot()
+    {
         parent::boot();
-
         self::creating(function ($model) {
-
-            $model->id = (string) Uuid::generate();
+            $model->id = (string) Str::uuid();
+            $model->om_number = self::latestOM() + 1;
         });
     }
 
-    public function latestOM()
+     /**
+     * Fetch the last OM Number of an opportunity.
+     *
+     * @return String
+     */
+
+    public static function latestOM()
     {
 
         $last = DB::table('opportunities')->latest('om_number')->first();
@@ -53,10 +110,14 @@ class Opportunity extends Model
         return $this->hasMany('App\Score');
     }
 
-    public function users()
+     /**
+     * The creator of the opportunity.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function creator()
     {
-
-        return $this->belongsToMany('App\User');
+        return $this->belongsTo('App\User','created_by');
     }
 
     public function timesheets()

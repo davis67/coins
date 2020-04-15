@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Opportunity;
+use App\Models\Opportunity;
+use App\Http\Requests\OpportunityRequest;
 use App\Project;
 use App\Models\Team;
 use App\Task;
@@ -72,43 +73,9 @@ class OpportunitiesController extends Controller
         return $total;
     }
 
-    public function store(Request $request)
+    public function store(OpportunityRequest $request)
     {
-        $opportunity = new Opportunity();
-        $latest = $opportunity->latestOM();
-
-        //validate the received data
-        // dd($request->all());
-        $data = $request->validate([
-            'opportunity_name' => 'required',
-            'country' => 'required',
-            'revenue' => 'nullable',
-            'type' => 'required',
-            'clients_name' => 'required',
-            'lead_source' => 'required',
-            'external_deadline' => 'required|date|after:internal_deadline',
-            'internal_deadline' => 'required|date|after:today',
-            'team' => 'required',
-            'funder' => 'required',
-        ]);
-
-        $run = Opportunity::create([
-            'opportunity_name' => $data['opportunity_name'],
-            'clients_name' => $data['clients_name'],
-            'country' => $data['country'],
-            'revenue' => $data['revenue'],
-            // 'sales_stage' => $data['sales_stage'],
-            'type' => $data['type'],
-            'lead_source' => $data['lead_source'],
-            'external_deadline' => $data['external_deadline'],
-            'internal_deadline' => $data['internal_deadline'],
-            'team_id' => $data['team'],
-            'funder' => $data['funder'],
-            'om_number' => $latest + 1,
-            'created_by' => Auth::user()->id
-        ]);
-
-        return $run;
+        return auth()->user()->opportunities()->create($request->validated());
     }
 
     /**

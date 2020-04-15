@@ -14,8 +14,7 @@ class CreateOpportunitiesTable extends Migration
     public function up()
     {
         Schema::create('opportunities', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->primary('id');
+            $table->uuid('id')->primary();
             $table->integer('om_number');
             $table->string('clients_name');
             $table->string('opportunity_name');
@@ -27,7 +26,7 @@ class CreateOpportunitiesTable extends Migration
             $table->string('lead_source');
             $table->date('internal_deadline');
             $table->date('external_deadline');
-            $table->unsignedBigInteger('team_id');
+            $table->unsignedBigInteger('team_id')->nullable();
             $table->string('created_by');
             $table->string('updated_by')->nullable();
             $table->foreign('team_id')->references('id')->on('teams');

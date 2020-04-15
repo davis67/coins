@@ -30,7 +30,6 @@ Route::resource('/contacts', 'ContactsController');
 
 //Routing everything about opportunities
 Route::resource('opportunities', 'OpportunitiesController');
-Route::post('/opportunities/{opportunity}', 'OpportunitiesController@update');
 Route::get('/getOpportunity/{opportunity}', 'OpportunitiesController@getOpportunity')->name('getOpportunity');
 Route::post('/opportunityUser', 'OpportunitiesController@addConsultants')->name('opportunityUser');
 Route::delete('/removeConsultant/{id}', 'OpportunitiesController@removeConsultant')->name('removeConsultant');
