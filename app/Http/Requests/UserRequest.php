@@ -29,7 +29,7 @@ class UserRequest extends FormRequest
             'gender' => "sometimes|required|in:female,male",
             'email' => "sometimes|required|unique:users",
             'mobilePhone' => "sometimes|required|unique:users",
-            'password' => 'required',
+            'password' => 'nullable',
             // 'mobilePhone' => "sometimes|required|digits:10|regex:/07\d{8}/|unique:users",
             // 'alternativePhone' => "nullable|digits:10|regex:/07\d{8}/|unique:users",
             'alternativePhone' => "nullable|unique:users",

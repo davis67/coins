@@ -6,7 +6,6 @@ use DB;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
@@ -20,7 +19,19 @@ class User extends Authenticatable
      * The attributes that are mass assignable
      * @var array
      */
-    protected $guarded = [];
+    protected $fillable = [
+        'staffId',
+        'name',
+        'gender',
+        'email',
+        'mobilePhone',
+        'password',
+        'alternativePhone',
+        'team_id',
+        'title_id',
+        'reportsTo',
+        'userStatus'
+    ];
 
     /**
      * The ID attribute should be a string
@@ -64,7 +75,7 @@ class User extends Authenticatable
      * Hook the UUID as ID attribute during the creation process of the model
      */
 
-    public static function boot()
+    protected static function boot()
     {
         parent::boot();
         self::creating(function ($model) {
