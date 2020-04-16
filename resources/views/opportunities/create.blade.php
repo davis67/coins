@@ -4,11 +4,11 @@
     <div class="bg-white border-t border-b sm:border-l sm:border-r  shadow mb-6">
         <div class="border-b px-6">
             <div class="flex justify-between -mb-px">
-                <div class="text-blue-700 py-4 text-lg">Opportunities</div>
+                <div class="text-gray-900 py-4 text-lg">Add new Opportunity</div>
                 <div class="lg:flex">
 
                     <a href="{{route('opportunities.index')}}"
-                        class="appearance-none py-4 {{ Nav::isRoute('opportunities.index', NULL, $activeClass= 'text-blue-700 border-blue-700 border-b ') }} mr-6">
+                        class="appearance-none py-4 {{ Nav::isRoute('opportunities.index') }} mr-6">
                         List Opportunities
                     </a>
 

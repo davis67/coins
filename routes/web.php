@@ -11,8 +11,7 @@
 |
 */
 // Auth::logout();
-// Auth::loginUsingId("fdf3cda0-13f0-11e9-9a86-ab5a0fb32b10");
-// Auth::loginUsingId("595131d0-c7f1-11e9-90f8-518a45dc92b0");
+// Auth::loginUsingId("b2bb8292-3e97-406f-b227-0a4eb2bc6962");
 Auth::routes(['register' => false]);
 // Auth::logout();
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
@@ -29,8 +28,9 @@ Route::get('/display/{current_year}', 'HomeController@display');
 Route::resource('/contacts', 'ContactsController');
 
 //Routing everything about opportunities
+Route::get("/opportunities/data", "OpportunitiesController@getAllOpportunities");
 Route::resource('opportunities', 'OpportunitiesController');
-Route::get('/getOpportunity/{opportunity}', 'OpportunitiesController@getOpportunity')->name('getOpportunity');
+// Route::get('/getOpportunity/{opportunity}', 'OpportunitiesController@getOpportunity')->name('getOpportunity');
 Route::post('/opportunityUser', 'OpportunitiesController@addConsultants')->name('opportunityUser');
 Route::delete('/removeConsultant/{id}', 'OpportunitiesController@removeConsultant')->name('removeConsultant');
 Route::post('/filterOpportunities', 'OpportunitiesController@filterOpportunities')->name('filterOpportunities');

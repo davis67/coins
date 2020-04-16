@@ -17,7 +17,7 @@ class CreateOpportunitiesTable extends Migration
             $table->uuid('id')->primary();
             $table->integer('om_number');
             $table->string('clients_name');
-            $table->string('opportunity_name');
+            $table->longText('opportunity_name');
             $table->string('country');
             $table->string('funder');
             $table->string('type');

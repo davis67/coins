@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Team;
+use App\Models\Team;
 class TeamsTableSeeder extends Seeder
 {
     /**

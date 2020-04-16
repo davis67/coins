@@ -3,6 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Models\Opportunity;
+use App\User;
 use Faker\Generator as Faker;
 
 $factory->define(Opportunity::class, function (Faker $faker) {
@@ -16,6 +17,7 @@ $factory->define(Opportunity::class, function (Faker $faker) {
         'sales_stage' => $faker->text,
         'external_deadline' => $faker->iso8601($max = 'now'),
         'internal_deadline' => $faker->iso8601($max = 'tommorrow'),
-        'funder' => $faker->text
+        'funder' => $faker->text,
+        'created_by' => factory(User::class)->create()->id
     ];
 });

@@ -120,6 +120,16 @@ class Opportunity extends Model
         return $this->belongsTo('App\User','created_by');
     }
 
+     /**
+     *  The path to the opportunity.
+     *
+     * @return string
+     */
+    public function path()
+    {
+        return "/opportunities/{$this->id}";
+    }
+
     public function timesheets()
     {
 
@@ -135,7 +145,7 @@ class Opportunity extends Model
     public function team()
     {
 
-        return $this->belongsTo('App\Team');
+        return $this->belongsTo('App\Models\Team');
     }
 
     public function documents()

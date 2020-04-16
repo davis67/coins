@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Opportunity;
+
 use App\Http\Requests\OpportunityRequest;
+use App\Http\Resources\OpportunitiesResource;
+use App\Http\Resources\OpportunitiesCollection;
 use App\Project;
 use App\Models\Team;
 use App\Task;
 use App\Contact;
-use App\Models\User;
+use App\User;
 use Countries;
 use App\OpportunityUser;
 use Carbon\Carbon;
@@ -23,7 +26,7 @@ use App\Charts\CoinChart;
 use Session;
 use Auth;
 use DB;
-use App\Http\Resources\Opportunity as OpportunityResource;
+use App\Http\Resources\OpportunityResource;
 
 use Gate;
 use PragmaRX\Countries\Package\Services\Countries as ServicesCountries;
@@ -36,16 +39,36 @@ class OpportunitiesController extends Controller
         $this->middleware('auth');
     }
 
+     /**
+     * View all opportunities.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
     public function index()
     {
-        // dd(auth()->user()->team->team_code);
-        $opportunities = OpportunityResource::collection(Opportunity::all());
-        return view('opportunities.index', compact('opportunities'));
+        return view('opportunities.index');
     }
+
+    /**
+     * get all the opportunities from the database, order by the latest
+     * @return collection
+     */
+
+    public function getAllOpportunities()
+    {
+        return new OpportunitiesCollection(Opportunity::all());
+    }
+
+
+    /**
+     * Create a new opportunity.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
     public function create()
     {
-        // $this->authorize("create", Opportunity::class);
         $teams = Team::all();
         $users = User::all();
         $countries = Countries::all()->pluck('name.common');
@@ -92,16 +115,8 @@ class OpportunitiesController extends Controller
 
     public function show($id)
     {
-        $opportunity = Opportunity::findOrFail($id);
-
-        $deliverables = DeliverableOpportunity::where(['deliverable_opportunity.opportunity_id' => $id])
-            ->join('deliverables', 'deliverable_opportunity.deliverable_id', '=', 'deliverables.id')
-            ->get();
-
-        $opportunity_tasks = Task::join('deliverables', 'tasks.deliverable_id', '=', 'deliverables.id')
-            ->join('deliverable_opportunity', 'tasks.deliverable_id', '=', 'deliverable_opportunity.deliverable_id')->get();
-        // dd($opportunity);
-        return view('opportunities.show', compact('opportunity', 'deliverables', 'opportunity_tasks'));
+        $opportunity = new OpportunitiesResource(Opportunity::findOrFail($id));
+        return view('opportunities.show', compact('opportunity'));
     }
 
     public function edit($id)
