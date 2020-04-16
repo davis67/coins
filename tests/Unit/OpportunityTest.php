@@ -16,7 +16,7 @@ class OpportunityTest extends TestCase
      * @test
      */
     public function it_has_a_path(){
-        $this->withoutExceptionHandling();
+
         $opportunity = factory(Opportunity::class)->create();
         $this->assertEquals('/opportunities/'.$opportunity->id, $opportunity->path());
     }
@@ -25,9 +25,16 @@ class OpportunityTest extends TestCase
     public function it_belongs_to_a_creator()
     {
 
-        $this->actingAs( factory(User::class)->create());
         $attributes =factory(Opportunity::class)->raw();
         $opportunity = auth()->user()->opportunities()->create($attributes);
         $this->assertInstanceOf('App\User', $opportunity->creator);
+    }
+
+     /** @test */
+    public function it_belongs_to_a_team()
+    {
+        $this->withoutExceptionHandling();
+        $opportunity =factory(Opportunity::class)->create();
+        $this->assertInstanceOf('App\Models\Team', $opportunity->team);
     }
 }

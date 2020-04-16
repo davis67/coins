@@ -3,6 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Models\Opportunity;
+use App\Models\Team;
 use App\User;
 use Faker\Generator as Faker;
 
@@ -18,6 +19,7 @@ $factory->define(Opportunity::class, function (Faker $faker) {
         'external_deadline' => $faker->iso8601($max = 'now'),
         'internal_deadline' => $faker->iso8601($max = 'tommorrow'),
         'funder' => $faker->text,
+        'team_id' => factory(Team::class)->create()->id,
         'created_by' => factory(User::class)->create()->id
     ];
 });

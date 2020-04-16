@@ -277,7 +277,7 @@
                                         form
                                     "
                                     label="Team"
-                                    name="team"
+                                    name="team_id"
                                     :options="
                                         teams
                                     "

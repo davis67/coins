@@ -47,7 +47,8 @@
                                     opportunity.clients_name
                                 }}
                             </dd>
-                        </template>
+                        </div>
+
                         <div
                             class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5"
                         >
@@ -69,7 +70,7 @@
                                     >
                                         Lead
                                         Source
-                                    </template>
+                                    </div>
                                     <span
                                         class="text-sm leading-5 text-gray-500"
                                     >
@@ -194,48 +195,40 @@
                             <dd
                                 class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
                             >
-                                Fugiat
-                                ipsum
-                                ipsum
-                                deserunt
-                                culpa
-                                aute
-                                sint
-                                do
-                                nostrud
-                                anim
-                                incididunt
-                                cillum
-                                culpa
-                                consequat.
-                                Excepteur
-                                qui
-                                ipsum
-                                aliquip
-                                consequat
-                                sint.
-                                Sit
-                                id
-                                mollit
-                                nulla
-                                mollit
-                                nostrud
-                                in
-                                ea
-                                officia
-                                proident.
-                                Irure
-                                nostrud
-                                pariatur
-                                mollit
-                                ad
-                                adipisicing
-                                reprehenderit
-                                deserunt
-                                qui
-                                eu.
+                                <span
+                                    class=" m-4 ml-8 capitalise font-bold text-center"
+                                    v-if="
+                                        opportunity.team_name
+                                    "
+                                    >{{
+                                        opportunity.team_name
+                                    }}
+                                </span>
+                                <span
+                                    class="text-center m-4"
+                                    v-else
+                                    >This
+                                    opportunity
+                                    has
+                                    not
+                                    yet
+                                    been
+                                    assigned
+                                    to
+                                    a
+                                    team.Click
+                                    on
+                                    Edit
+                                    opportunity
+                                    to
+                                    assign
+                                    it
+                                    to
+                                    a
+                                    team.</span
+                                >
                                 <div
-                                    class="flex justify-around"
+                                    class="flex justify-around mt-4"
                                 >
                                     <span>
                                         <span

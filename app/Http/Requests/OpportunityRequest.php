@@ -31,6 +31,7 @@ class OpportunityRequest extends FormRequest
             'clients_name' => 'required',
             'lead_source' => 'required',
             'sales_stage' => 'required',
+            'team_id' => 'nullable',
             'internal_deadline' => 'required|date',
             'external_deadline' => 'required|date|after:internal_deadline',
             'funder' => 'required',

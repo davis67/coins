@@ -25,7 +25,7 @@ class Opportunity extends Model
         'sales_stage',
         'external_deadline',
         'internal_deadline',
-        'team',
+        'team_id',
         'funder',
         'created_by',
         'updated_by',
