@@ -110,6 +110,19 @@ class User extends Authenticatable
     }
 
 
+     /**
+	 * Get all opportunities assigned to an consultant.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+	 */
+    public function assignedOpportinities(){
+
+        return $this->belongsToMany(
+            'App\Models\Opportunity',
+            'consultant_opportunity')
+            ->withTimestamps();
+    }
+
 
     public function tasks()
     {
@@ -184,12 +197,16 @@ class User extends Authenticatable
         return $this->hasMany(Leavestatus::class, 'approved_by');
     }
 
-
+    /**
+	 * Get all opportunities created by the user.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
 
     public function team()
     {
 
-        return $this->belongsTo('App\Team')->withDefault(['id' => 1]);
+        return $this->belongsTo('App\Models\Team');
     }
 
     public function leads()
@@ -211,27 +228,28 @@ class User extends Authenticatable
 	 */
 	public function opportunities()
 	{
-		return $this->hasMany(Opportunity::class, 'created_by')->latest('updated_at');
+        return $this->hasMany('Opportunity::class', 'created_by')
+                    ->latest('updated_at');
 	}
 
-    public function approvedUsers()
-    {
-        return $this->hasMany('App\Opportunity')->where('approved', 1)->orderBy('email');
-    }
+    // public function approvedUsers()
+    // {
+    //     return $this->hasMany('App\Opportunity')->where('approved', 1)->orderBy('email');
+    // }
 
     //actual function that checks whther the user has a title from a specified array of titles.This function will be usedd in the middleware to check if a user is authorised to perform a certain task.
-    public function hasAnyTitles($titles)
-    {
-        if (is_array($titles)) {
-            foreach ($titles as $title) {
-                if ($this->hasRole($title)) {
-                    return true;
-                }
+    // public function hasAnyTitles($titles)
+    // {
+    //     if (is_array($titles)) {
+    //         foreach ($titles as $title) {
+    //             if ($this->hasRole($title)) {
+    //                 return true;
+    //             }
 
-                return false;
-            }
-        }
-    }
+    //             return false;
+    //         }
+    //     }
+    // }
 
     //function that checks whether the user has acertain title.
     public function hasTitle($title)

@@ -98,6 +98,30 @@ class Opportunity extends Model
         return $latest;
     }
 
+    /**
+	 * Get all consultants assigned to an opportunity.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+	 */
+    public function consultants(){
+
+        return $this->belongsToMany(
+            'App\User',
+             'consultant_opportunity')
+             ->withTimestamps();
+    }
+
+     /**
+     * Assign a consultant tan opportunity.
+     *
+     * @param  string $body
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function assignConsultant($user)
+    {
+        return $this->consultants()->attach($user);
+    }
+
     public function project()
     {
 

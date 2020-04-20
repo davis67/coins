@@ -76,7 +76,12 @@
 
 <script>
 import debounce from "lodash/debounce";
+import vSelect from "vue-select";
 export default {
+    components: {
+        vSelect:
+            "v-select"
+    },
     props: {
         form: {
             required: true,

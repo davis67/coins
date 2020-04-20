@@ -273,10 +273,59 @@
                             <dd
                                 class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
                             >
+                                <form
+                                    @submit.prevent="
+                                        assignConsultant
+                                    "
+                                    class="flex"
+                                >
+                                    <select
+                                        v-model="
+                                            consultant_id
+                                        "
+                                        class="block appearance-none md:font-size-1 bg-white border border-gray-700 py-1 px-2 md:pr-8 w-full m-4 rounded focus:outline-none focus:bg-white focus:border-gray-500"
+                                    >
+                                        <!-- <option
+                                            >Select
+                                            consultants</option
+                                        > -->
+                                        <option
+                                            v-for="consultant in consultants"
+                                            :key="
+                                                consultant.id
+                                            "
+                                            :value="
+                                                consultant.id
+                                            "
+                                            >{{
+                                                consultant.name
+                                            }}</option
+                                        >
+                                    </select>
+                                    <button
+                                        type="submit"
+                                        class="appearance-none md:font-size-1 bg-red-800 text-white border border-red-700 py-1 px-2 rounded  m-4 focus:border-red-800"
+                                    >
+                                        select
+                                    </button>
+                                </form>
                                 <ul
+                                    v-if="
+                                        opportunity
+                                            .consultants
+                                            .data
+                                            .length !==
+                                            0
+                                    "
                                     class="border border-gray-200 rounded-md"
                                 >
                                     <li
+                                        v-for="assigned in opportunity
+                                            .consultants
+                                            .data"
+                                        :key="
+                                            assigned.id
+                                        "
                                         class="pl-3 pr-4 py-3 flex items-center justify-between text-sm leading-5"
                                     >
                                         <div
@@ -294,8 +343,9 @@
                                             <span
                                                 class="ml-2 flex-1 w-0 truncate"
                                             >
-                                                Agaba
-                                                Davis
+                                                {{
+                                                    assigned.name
+                                                }}
                                             </span>
                                         </div>
                                         <div
@@ -309,38 +359,21 @@
                                             </a>
                                         </div>
                                     </li>
+                                </ul>
+                                <ul
+                                    v-else
+                                    class="border border-gray-200 rounded-md"
+                                >
                                     <li
-                                        class="border-t border-gray-200 pl-3 pr-4 py-3 flex items-center justify-between text-sm leading-5"
+                                        class="pl-3 pr-4 py-3 flex items-center justify-between text-sm leading-5"
                                     >
-                                        <div
-                                            class="w-0 flex-1 flex items-center"
-                                        >
-                                            <svg
-                                                class="flex-shrink-0 h-5 w-5 text-gray-400"
-                                                fill="currentColor"
-                                                viewBox="0 0 20 20"
-                                            >
-                                                <path
-                                                    d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"
-                                                />
-                                            </svg>
-                                            <span
-                                                class="ml-2 flex-1 w-0 truncate"
-                                            >
-                                                Agaba
-                                                Davis
-                                            </span>
-                                        </div>
-                                        <div
-                                            class="ml-4 flex-shrink-0"
-                                        >
-                                            <a
-                                                href="#"
-                                                class="font-medium text-red-800 hover:text-red-600 transition duration-150 ease-in-out"
-                                            >
-                                                Remove
-                                            </a>
-                                        </div>
+                                        No
+                                        consultants
+                                        assigned
+                                        to
+                                        this
+                                        opportunity
+                                        yet
                                     </li>
                                 </ul>
                             </dd>
@@ -361,7 +394,7 @@
                                     class="border border-gray-200 rounded-md"
                                 >
                                     <li
-                                        class="pl-3 pr-4 py-3 flex items-center justify-between text-sm leading-5"
+                                        class="pl-3 pr-4 py-3 border border-gray-200 flex items-center justify-between text-sm leading-5"
                                     >
                                         <div
                                             class="w-0 flex-1 flex items-center"
@@ -458,22 +491,55 @@ export default {
             isOpen: false,
             isCreating: false,
             isEditing: false,
+            consultants: [],
+            consultant_id:
+                "",
             opportunity: this
                 .dataOpportunity
         };
     },
     created() {
+        this.getUsers();
         console.log(
             this
-                .dataOpportunity
+                .opportunity
         );
     },
     methods: {
-        getopportunity(
-            opportunity
-        ) {
-            this.isEditing = true;
-            this.opportunity = opportunity;
+        async assignConsultant() {
+            try {
+                let response = await axios.get(
+                    `/opportunities/${this.opportunity.id}/assign/${this.consultant_id}`
+                );
+                if (
+                    response.data ==
+                    "success"
+                ) {
+                    this.consultant_id =
+                        "";
+                    Flash.success(
+                        "You have successfully assigned consultant to this opportunity"
+                    );
+                    window.location = `/opportunities/${this.opportunity.id}`;
+                }
+            } catch (error) {
+                console.log(
+                    error
+                );
+            }
+        },
+        async getUsers() {
+            try {
+                let consultants = await axios.get(
+                    "/users/data"
+                );
+                this.consultants =
+                    consultants.data.data;
+            } catch (error) {
+                console.log(
+                    error
+                );
+            }
         },
         addingOpportunity() {
             Confirmation.confirm(

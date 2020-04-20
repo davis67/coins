@@ -29,8 +29,8 @@ Route::resource('/contacts', 'ContactsController');
 
 //Routing everything about opportunities
 Route::get("/opportunities/data", "OpportunitiesController@getAllOpportunities");
+Route::get('/opportunities/{opportunity}/assign/{consultant}', 'OpportunitiesController@assignConsultants')->name('opportunties.assign');
 Route::resource('opportunities', 'OpportunitiesController');
-// Route::get('/getOpportunity/{opportunity}', 'OpportunitiesController@getOpportunity')->name('getOpportunity');
 Route::post('/opportunityUser', 'OpportunitiesController@addConsultants')->name('opportunityUser');
 Route::delete('/removeConsultant/{id}', 'OpportunitiesController@removeConsultant')->name('removeConsultant');
 Route::post('/filterOpportunities', 'OpportunitiesController@filterOpportunities')->name('filterOpportunities');

@@ -58,7 +58,7 @@ class ManageOpportunitiesTest extends TestCase
 
     public function a_user_can_view_a_single_opportunity()
     {
-        $this->withoutExceptionHandling();
+
         $user = factory(User::class)->create();
         $this->actingAs($user);
         $opportunity = factory(Opportunity::class)->create();
@@ -68,6 +68,25 @@ class ManageOpportunitiesTest extends TestCase
             ->assertSee($opportunity['type'])
             ->assertSee($opportunity['om_number'])
             ->assertSee($opportunity['funder']);
+
+    }
+
+     /**
+     * @test
+     */
+
+    public function a_consultant_can_be_assigned_an_opportunity()
+    {
+         $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
+        $consultant =factory(User::class)->create();
+        $opportunity =factory(Opportunity::class)->create();
+        $this->get('/opportunities/'.$opportunity->id.'/assign/'.$consultant->id)->assertOk();
+        $this->assertDatabaseHas('consultant_opportunity', [
+            'user_id'=> $consultant->id,
+            'opportunity_id'=>$opportunity->id
+        ]);
 
     }
 }

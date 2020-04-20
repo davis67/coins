@@ -102,6 +102,18 @@ class OpportunitiesController extends Controller
     }
 
     /**
+     * assign a consultant.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function assignConsultants($opportunityId,$userId){
+        $opportunity = Opportunity::findOrFail($opportunityId);
+        $consultant = User::findOrFail($userId);
+        $opportunity->assignConsultant($consultant);
+        return 'success';
+    }
+
+    /**
      * Display the resource.
      *
      * @param  int  $id

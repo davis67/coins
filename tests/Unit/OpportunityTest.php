@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\Opportunity;
 use App\User;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class OpportunityTest extends TestCase
@@ -25,16 +26,32 @@ class OpportunityTest extends TestCase
     public function it_belongs_to_a_creator()
     {
 
-        $attributes =factory(Opportunity::class)->raw();
-        $opportunity = auth()->user()->opportunities()->create($attributes);
+        $opportunity =factory(Opportunity::class)->create();
         $this->assertInstanceOf('App\User', $opportunity->creator);
     }
 
      /** @test */
     public function it_belongs_to_a_team()
     {
-        $this->withoutExceptionHandling();
+
         $opportunity =factory(Opportunity::class)->create();
         $this->assertInstanceOf('App\Models\Team', $opportunity->team);
+    }
+
+     /** @test */
+    public function it_may_have_consultants()
+    {
+        $opportunity =factory(Opportunity::class)->create();
+        $this->assertInstanceOf(Collection::class, $opportunity->consultants);
+    }
+
+     /** @test */
+    public function it_may_be_assigned_to_consultants()
+    {
+        $opportunity =factory(Opportunity::class)->create();
+        $consultant =factory(User::class)->create();
+        $opportunity->assignConsultant($consultant);
+        $this->assertCount(1, $opportunity->consultants);
+        $this->assertTrue($opportunity->consultants->contains($consultant));
     }
 }
