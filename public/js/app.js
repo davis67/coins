@@ -5069,6 +5069,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["dataOpportunity"],
   data: function data() {
@@ -55327,6 +55346,40 @@ var render = function() {
                           "mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
                       },
                       [
+                        _c(
+                          "form",
+                          {
+                            staticClass: "flex items-center",
+                            attrs: { enctype: "multipart/form-data" },
+                            on: {
+                              submit: function($event) {
+                                $event.preventDefault()
+                                return _vm.attachDocument($event)
+                              }
+                            }
+                          },
+                          [
+                            _c("input", {
+                              staticClass: "border w-full",
+                              attrs: { type: "file", name: "document" }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "appearance-none md:font-size-1 bg-red-800 text-white border border-red-700 py-1 px-2 rounded  m-4 focus:border-red-800",
+                                attrs: { type: "submit" }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                    select\n                                "
+                                )
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
                         _c(
                           "ul",
                           { staticClass: "border border-gray-200 rounded-md" },

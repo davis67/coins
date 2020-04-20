@@ -392,6 +392,25 @@
                             <dd
                                 class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
                             >
+                                <form
+                                    @submit.prevent="
+                                        attachDocument
+                                    "
+                                    class="flex items-center"
+                                    enctype="multipart/form-data"
+                                >
+                                    <input
+                                        type="file"
+                                        name="document"
+                                        class="border w-full"
+                                    />
+                                    <button
+                                        type="submit"
+                                        class="appearance-none md:font-size-1 bg-red-800 text-white border border-red-700 py-1 px-2 rounded  m-4 focus:border-red-800"
+                                    >
+                                        select
+                                    </button>
+                                </form>
                                 <ul
                                     class="border border-gray-200 rounded-md"
                                 >
@@ -637,6 +656,5 @@ export default {
 };
 </script>
 <style
-    lang="sass"
     scoped
 ></style>

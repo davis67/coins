@@ -12,6 +12,10 @@
 */
 // Auth::logout();
 // Auth::loginUsingId("b2bb8292-3e97-406f-b227-0a4eb2bc6962");
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 Auth::routes(['register' => false]);
 // Auth::logout();
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');

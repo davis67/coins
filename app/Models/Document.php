@@ -1,48 +1,37 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
-
-use Webpatser\Uuid\Uuid;
 
 class Document extends Model
 {
-    public $incrementing = false;
-    
+    /**
+     * Attributes to guard against mass assignment.
+     *
+     * @var array
+     */
     protected $guarded = [];
 
-    public static function boot()
+
+    /**
+     * Get the description of the document.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function description()
     {
-        parent::boot();
-        
-        self::creating(function ($model) {
-
-            $model->id = (string) Uuid::generate();
-            
-        });
-
-    }
-    
-    public function comments(){
-        return $this->morphMany('App\Comment', 'commentable');
+        return $this->morphTo();
     }
 
-    public function associate(){
-
-        return $this->belongsTo('App\Associate', 'commentable');
-
-    }
-
-    public function opportunity(){
-
-        return $this->belongsTo('App\Opportunity', 'commentable');
-
-    }
-
-    public function project(){
-
-        return $this->belongsTo('App\Project', 'commentable');
-
+    /**
+     * Get the user who triggered the document.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

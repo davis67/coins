@@ -26,7 +26,6 @@ class CreateTimesheetsTable extends Migration
             $table->string('updated_by')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('serviceline_id')->references('id')->on('servicelines');
-            $table->foreign('task_id')->references('id')->on('tasks');
             $table->foreign('created_by')->references('id')->on('users');
             $table->foreign('updated_by')->references('id')->on('users');
             $table->timestamps();

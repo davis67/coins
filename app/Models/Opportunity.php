@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Document;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use DB;
@@ -183,10 +184,15 @@ class Opportunity extends Model
         return $this->hasMany('App\Document');
     }
 
-    public function comments()
-    {
+    /**
+     * The document for the opportunity.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
 
-        return $this->morphMany('App\Comment', 'commentable');
+    public function document()
+    {
+        return $this->morphMany(Document::class, 'description')->latest();
     }
 
     public function evaluations()

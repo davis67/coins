@@ -92,7 +92,7 @@ class ManageOpportunitiesTest extends TestCase
 
     public function a_consultant_can_update_an_opportunity()
     {
-        $this->withoutExceptionHandling();;
+
         $this->actingAs($user = factory(User::class)->create());
         $opportunity = factory(Opportunity::class)->create();
         $this->get($opportunity->path() . '/edit')->assertOk();
