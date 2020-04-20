@@ -196,12 +196,14 @@
                                 class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
                             >
                                 <span
-                                    class=" m-4 ml-8 capitalise font-bold text-center"
+                                    class=" m-4 ml-8 capitalise font-bold text-lg text-center"
                                     v-if="
-                                        opportunity.team_name
+                                        opportunity.team
                                     "
                                     >{{
-                                        opportunity.team_name
+                                        opportunity
+                                            .team
+                                            .team_name
                                     }}
                                 </span>
                                 <span
@@ -468,6 +470,9 @@
                             >
                                 <a
                                     href="#"
+                                    @click.prevent="
+                                        editOpportunity
+                                    "
                                     class="inline-block leading-tight bg-red-800 border border-red-800 hover:bg-red-700 px-3 py-2 text-white no-underline rounded"
                                 >
                                     Edit
@@ -488,9 +493,7 @@ export default {
     ],
     data() {
         return {
-            isOpen: false,
             isCreating: false,
-            isEditing: false,
             consultants: [],
             consultant_id:
                 "",
@@ -502,7 +505,7 @@ export default {
         this.getUsers();
         console.log(
             this
-                .opportunity
+                .dataOpportunity
         );
     },
     methods: {
@@ -552,9 +555,7 @@ export default {
                     (window.location = `/opportunities/create`)
             );
         },
-        viewOpportunity(
-            opportunity
-        ) {
+        editOpportunity() {
             Confirmation.confirm(
                 "Do you want to Leave this Page?",
                 "Continue"
@@ -562,31 +563,7 @@ export default {
                 (
                     done
                 ) =>
-                    (window.location = `/opportunities/${opportunity.id}`)
-            );
-        },
-
-        async registeredopportunity(
-            opportunity
-        ) {
-            Flash.success(
-                "You have successfully added an opportunity"
-            );
-            await this.fetchopportunities(); // or vue.set(this.opportunities, opportunity.id, opportunity)
-            this.isCreating = false;
-        },
-        async updatedOpportunity(
-            opportunity
-        ) {
-            Flash.success(
-                "You have successfully updated opportunity"
-            );
-            await this.fetchOpportunities(); // or vue.set(this.opportunities, opportunity.id, opportunity)
-        },
-
-        cancelEditing() {
-            this.$modal.hide(
-                "edit_opportunity_modal"
+                    (window.location = `/opportunities/${this.opportunity.id}/edit`)
             );
         },
         async deleteOpportunity(

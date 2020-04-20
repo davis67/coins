@@ -17,6 +17,8 @@ use DB;
 use Gate;
 use Alert;
 use App\Http\Requests\UserRequest;
+use App\Http\Resources\TeamsCollection;
+use App\Http\Resources\TeamsResource;
 use Session;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\UsersCollection;

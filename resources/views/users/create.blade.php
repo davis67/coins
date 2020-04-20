@@ -85,6 +85,6 @@
             </a>
                 </div>
             </div>
-        <create-users :data-titles="{{$titles}}" :data-teams="{{$teams}}" :data-users="{{$users}}"></create-users>
+        <create-users :data-titles="{{$titles}}" :data-teams="{{json_encode($teams)}}" :data-users="{{$users}}"></create-users>
     </div>
 @endsection

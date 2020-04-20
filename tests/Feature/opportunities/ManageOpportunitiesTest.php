@@ -29,7 +29,6 @@ class ManageOpportunitiesTest extends TestCase
             ->assertSee($attributes['type'])
             ->assertSee($attributes['internal_deadline'])
             ->assertSee($attributes['external_deadline']);
-
     }
 
 
@@ -49,10 +48,9 @@ class ManageOpportunitiesTest extends TestCase
             ->assertSee($opportunity['type'])
             ->assertSee($opportunity['om_number'])
             ->assertSee($opportunity['funder']);
-
     }
 
-     /**
+    /**
      * @test
      */
 
@@ -68,25 +66,45 @@ class ManageOpportunitiesTest extends TestCase
             ->assertSee($opportunity['type'])
             ->assertSee($opportunity['om_number'])
             ->assertSee($opportunity['funder']);
-
     }
 
-     /**
+    /**
      * @test
      */
 
     public function a_consultant_can_be_assigned_an_opportunity()
     {
-         $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $this->actingAs($user);
-        $consultant =factory(User::class)->create();
-        $opportunity =factory(Opportunity::class)->create();
-        $this->get('/opportunities/'.$opportunity->id.'/assign/'.$consultant->id)->assertOk();
+        $consultant = factory(User::class)->create();
+        $opportunity = factory(Opportunity::class)->create();
+        $this->get('/opportunities/' . $opportunity->id . '/assign/' . $consultant->id)->assertOk();
         $this->assertDatabaseHas('consultant_opportunity', [
-            'user_id'=> $consultant->id,
-            'opportunity_id'=>$opportunity->id
+            'user_id' => $consultant->id,
+            'opportunity_id' => $opportunity->id
         ]);
+    }
 
+    /**
+     * @test
+     */
+
+    public function a_consultant_can_update_an_opportunity()
+    {
+        $this->withoutExceptionHandling();;
+        $this->actingAs($user = factory(User::class)->create());
+        $opportunity = factory(Opportunity::class)->create();
+        $this->get($opportunity->path() . '/edit')->assertOk();
+        $attributes = [
+            'opportunity_name' => 'Changed',
+            'sales_stage' => 'changed'
+        ];
+        $this->patch($opportunity->path(), $attributes)
+            ->assertStatus(200);
+        $this->assertDatabaseHas('opportunities', [
+            'opportunity_name' => $attributes['opportunity_name'],
+            'sales_stage' => $attributes['sales_stage']
+        ]);
     }
 }

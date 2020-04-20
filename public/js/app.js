@@ -3675,8 +3675,270 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["dataOpportunity", "dataCountries", "dataTeams"],
+  props: ["dataOpportunity", "dataCountries"],
   data: function data() {
     return {
       form: new MyForm({}),
@@ -3685,7 +3947,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       leads_source_option: ["Cold call", "Existing customer", "Self Generated", "Employee", "Partner", "Public Relations", "Direct Mail", "Conference", "Trade Show", "website", "word of mouth", "Email", "Compaign", "other"],
       sale_stage_option: ["Prospecting", "EOI", "Needs Analysis", "Value Proposition", "Id Decision Analysis", "Perception Analysis", "Propasal Price Quote", "Negotiation Review", "CLosed Won", "Closed Lost", "Submitted", "Did Not Pursue", "Not Submitted"],
       countries: this.dataCountries,
-      teams: this.dataTeams
+      teams: []
     };
   },
   mounted: function mounted() {
@@ -3693,6 +3955,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   created: function created() {
     this.updatefields(this.form);
+    this.fetchTeams();
+    console.log(this.dataOpportunity);
   },
   methods: {
     deleteOpportunity: function deleteOpportunity(opportunity) {
@@ -3728,10 +3992,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.updateField("funder", this.opportunity.funder);
       this.form.updateField("type", this.opportunity.type);
       this.form.updateField("lead_source", this.opportunity.lead_source);
+      this.form.updateField("sales_stage", this.opportunity.sales_stage);
       this.form.updateField("revenue", this.opportunity.revenue);
-      this.form.updateField("internal_deadline", this.opportunity.internal_deadline);
-      this.form.updateField("external_deadline", this.opportunity.external_deadline);
-      this.form.updateField("team_id", this.opportunity.team_id);
+      this.form.updateField("internal_deadline", this.opportunity.original_internal_deadline);
+      this.form.updateField("external_deadline", this.opportunity.original_external_deadline);
+      this.form.updateField("team_id", this.opportunity.team.id);
     },
     editOpportunity: function editOpportunity() {
       var _this = this;
@@ -3744,6 +4009,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       })["catch"](function (errors) {
         return Flash.error("Something went wrong! please try again");
       });
+    },
+    fetchTeams: function fetchTeams() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var teams;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios.get("/teams/data");
+
+              case 3:
+                teams = _context2.sent;
+                _this2.teams = teams.data.data;
+                _context2.next = 10;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0);
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[0, 7]]);
+      }))();
     }
   }
 });
@@ -4767,13 +5064,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["dataOpportunity"],
   data: function data() {
     return {
-      isOpen: false,
       isCreating: false,
-      isEditing: false,
       consultants: [],
       consultant_id: "",
       opportunity: this.dataOpportunity
@@ -4781,7 +5081,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   created: function created() {
     this.getUsers();
-    console.log(this.opportunity);
+    console.log(this.dataOpportunity);
   },
   methods: {
     assignConsultant: function assignConsultant() {
@@ -4859,67 +5159,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return window.location = "/opportunities/create";
       });
     },
-    viewOpportunity: function viewOpportunity(opportunity) {
+    editOpportunity: function editOpportunity() {
+      var _this3 = this;
+
       Confirmation.confirm("Do you want to Leave this Page?", "Continue").then(function (done) {
-        return window.location = "/opportunities/".concat(opportunity.id);
+        return window.location = "/opportunities/".concat(_this3.opportunity.id, "/edit");
       });
     },
-    registeredopportunity: function registeredopportunity(opportunity) {
-      var _this3 = this;
+    deleteOpportunity: function deleteOpportunity(opportunity) {
+      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                Flash.success("You have successfully added an opportunity");
-                _context3.next = 3;
-                return _this3.fetchopportunities();
-
-              case 3:
-                // or vue.set(this.opportunities, opportunity.id, opportunity)
-                _this3.isCreating = false;
-
-              case 4:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
-    },
-    updatedOpportunity: function updatedOpportunity(opportunity) {
-      var _this4 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                Flash.success("You have successfully updated opportunity");
-                _context4.next = 3;
-                return _this4.fetchOpportunities();
-
-              case 3:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }))();
-    },
-    cancelEditing: function cancelEditing() {
-      this.$modal.hide("edit_opportunity_modal");
-    },
-    deleteOpportunity: function deleteOpportunity(opportunity) {
-      var _this5 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                _context5.next = 2;
+                _context3.next = 2;
                 return Confirmation.confirm("This action is irreversible", "Do you want to delete a opportunity?").then(function (done) {
                   return axios["delete"]("/opportunities/" + opportunity.opportunity_id).then(function (response) {});
                 })["catch"](function (error) {
@@ -4927,19 +5182,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 2:
-                _context5.next = 4;
-                return _this5.fetchOpportunities();
+                _context3.next = 4;
+                return _this4.fetchOpportunities();
 
               case 4:
                 // or vue.set(this.opportunities, opportunity.id, opportunity)
-                Flash.success("You have successfully deleted a opportunity"), _this5.$emit("opportunity:deleted", opportunity);
+                Flash.success("You have successfully deleted a opportunity"), _this4.$emit("opportunity:deleted", opportunity);
 
               case 5:
               case "end":
-                return _context5.stop();
+                return _context3.stop();
             }
           }
-        }, _callee5);
+        }, _callee3);
       }))();
     }
   },
@@ -5658,10 +5913,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["team"],
   data: function data() {
@@ -5689,7 +5940,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     updateTeam: function updateTeam() {
       var _this = this;
 
-      this.form.put("/teams/".concat(this.team.team_id)).then(function (data) {
+      this.form.put("/teams/".concat(this.team.id)).then(function (data) {
         _this.$emit("team:updated", data);
       })["catch"](function (errors) {
         return Flash.error("Something went wrong! please try again");
@@ -5761,6 +6012,21 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6175,7 +6441,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context3.next = 2;
                 return Confirmation.confirm("This action is irreversible", "Do you want to delete a team?").then(function (done) {
-                  return axios["delete"]("/teams/" + team.team_id).then(function (response) {});
+                  return axios["delete"]("/teams/" + team.id).then(function (response) {});
                 })["catch"](function (error) {
                   console.log(error);
                 });
@@ -53538,220 +53804,258 @@ var render = function() {
       _c("FlashComponent"),
       _vm._v(" "),
       _c(
-        "form",
-        {
-          staticClass: "container mx-auto mt-8 w-8/12",
-          attrs: { method: "post" },
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.editOpportunity($event)
-            }
-          }
-        },
+        "div",
+        { staticClass: "mt-6 bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6" },
         [
-          _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
-            _c(
-              "div",
-              { staticClass: "w-full px-3" },
-              [
-                _c("InputComponent", {
-                  attrs: {
-                    form: _vm.form,
-                    label: "Opportunity Name",
-                    name: "opportunity_name"
-                  }
-                })
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "flex flex-wrap -mx-3 mb-2" }, [
-            _c(
-              "div",
-              { staticClass: "w-full md:w-1/4 px-3 mb-6 md:mb-0" },
-              [
-                _c("SelectComponent", {
-                  attrs: {
-                    form: _vm.form,
-                    label: "Type",
-                    name: "type",
-                    options: _vm.options_type
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "w-full md:w-1/4 px-3 mb-6 md:mb-0" },
-              [
-                _c("SelectComponent", {
-                  attrs: {
-                    form: _vm.form,
-                    label: "Sales Stage",
-                    name: "sales_stage",
-                    options: _vm.sale_stage_option
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "w-full md:w-1/4 px-3 mb-6 md:mb-0" },
-              [
-                _c("SelectComponent", {
-                  attrs: {
-                    form: _vm.form,
-                    label: "Country",
-                    name: "country",
-                    options: _vm.countries
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "w-full md:w-1/4 px-3 mb-6 md:mb-0" },
-              [
-                _c("InputComponent", {
-                  attrs: {
-                    form: _vm.form,
-                    label: "Client Name",
-                    name: "clients_name"
-                  }
-                })
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
-            _c(
-              "div",
-              { staticClass: "w-full md:w-1/2 px-3 mb-6 md:mb-0" },
-              [
-                _c("DateComponent", {
-                  attrs: {
-                    form: _vm.form,
-                    type: "date",
-                    label: "Internal Dealine",
-                    name: "internal_deadline"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "w-full md:w-1/2 px-3" },
-              [
-                _c("DateComponent", {
-                  attrs: {
-                    form: _vm.form,
-                    type: "date",
-                    label: "External Dealine",
-                    name: "external_deadline"
-                  }
-                })
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
-            _c(
-              "div",
-              { staticClass: "w-full px-3" },
-              [
-                _c("SelectComponent", {
-                  attrs: {
-                    form: _vm.form,
-                    label: "Team",
-                    name: "team_id",
-                    options: _vm.teams
-                  }
-                })
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "flex flex-wrap -mx-3 mb-2" }, [
-            _c(
-              "div",
-              { staticClass: "w-full md:w-1/3 px-3 mb-6 md:mb-0" },
-              [
-                _c("InputComponent", {
-                  attrs: { form: _vm.form, label: "Funded By", name: "funder" }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "w-full md:w-1/3 px-3 mb-6 md:mb-0" },
-              [
-                _c("SelectComponent", {
-                  attrs: {
-                    form: _vm.form,
-                    label: "Lead Source",
-                    name: "lead_source",
-                    options: _vm.leads_source_option
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "w-full md:w-1/3 px-3 mb-6 md:mb-0" },
-              [
-                _c("InputComponent", {
-                  attrs: { form: _vm.form, label: "Revenue", name: "revenue" }
-                })
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
           _c(
-            "div",
-            { staticClass: "py-6 flex items-center justify-between" },
-            [
-              _c("submitButton", {
-                attrs: {
-                  form: _vm.form,
-                  type: "submit",
-                  text: "Update an Opportunity"
+            "form",
+            {
+              attrs: { method: "post" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.editOpportunity($event)
                 }
-              }),
+              }
+            },
+            [
+              _c("div", { staticClass: "md:grid md:grid-cols-3 md:gap-6" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-5 md:mt-0 md:col-span-2" }, [
+                  _c("div", { staticClass: "grid grid-cols-6 gap-6" }, [
+                    _c(
+                      "div",
+                      { staticClass: "col-span-6" },
+                      [
+                        _c("InputComponent", {
+                          attrs: {
+                            form: _vm.form,
+                            label: "Opportunity Name",
+                            name: "opportunity_name"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-span-6 sm:col-span-6 lg:col-span-2" },
+                      [
+                        _c("SelectComponent", {
+                          attrs: {
+                            form: _vm.form,
+                            label: "Type",
+                            name: "type",
+                            options: _vm.options_type
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-span-6 sm:col-span-3 lg:col-span-2" },
+                      [
+                        _c("SelectComponent", {
+                          attrs: {
+                            form: _vm.form,
+                            label: "Sales Stage",
+                            name: "sales_stage",
+                            options: _vm.sale_stage_option
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-span-6 sm:col-span-3 lg:col-span-2" },
+                      [
+                        _c("SelectComponent", {
+                          attrs: {
+                            form: _vm.form,
+                            label: "Country",
+                            name: "country",
+                            options: _vm.countries
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-span-6 sm:col-span-4" },
+                      [
+                        _c("InputComponent", {
+                          attrs: {
+                            form: _vm.form,
+                            label: "Client Name",
+                            name: "clients_name"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                ])
+              ]),
               _vm._v(" "),
               _c(
-                "button",
+                "div",
                 {
                   staticClass:
-                    "inline-block leading-tight bg-red-700 border border-red-700 hover:bg-red-700 uppercase px-3 py-3 text-white no-underline",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      return _vm.deleteOpportunity(_vm.opportunity)
-                    }
-                  }
+                    "md:grid md:grid-cols-3 mt-8 border-t border-gray-400 md:gap-6"
                 },
-                [_vm._v("Delete an Opportunity")]
+                [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "mt-5 md:mt-0 pt-6 md:col-span-2" },
+                    [
+                      _c("div", { staticClass: "grid grid-cols-6 gap-6" }, [
+                        _c(
+                          "div",
+                          { staticClass: "col-span-6" },
+                          [
+                            _c("InputComponent", {
+                              attrs: {
+                                form: _vm.form,
+                                label: "Funded By",
+                                name: "funder"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "col-span-6 sm:col-span-3" },
+                          [
+                            _c("SelectComponent", {
+                              attrs: {
+                                form: _vm.form,
+                                label: "Lead Source",
+                                name: "lead_source",
+                                options: _vm.leads_source_option
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "col-span-6 sm:col-span-3" },
+                          [
+                            _c("InputComponent", {
+                              attrs: {
+                                form: _vm.form,
+                                label: "Revenue",
+                                name: "revenue"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ])
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "md:grid md:grid-cols-3 mt-8 md:gap-6  border-t border-gray-400"
+                },
+                [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "mt-5 md:mt-0 md:col-span-2 pt-6" },
+                    [
+                      _c("div", { staticClass: "grid grid-cols-6 gap-6" }, [
+                        _c(
+                          "div",
+                          { staticClass: "col-span-6 sm:col-span-4" },
+                          [
+                            _c("SelectComponent", {
+                              attrs: {
+                                form: _vm.form,
+                                label: "Team",
+                                name: "team_id",
+                                options: _vm.teams
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "col-span-6 sm:col-span-3" },
+                          [
+                            _c("DateComponent", {
+                              attrs: {
+                                form: _vm.form,
+                                type: "date",
+                                label: "Internal Dealine",
+                                name: "internal_deadline"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "col-span-6 sm:col-span-3" },
+                          [
+                            _c("DateComponent", {
+                              attrs: {
+                                form: _vm.form,
+                                type: "date",
+                                label: "External Dealine",
+                                name: "external_deadline"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "flex" }, [
+                        _c(
+                          "div",
+                          { staticClass: "py-6" },
+                          [
+                            _c("submitButton", {
+                              attrs: {
+                                form: _vm.form,
+                                type: "submit",
+                                text: "Update an Opportunity"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _vm._m(3)
+                      ])
+                    ]
+                  )
+                ]
               )
-            ],
-            1
+            ]
           )
         ]
       )
@@ -53759,7 +54063,82 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "md:col-span-1" }, [
+      _c("h3", { staticClass: "text-lg font-medium leading-6 text-gray-900" }, [
+        _vm._v(
+          "\n                        General\n                        Information\n                    "
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "mt-1 text-sm leading-5 text-gray-500" }, [
+        _vm._v(
+          "\n                        Please\n                        provide\n                        general\n                        name\n                        of\n                        the\n                        Opportunity,\n                        its\n                        type\n                        ,\n                        sales\n                        stage,\n                        client\n                        and\n                        the\n                        country\n                        of\n                        origin.If\n                        the\n                        client\n                        is\n                        new,\n                        you\n                        need\n                        to\n                        first\n                        register\n                        them.\n                    "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "md:col-span-1 pt-4" }, [
+      _c("h3", { staticClass: "text-lg font-medium leading-6 text-gray-900" }, [
+        _vm._v(
+          "\n                        Funders'\n                        Information\n                    "
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "mt-1 text-sm leading-5 text-gray-500" }, [
+        _vm._v(
+          "\n                        Input\n                        the\n                        funders\n                        of\n                        the\n                        opportunity,\n                        the\n                        lead\n                        source\n                        and\n                        the\n                        amount\n                        of\n                        money\n                        allocated\n                        on\n                        the\n                        opportunity\n                        on\n                        the\n                        revenue\n                        input.If\n                        the\n                        amount\n                        is\n                        not\n                        allocated,\n                        Record\n                        0\n                        as\n                        the\n                        revenue.\n                    "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "md:col-span-1  pt-4" }, [
+      _c("h3", { staticClass: "text-lg font-medium leading-6 text-gray-900" }, [
+        _vm._v(
+          "\n                        Assigned\n                        Team\n                    "
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "mt-1 text-sm leading-5 text-gray-500" }, [
+        _vm._v(
+          "\n                        Assign\n                        the\n                        opportunity\n                        to\n                        the\n                        relevant\n                        team\n                        and\n                        the\n                        team\n                        leader\n                        will\n                        allocate\n                        the\n                        consultants\n                        to\n                        work\n                        on\n                        this\n                        opportunity.\n                    "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "px-2 py-6" }, [
+      _c(
+        "button",
+        {
+          staticClass:
+            "inline-block leading-tight text-red-800 border border-red-800 hover:text-red-700 px-3 py-2 bg-white no-underline",
+          attrs: { type: "button" }
+        },
+        [
+          _vm._v(
+            "\n                                Cancel\n                            "
+          )
+        ]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -54658,16 +55037,16 @@ var render = function() {
                           "mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
                       },
                       [
-                        _vm.opportunity.team_name
+                        _vm.opportunity.team
                           ? _c(
                               "span",
                               {
                                 staticClass:
-                                  " m-4 ml-8 capitalise font-bold text-center"
+                                  " m-4 ml-8 capitalise font-bold text-lg text-center"
                               },
                               [
                                 _vm._v(
-                                  _vm._s(_vm.opportunity.team_name) +
+                                  _vm._s(_vm.opportunity.team.team_name) +
                                     "\n                            "
                                 )
                               ]
@@ -55062,7 +55441,27 @@ var render = function() {
                       ]
                     ),
                     _vm._v(" "),
-                    _vm._m(4)
+                    _c("div", { staticClass: "p-4" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass:
+                            "inline-block leading-tight bg-red-800 border border-red-800 hover:bg-red-700 px-3 py-2 text-white no-underline rounded",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.editOpportunity($event)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                Edit\n                                Opportunity\n                            "
+                          )
+                        ]
+                      )
+                    ])
                   ]
                 )
               ])
@@ -55160,26 +55559,6 @@ var staticRenderFns = [
         [
           _vm._v(
             "\n                                            Download\n                                        "
-          )
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "p-4" }, [
-      _c(
-        "a",
-        {
-          staticClass:
-            "inline-block leading-tight bg-red-800 border border-red-800 hover:bg-red-700 px-3 py-2 text-white no-underline rounded",
-          attrs: { href: "#" }
-        },
-        [
-          _vm._v(
-            "\n                                Edit\n                                Opportunity\n                            "
           )
         ]
       )
@@ -55871,7 +56250,7 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("\n         Cancel\n        ")]
+                  [_vm._v("\n                    Cancel\n                ")]
                 )
               ],
               1
@@ -55914,7 +56293,7 @@ var render = function() {
         { attrs: { name: _vm.create_team_modal } },
         [
           _c("span", { attrs: { slot: "modal-title" }, slot: "modal-title" }, [
-            _vm._v("Create a\n      New\n      Team")
+            _vm._v("Create\n            a\n            New\n            Team")
           ]),
           _vm._v(" "),
           _c("CreateTeams", {
@@ -55934,7 +56313,9 @@ var render = function() {
         },
         [
           _c("span", { attrs: { slot: "modal-title" }, slot: "modal-title" }, [
-            _vm._v("Update an\n      Existing\n      Team")
+            _vm._v(
+              "Update\n            an\n            Existing\n            Team"
+            )
           ]),
           _vm._v(" "),
           _c("EditTeam", {
@@ -55979,7 +56360,7 @@ var render = function() {
                       })
                     ]
                   ),
-                  _vm._v("\n            Back\n          ")
+                  _vm._v("\n                        Back\n                    ")
                 ]
               )
             ]),
@@ -56054,7 +56435,11 @@ var render = function() {
                       "text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out",
                     attrs: { href: "#" }
                   },
-                  [_vm._v("view\n            all\n            teams")]
+                  [
+                    _vm._v(
+                      "view\n                        all\n                        teams"
+                    )
+                  ]
                 )
               ]
             )
@@ -56080,7 +56465,11 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("\n          New Team\n        ")]
+                [
+                  _vm._v(
+                    "\n                    New\n                    Team\n                "
+                  )
+                ]
               )
             ]
           )
@@ -56150,9 +56539,13 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("div", { staticClass: "hidden lg:block" }, [
-                    _vm._v("\n            Page\n            "),
+                    _vm._v(
+                      "\n                        Page\n                        "
+                    ),
                     _c("span", [_vm._v(_vm._s(_vm.pagination.currentPage))]),
-                    _vm._v("\n            of\n            "),
+                    _vm._v(
+                      "\n                        of\n                        "
+                    ),
                     _c("span", [_vm._v(_vm._s(_vm.pagination.lastPage))])
                   ]),
                   _vm._v(" "),
@@ -56162,7 +56555,8 @@ var render = function() {
                         name: "model",
                         rawName: "v-model",
                         value: _vm.query,
-                        expression: "\n              query\n            "
+                        expression:
+                          "\n                            query\n                        "
                       }
                     ],
                     staticClass:
@@ -56199,9 +56593,9 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                " +
+                                "\n                                " +
                                   _vm._s(index + 1) +
-                                  "\n              "
+                                  "\n                            "
                               )
                             ]
                           ),
@@ -56214,9 +56608,9 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                " +
+                                "\n                                " +
                                   _vm._s(team.team_name) +
-                                  "\n              "
+                                  "\n                            "
                               )
                             ]
                           ),
@@ -56229,9 +56623,9 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                " +
+                                "\n                                " +
                                   _vm._s(team.team_code) +
-                                  "\n              "
+                                  "\n                            "
                               )
                             ]
                           ),
@@ -56244,9 +56638,9 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                " +
+                                "\n                                " +
                                   _vm._s(team.team_leader) +
-                                  "\n              "
+                                  "\n                            "
                               )
                             ]
                           ),
@@ -56322,18 +56716,9 @@ var staticRenderFns = [
             staticClass:
               "px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
           },
-          [_vm._v("\n                #\n              ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-          },
           [
             _vm._v(
-              "\n                Team\n                Name\n              "
+              "\n                                #\n                            "
             )
           ]
         ),
@@ -56346,7 +56731,7 @@ var staticRenderFns = [
           },
           [
             _vm._v(
-              "\n                Team\n                Code\n              "
+              "\n                                Team\n                                Name\n                            "
             )
           ]
         ),
@@ -56359,7 +56744,20 @@ var staticRenderFns = [
           },
           [
             _vm._v(
-              "\n                Team\n                Leader\n              "
+              "\n                                Team\n                                Code\n                            "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass:
+              "px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+          },
+          [
+            _vm._v(
+              "\n                                Team\n                                Leader\n                            "
             )
           ]
         ),

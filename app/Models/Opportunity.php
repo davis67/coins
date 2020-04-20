@@ -76,7 +76,7 @@ class Opportunity extends Model
         });
     }
 
-     /**
+    /**
      * Fetch the last OM Number of an opportunity.
      *
      * @return String
@@ -99,19 +99,21 @@ class Opportunity extends Model
     }
 
     /**
-	 * Get all consultants assigned to an opportunity.
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
-	 */
-    public function consultants(){
+     * Get all consultants assigned to an opportunity.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function consultants()
+    {
 
         return $this->belongsToMany(
             'App\User',
-             'consultant_opportunity')
-             ->withTimestamps();
+            'consultant_opportunity'
+        )
+            ->withTimestamps();
     }
 
-     /**
+    /**
      * Assign a consultant tan opportunity.
      *
      * @param  string $body
@@ -119,6 +121,9 @@ class Opportunity extends Model
      */
     public function assignConsultant($user)
     {
+        if ($this->consultants->contains($user)) {
+            return;
+        }
         return $this->consultants()->attach($user);
     }
 
@@ -134,17 +139,17 @@ class Opportunity extends Model
         return $this->hasMany('App\Score');
     }
 
-     /**
+    /**
      * The creator of the opportunity.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function creator()
     {
-        return $this->belongsTo('App\User','created_by');
+        return $this->belongsTo('App\User', 'created_by');
     }
 
-     /**
+    /**
      *  The path to the opportunity.
      *
      * @return string

@@ -24,17 +24,17 @@ class OpportunityRequest extends FormRequest
     public function rules()
     {
         return [
-            'opportunity_name' => 'required',
-            'country' => 'required',
+            'opportunity_name' => 'sometimes|required',
+            'country' => 'sometimes|required',
             'revenue' => 'nullable',
-            'type' => 'required',
-            'clients_name' => 'required',
-            'lead_source' => 'required',
-            'sales_stage' => 'required',
+            'type' => 'sometimes|required',
+            'clients_name' => 'sometimes|required',
+            'lead_source' => 'sometimes|required',
+            'sales_stage' => 'sometimes|required',
             'team_id' => 'nullable',
-            'internal_deadline' => 'required|date',
-            'external_deadline' => 'required|date|after:internal_deadline',
-            'funder' => 'required',
+            'internal_deadline' => 'sometimes|required|date',
+            'external_deadline' => 'sometimes|required|date|after:internal_deadline',
+            'funder' => 'sometimes|required',
         ];
     }
 }

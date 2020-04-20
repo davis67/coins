@@ -110,16 +110,18 @@ class User extends Authenticatable
     }
 
 
-     /**
-	 * Get all opportunities assigned to an consultant.
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
-	 */
-    public function assignedOpportinities(){
+    /**
+     * Get all opportunities assigned to an consultant.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function assignedOpportinities()
+    {
 
         return $this->belongsToMany(
             'App\Models\Opportunity',
-            'consultant_opportunity')
+            'consultant_opportunity'
+        )
             ->withTimestamps();
     }
 
@@ -198,10 +200,10 @@ class User extends Authenticatable
     }
 
     /**
-	 * Get all opportunities created by the user.
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-	 */
+     * Get all opportunities created by the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
 
     public function team()
     {
@@ -222,15 +224,15 @@ class User extends Authenticatable
     }
 
     /**
-	 * Get all opportunities created by the user.
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
-	 */
-	public function opportunities()
-	{
-        return $this->hasMany('Opportunity::class', 'created_by')
-                    ->latest('updated_at');
-	}
+     * Get all opportunities created by the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function opportunities()
+    {
+        return $this->hasMany(Opportunity::class, 'created_by')
+            ->latest('updated_at');
+    }
 
     // public function approvedUsers()
     // {
