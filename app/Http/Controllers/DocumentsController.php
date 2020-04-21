@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Auth;
-use App\Document;
+use App\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+
 class DocumentsController extends Controller
 {
 
@@ -15,10 +17,10 @@ class DocumentsController extends Controller
 
     public function index()
     {
-       $documents = Document::all();
-       return view('documents.index',compact('documents'));
+        $documents = Document::all();
+        return view('documents.index', compact('documents'));
     }
-    
+
     public function create()
     {
         return view('documents.create');
@@ -30,53 +32,8 @@ class DocumentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //validate the received data
-        $data = $request->validate([
-            "associate_id"  => "nullable",
-            "opportunity_id"  => "nullable",
-            "project_id"  => "nullable",
-            "document"    => "required|file|max:10000|mimes:doc,docx,pdf",
-            "document_type"  => "required|string|min:2",
-            "file_description"  => "required|string|min:5",
-        ]);
-
-        //Get file
-        $file = $request->file('document');
-        //Get file Extension
-        $extension = $request->document->extension();
-        //Rename the file and retain the extension
-        $filename = $request->input('fileName').'.'.$extension;
-        //Upload file and get its destination path
-        $destination = $request->input('document_type');
-        $url = $request->document->storeAs($destination, $filename);
-
-        //Specify the ID that has been recieved
-        if($request->associate_id){
-            $done = Document::create([
-                'associate_id' => $data['associate_id'],
-                'document_url' => $url,
-                'description' => $data['file_description'],
-                'created_by'=>Auth::user()->id
-            ]);
-        }elseif($request->opportunity_id){
-            $done = Document::create([
-                'opportunity_id' => $data['opportunity_id'],
-                'document_url' => $url,
-                'description' => $data['file_description'],
-                'created_by'=>Auth::user()->id
-            ]);
-        }else{
-            $done = Document::create([
-                'project_id' => $data['project_id'],
-                'document_url' => $url,
-                'description' => $data['file_description'],
-                'created_by'=>Auth::user()->id
-            ]);
-        }
-        //save data in the documents table
-        return redirect()->back()->with('success', 'Document added successfully');
     }
 
     /**

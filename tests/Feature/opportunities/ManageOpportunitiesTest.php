@@ -7,6 +7,8 @@ use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class ManageOpportunitiesTest extends TestCase
 {
@@ -22,7 +24,6 @@ class ManageOpportunitiesTest extends TestCase
         // $this->withoutExceptionHandling();
         $this->actingAs(factory(User::class)->create());
         $attributes = factory(Opportunity::class)->raw();
-        // dd($attributes);
         $this->post('/opportunities', $attributes)
             ->assertSee($attributes['clients_name'])
             ->assertSee($attributes['opportunity_name'])
@@ -107,4 +108,21 @@ class ManageOpportunitiesTest extends TestCase
             'sales_stage' => $attributes['sales_stage']
         ]);
     }
+    /**
+     * @test
+     */
+
+    // public function an_opportunity_can_have_documents()
+    // {
+    //     Storage::fake('documents/opportunities');
+
+    //     $file = UploadedFile::fake()->create('document.pdf');
+    //     $opportunity = factory(Opportunity::class)->create();
+    //     $this->actingAs($user = factory(User::class)->create());
+    //     $response = $this->json('POST', '/opportunities/' . $opportunity->path() . '/upload', [
+    //         'document' => $file,
+    //     ]);
+    //     // Assert the file was stored...
+    //     Storage::disk('documents/opportunities')->assertExists($file->hashName());
+    // }
 }

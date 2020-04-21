@@ -178,19 +178,13 @@ class Opportunity extends Model
         return $this->belongsTo('App\Models\Team');
     }
 
-    public function documents()
-    {
-
-        return $this->hasMany('App\Document');
-    }
-
     /**
      * The document for the opportunity.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
 
-    public function document()
+    public function documents()
     {
         return $this->morphMany(Document::class, 'description')->latest();
     }
@@ -215,5 +209,20 @@ class Opportunity extends Model
     public static function getAll()
     {
         return static::oldest('opportunity_name')->get()->keyBy('id');
+    }
+
+    /**
+     * attach a file to an opportunity.
+     *
+     */
+    public function attachFIle($file)
+    {
+        $this->documents()->create([
+            'user_id' => auth()->user()->id,
+            'file_path' => $file->store('documents/opportunities'),
+            'original_name' => $file->getClientOriginalName(),
+            'extension' => $file->extension()
+
+        ]);
     }
 }

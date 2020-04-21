@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Document;
 use App\Models\Opportunity;
 use DB;
 use Illuminate\Notifications\Notifiable;
@@ -234,24 +235,15 @@ class User extends Authenticatable
             ->latest('updated_at');
     }
 
-    // public function approvedUsers()
-    // {
-    //     return $this->hasMany('App\Opportunity')->where('approved', 1)->orderBy('email');
-    // }
-
-    //actual function that checks whther the user has a title from a specified array of titles.This function will be usedd in the middleware to check if a user is authorised to perform a certain task.
-    // public function hasAnyTitles($titles)
-    // {
-    //     if (is_array($titles)) {
-    //         foreach ($titles as $title) {
-    //             if ($this->hasRole($title)) {
-    //                 return true;
-    //             }
-
-    //             return false;
-    //         }
-    //     }
-    // }
+    /**
+     * The user associated with the documents.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function documents()
+    {
+        return $this->hasMany(Document::class, 'user_id');
+    }
 
     //function that checks whether the user has acertain title.
     public function hasTitle($title)

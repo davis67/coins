@@ -398,12 +398,18 @@
                                     "
                                     class="flex items-center"
                                     enctype="multipart/form-data"
+                                    method="POST"
                                 >
                                     <input
                                         type="file"
-                                        name="document"
-                                        class="border w-full"
+                                        id="file"
+                                        ref="file"
+                                        v-on:change="
+                                            handleFileUpload
+                                        "
+                                        class="w-full"
                                     />
+
                                     <button
                                         type="submit"
                                         class="appearance-none md:font-size-1 bg-red-800 text-white border border-red-700 py-1 px-2 rounded  m-4 focus:border-red-800"
@@ -516,18 +522,67 @@ export default {
             consultants: [],
             consultant_id:
                 "",
+            file:
+                "",
             opportunity: this
                 .dataOpportunity
         };
     },
     created() {
         this.getUsers();
-        console.log(
-            this
-                .dataOpportunity
-        );
     },
     methods: {
+        handleFileUpload(
+            e
+        ) {
+            this.file =
+                e.target.files[0];
+            console.log(
+                this
+                    .file
+            );
+        },
+        attachDocument() {
+            let formData = new FormData();
+            formData.append(
+                "file",
+                this
+                    .file
+            );
+
+            console.log(
+                formData
+            );
+            axios
+                .post(
+                    `/opportunities/${this.opportunity.id}/upload`,
+                    formData,
+                    {
+                        headers: {
+                            "Content-Type":
+                                "multipart/form-data"
+                        }
+                    }
+                )
+                .then(
+                    (
+                        response
+                    ) => {
+                        console.log(
+                            response
+                        );
+                    }
+                )
+                .catch(
+                    (
+                        error
+                    ) => {
+                        console.log(
+                            error
+                        );
+                    }
+                );
+        },
         async assignConsultant() {
             try {
                 let response = await axios.get(

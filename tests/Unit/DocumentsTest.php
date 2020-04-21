@@ -26,20 +26,6 @@ class DocumentsTest extends TestCase
             "description_type"
         ]), 1);
     }
-    /**
-     * @test
-     */
-    public function a_document_can_be_morphed_to_user()
-    {
-        $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $document = factory(Document::class)->create([
-            'description_id' => $user->id,
-            'description_type' => 'App\User'
-        ]);
-        $this->assertInstanceOf(User::class, $document->description);
-    }
-
 
     /** @test */
     public function a_document_can_be_uploaded_for_an_opportunity()
@@ -51,5 +37,18 @@ class DocumentsTest extends TestCase
         ]);
 
         $this->assertInstanceOf(Opportunity::class, $document->description);
+    }
+
+    /**
+     * @test
+     */
+    public function a_document_can_be_uploaded_by_user()
+    {
+        $opportunity = factory(Opportunity::class)->create();
+        $document = factory(Document::class)->create([
+            'description_id' => $opportunity->id,
+            'description_type' => 'App\Models\Opportunity'
+        ]);
+        $this->assertInstanceOf(User::class, $document->uploadedBy);
     }
 }

@@ -5088,6 +5088,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["dataOpportunity"],
   data: function data() {
@@ -5095,14 +5101,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       isCreating: false,
       consultants: [],
       consultant_id: "",
+      file: "",
       opportunity: this.dataOpportunity
     };
   },
   created: function created() {
     this.getUsers();
-    console.log(this.dataOpportunity);
   },
   methods: {
+    handleFileUpload: function handleFileUpload(e) {
+      this.file = e.target.files[0];
+      console.log(this.file);
+    },
+    attachDocument: function attachDocument() {
+      var formData = new FormData();
+      formData.append("file", this.file);
+      console.log(formData);
+      axios.post("/opportunities/".concat(this.opportunity.id, "/upload"), formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      }).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     assignConsultant: function assignConsultant() {
       var _this = this;
 
@@ -55350,7 +55374,10 @@ var render = function() {
                           "form",
                           {
                             staticClass: "flex items-center",
-                            attrs: { enctype: "multipart/form-data" },
+                            attrs: {
+                              enctype: "multipart/form-data",
+                              method: "POST"
+                            },
                             on: {
                               submit: function($event) {
                                 $event.preventDefault()
@@ -55360,8 +55387,10 @@ var render = function() {
                           },
                           [
                             _c("input", {
-                              staticClass: "border w-full",
-                              attrs: { type: "file", name: "document" }
+                              ref: "file",
+                              staticClass: "w-full",
+                              attrs: { type: "file", id: "file" },
+                              on: { change: _vm.handleFileUpload }
                             }),
                             _vm._v(" "),
                             _c(

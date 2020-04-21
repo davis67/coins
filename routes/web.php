@@ -11,7 +11,8 @@
 |
 */
 // Auth::logout();
-// Auth::loginUsingId("b2bb8292-3e97-406f-b227-0a4eb2bc6962");
+
+Auth::loginUsingId("f7d952bd-b417-471c-9a92-00be1f909cb6");
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,7 @@ Route::get('/display/{current_year}', 'HomeController@display');
 Route::resource('/contacts', 'ContactsController');
 
 //Routing everything about opportunities
+Route::post("/opportunities/{opportunity}/upload", "OpportunitiesController@uploadDocument");
 Route::get("/opportunities/data", "OpportunitiesController@getAllOpportunities");
 Route::get('/opportunities/{opportunity}/assign/{consultant}', 'OpportunitiesController@assignConsultants')->name('opportunties.assign');
 Route::resource('opportunities', 'OpportunitiesController');

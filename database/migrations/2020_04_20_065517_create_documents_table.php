@@ -16,10 +16,12 @@ class CreateDocumentsTable extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('user_id');
-            $table->string('opportunity_id');
             $table->string('file_path')->nullable();
             $table->string('original_name')->nullable();
-            $table->nullableMorphs('description');
+            $table->string('extension')->nullable();
+            // $table->nullableMorphs('description');
+            $table->string('description_id')->nullable();
+            $table->string('description_type')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
