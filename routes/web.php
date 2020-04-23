@@ -1,24 +1,12 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-// Auth::logout();
-
-Auth::loginUsingId("f7d952bd-b417-471c-9a92-00be1f909cb6");
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes(['register' => false]);
-// Auth::logout();
+Auth::loginUsingId("1270f0a0-79eb-426b-a47a-dbe1816a7ffd");
+
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name("home");
@@ -34,8 +22,13 @@ Route::resource('/contacts', 'ContactsController');
 
 //Routing everything about opportunities
 Route::post("/opportunities/{opportunity}/upload", "OpportunitiesController@uploadDocument");
+Route::get("/opportunities/{opportunity}/download/{download}", "OpportunitiesController@downloadDocument");
+Route::get("/opportunities/{opportunity}/remove/{download}", "OpportunitiesController@removeDocument");
 Route::get("/opportunities/data", "OpportunitiesController@getAllOpportunities");
-Route::get('/opportunities/{opportunity}/assign/{consultant}', 'OpportunitiesController@assignConsultants')->name('opportunties.assign');
+Route::get('/opportunities/{opportunity}/assign/{consultant}', 'OpportunitiesController@assignConsultants')
+    ->name('opportunties.assign');
+Route::get('/opportunities/{opportunity}/removeconsultant/{consultant}', 'OpportunitiesController@removeConsultants')
+    ->name('opportunties.detach');
 Route::resource('opportunities', 'OpportunitiesController');
 Route::post('/opportunityUser', 'OpportunitiesController@addConsultants')->name('opportunityUser');
 Route::delete('/removeConsultant/{id}', 'OpportunitiesController@removeConsultant')->name('removeConsultant');

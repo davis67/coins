@@ -5094,6 +5094,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["dataOpportunity"],
   data: function data() {
@@ -5107,80 +5130,88 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   created: function created() {
     this.getUsers();
+    console.log(this.dataOpportunity);
   },
   methods: {
+    downloadDocument: function downloadDocument(document) {
+      axios.get("/opportunities/".concat(this.opportunity.id, "/download/").concat(document.id)).then(function (response) {
+        if (response) {}
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    removeDocument: function removeDocument(document) {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return Confirmation.confirm("Do you want to delete a file?", "Continue").then(function (done) {
+                  axios.get("/opportunities/".concat(_this.opportunity.id, "/remove/").concat(document.id)).then(function (response) {
+                    if (response) {
+                      console.log(response);
+                    }
+
+                    window.location = "/opportunities/".concat(_this.opportunity.id);
+                  })["catch"](function (error) {
+                    console.log(error);
+                  });
+                });
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
     handleFileUpload: function handleFileUpload(e) {
       this.file = e.target.files[0];
-      console.log(this.file);
     },
     attachDocument: function attachDocument() {
+      var _this2 = this;
+
       var formData = new FormData();
       formData.append("file", this.file);
-      console.log(formData);
       axios.post("/opportunities/".concat(this.opportunity.id, "/upload"), formData, {
         headers: {
           "Content-Type": "multipart/form-data"
         }
       }).then(function (response) {
-        console.log(response);
+        if (response.data == "success") {
+          Flash.success("You have successfully assigned consultant to this opportunity");
+          window.location = "/opportunities/".concat(_this2.opportunity.id);
+        }
       })["catch"](function (error) {
         console.log(error);
       });
     },
     assignConsultant: function assignConsultant() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return axios.get("/opportunities/".concat(_this.opportunity.id, "/assign/").concat(_this.consultant_id));
-
-              case 3:
-                response = _context.sent;
-
-                if (response.data == "success") {
-                  _this.consultant_id = "";
-                  Flash.success("You have successfully assigned consultant to this opportunity");
-                  window.location = "/opportunities/".concat(_this.opportunity.id);
-                }
-
-                _context.next = 10;
-                break;
-
-              case 7:
-                _context.prev = 7;
-                _context.t0 = _context["catch"](0);
-                console.log(_context.t0);
-
-              case 10:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[0, 7]]);
-      }))();
-    },
-    getUsers: function getUsers() {
-      var _this2 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var consultants;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return axios.get("/users/data");
+                return axios.get("/opportunities/".concat(_this3.opportunity.id, "/assign/").concat(_this3.consultant_id));
 
               case 3:
-                consultants = _context2.sent;
-                _this2.consultants = consultants.data.data;
+                response = _context2.sent;
+
+                if (response.data == "success") {
+                  _this3.consultant_id = "";
+                  Flash.success("You have successfully assigned consultant to this opportunity");
+                  window.location = "/opportunities/".concat(_this3.opportunity.id);
+                }
+
                 _context2.next = 10;
                 break;
 
@@ -5197,19 +5228,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2, null, [[0, 7]]);
       }))();
     },
-    addingOpportunity: function addingOpportunity() {
-      Confirmation.confirm("Do you want to Leave this Page?", "Continue").then(function (done) {
-        return window.location = "/opportunities/create";
-      });
-    },
-    editOpportunity: function editOpportunity() {
-      var _this3 = this;
-
-      Confirmation.confirm("Do you want to Leave this Page?", "Continue").then(function (done) {
-        return window.location = "/opportunities/".concat(_this3.opportunity.id, "/edit");
-      });
-    },
-    deleteOpportunity: function deleteOpportunity(opportunity) {
+    detachConsultant: function detachConsultant(consultant) {
       var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
@@ -5217,7 +5236,78 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _context3.next = 2;
+                console.log(consultant);
+                _context3.next = 3;
+                return Confirmation.confirm("Do you want to remove this consultant?", "Continue").then(function (done) {
+                  axios.get("/opportunities/".concat(_this4.opportunity.id, "/removeconsultant/").concat(consultant.id)).then(function (response) {
+                    Flash.success("You have successfully assigned consultant to this opportunity");
+                    window.location = "/opportunities/".concat(_this4.opportunity.id);
+                  })["catch"](function (error) {
+                    console.log(error);
+                  });
+                });
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    getUsers: function getUsers() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var consultants;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+                _context4.next = 3;
+                return axios.get("/users/data");
+
+              case 3:
+                consultants = _context4.sent;
+                _this5.consultants = consultants.data.data;
+                _context4.next = 10;
+                break;
+
+              case 7:
+                _context4.prev = 7;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_context4.t0);
+
+              case 10:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[0, 7]]);
+      }))();
+    },
+    addingOpportunity: function addingOpportunity() {
+      Confirmation.confirm("Do you want to Leave this Page?", "Continue").then(function (done) {
+        return window.location = "/opportunities/create";
+      });
+    },
+    editOpportunity: function editOpportunity() {
+      var _this6 = this;
+
+      Confirmation.confirm("Do you want to Leave this Page?", "Continue").then(function (done) {
+        return window.location = "/opportunities/".concat(_this6.opportunity.id, "/edit");
+      });
+    },
+    deleteOpportunity: function deleteOpportunity(opportunity) {
+      var _this7 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
                 return Confirmation.confirm("This action is irreversible", "Do you want to delete a opportunity?").then(function (done) {
                   return axios["delete"]("/opportunities/" + opportunity.opportunity_id).then(function (response) {});
                 })["catch"](function (error) {
@@ -5225,19 +5315,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 2:
-                _context3.next = 4;
-                return _this4.fetchOpportunities();
+                _context5.next = 4;
+                return _this7.fetchOpportunities();
 
               case 4:
                 // or vue.set(this.opportunities, opportunity.id, opportunity)
-                Flash.success("You have successfully deleted a opportunity"), _this4.$emit("opportunity:deleted", opportunity);
+                Flash.success("You have successfully deleted a opportunity"), _this7.$emit("opportunity:deleted", opportunity);
 
               case 5:
               case "end":
-                return _context3.stop();
+                return _context5.stop();
             }
           }
-        }, _callee3);
+        }, _callee5);
       }))();
     }
   },
@@ -55253,91 +55343,104 @@ var render = function() {
                         _vm._v(" "),
                         _vm.opportunity.consultants.data.length !== 0
                           ? _c(
-                              "ul",
-                              {
-                                staticClass: "border border-gray-200 rounded-md"
-                              },
+                              "div",
                               _vm._l(_vm.opportunity.consultants.data, function(
                                 assigned
                               ) {
                                 return _c(
-                                  "li",
+                                  "ul",
                                   {
                                     key: assigned.id,
                                     staticClass:
-                                      "pl-3 pr-4 py-3 flex items-center justify-between text-sm leading-5"
+                                      "border border-gray-200 rounded-md"
                                   },
                                   [
                                     _c(
-                                      "div",
+                                      "li",
                                       {
                                         staticClass:
-                                          "w-0 flex-1 flex items-center"
+                                          "pl-3 pr-4 py-3 flex items-center justify-between text-sm leading-5"
                                       },
                                       [
                                         _c(
-                                          "svg",
+                                          "div",
                                           {
                                             staticClass:
-                                              "flex-shrink-0 h-5 w-5 text-gray-400",
-                                            attrs: {
-                                              fill: "currentColor",
-                                              viewBox: "0 0 20 20"
-                                            }
+                                              "w-0 flex-1 flex items-center"
                                           },
                                           [
-                                            _c("path", {
-                                              attrs: {
-                                                d:
-                                                  "M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"
-                                              }
-                                            })
+                                            _c(
+                                              "svg",
+                                              {
+                                                staticClass:
+                                                  "flex-shrink-0 h-5 w-5 text-gray-400",
+                                                attrs: {
+                                                  fill: "currentColor",
+                                                  viewBox: "0 0 20 20"
+                                                }
+                                              },
+                                              [
+                                                _c("path", {
+                                                  attrs: {
+                                                    d:
+                                                      "M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"
+                                                  }
+                                                })
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "span",
+                                              {
+                                                staticClass:
+                                                  "ml-2 flex-1 w-0 truncate"
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                " +
+                                                    _vm._s(assigned.name) +
+                                                    "\n                                            "
+                                                )
+                                              ]
+                                            )
                                           ]
                                         ),
                                         _vm._v(" "),
                                         _c(
-                                          "span",
-                                          {
-                                            staticClass:
-                                              "ml-2 flex-1 w-0 truncate"
-                                          },
+                                          "div",
+                                          { staticClass: "ml-4 flex-shrink-0" },
                                           [
-                                            _vm._v(
-                                              "\n                                            " +
-                                                _vm._s(assigned.name) +
-                                                "\n                                        "
+                                            _c(
+                                              "a",
+                                              {
+                                                staticClass:
+                                                  "font-medium text-red-800 hover:text-red-600 transition duration-150 ease-in-out",
+                                                attrs: { href: "#" },
+                                                on: {
+                                                  click: function($event) {
+                                                    $event.preventDefault()
+                                                    return _vm.detachConsultant(
+                                                      assigned
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                Remove\n                                            "
+                                                )
+                                              ]
                                             )
                                           ]
                                         )
                                       ]
-                                    ),
-                                    _vm._v(" "),
-                                    _vm._m(1, true)
+                                    )
                                   ]
                                 )
                               }),
                               0
                             )
-                          : _c(
-                              "ul",
-                              {
-                                staticClass: "border border-gray-200 rounded-md"
-                              },
-                              [
-                                _c(
-                                  "li",
-                                  {
-                                    staticClass:
-                                      "pl-3 pr-4 py-3 flex items-center justify-between text-sm leading-5"
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                    No\n                                    consultants\n                                    assigned\n                                    to\n                                    this\n                                    opportunity\n                                    yet\n                                "
-                                    )
-                                  ]
-                                )
-                              ]
-                            )
+                          : _c("div", [_vm._m(1)])
                       ]
                     )
                   ]
@@ -55402,124 +55505,135 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n                                    select\n                                "
+                                  "\n                                    upload\n                                "
                                 )
                               ]
                             )
                           ]
                         ),
                         _vm._v(" "),
-                        _c(
-                          "ul",
-                          { staticClass: "border border-gray-200 rounded-md" },
-                          [
-                            _c(
-                              "li",
-                              {
-                                staticClass:
-                                  "pl-3 pr-4 py-3 border border-gray-200 flex items-center justify-between text-sm leading-5"
-                              },
-                              [
-                                _c(
-                                  "div",
+                        _vm.opportunity.documents.length != 0
+                          ? _c(
+                              "div",
+                              _vm._l(_vm.opportunity.documents, function(
+                                document
+                              ) {
+                                return _c(
+                                  "ul",
                                   {
-                                    staticClass: "w-0 flex-1 flex items-center"
+                                    key: document.id,
+                                    staticClass:
+                                      "border border-gray-200 rounded-md"
                                   },
                                   [
                                     _c(
-                                      "svg",
+                                      "li",
                                       {
                                         staticClass:
-                                          "flex-shrink-0 h-5 w-5 text-gray-400",
-                                        attrs: {
-                                          fill: "currentColor",
-                                          viewBox: "0 0 20 20"
-                                        }
+                                          "pl-3 pr-4 py-3 border border-gray-200 flex items-center justify-between text-sm leading-5"
                                       },
                                       [
-                                        _c("path", {
-                                          attrs: {
-                                            "fill-rule": "evenodd",
-                                            d:
-                                              "M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z",
-                                            "clip-rule": "evenodd"
-                                          }
-                                        })
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "span",
-                                      {
-                                        staticClass: "ml-2 flex-1 w-0 truncate"
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                            resume_back_end_developer.pdf\n                                        "
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "w-0 flex-1 flex items-center"
+                                          },
+                                          [
+                                            _c(
+                                              "svg",
+                                              {
+                                                staticClass:
+                                                  "flex-shrink-0 h-5 w-5 text-gray-400",
+                                                attrs: {
+                                                  fill: "currentColor",
+                                                  viewBox: "0 0 20 20"
+                                                }
+                                              },
+                                              [
+                                                _c("path", {
+                                                  attrs: {
+                                                    "fill-rule": "evenodd",
+                                                    d:
+                                                      "M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z",
+                                                    "clip-rule": "evenodd"
+                                                  }
+                                                })
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "span",
+                                              {
+                                                staticClass:
+                                                  "ml-2 flex-1 w-0 truncate"
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(document.original_name)
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          { staticClass: "ml-4 flex-shrink-0" },
+                                          [
+                                            _c(
+                                              "a",
+                                              {
+                                                staticClass:
+                                                  "font-medium text-red-800 hover:text-red-600 transition duration-150 ease-in-out",
+                                                attrs: { href: "#" },
+                                                on: {
+                                                  click: function($event) {
+                                                    $event.preventDefault()
+                                                    return _vm.downloadDocument(
+                                                      document
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                Download\n                                            "
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "a",
+                                              {
+                                                staticClass:
+                                                  "font-medium text-red-800 hover:text-red-600 transition duration-150 ease-in-out",
+                                                attrs: { href: "#" },
+                                                on: {
+                                                  click: function($event) {
+                                                    $event.preventDefault()
+                                                    return _vm.removeDocument(
+                                                      document
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                Remove\n                                            "
+                                                )
+                                              ]
+                                            )
+                                          ]
                                         )
                                       ]
                                     )
                                   ]
-                                ),
-                                _vm._v(" "),
-                                _vm._m(2)
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "li",
-                              {
-                                staticClass:
-                                  "border-t border-gray-200 pl-3 pr-4 py-3 flex items-center justify-between text-sm leading-5"
-                              },
-                              [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "w-0 flex-1 flex items-center"
-                                  },
-                                  [
-                                    _c(
-                                      "svg",
-                                      {
-                                        staticClass:
-                                          "flex-shrink-0 h-5 w-5 text-gray-400",
-                                        attrs: {
-                                          fill: "currentColor",
-                                          viewBox: "0 0 20 20"
-                                        }
-                                      },
-                                      [
-                                        _c("path", {
-                                          attrs: {
-                                            "fill-rule": "evenodd",
-                                            d:
-                                              "M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z",
-                                            "clip-rule": "evenodd"
-                                          }
-                                        })
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "span",
-                                      {
-                                        staticClass: "ml-2 flex-1 w-0 truncate"
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                            coverletter_back_end_developer.pdf\n                                        "
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _vm._m(3)
-                              ]
+                                )
+                              }),
+                              0
                             )
-                          ]
-                        )
+                          : _c("div", [_vm._m(2)])
                       ]
                     ),
                     _vm._v(" "),
@@ -55590,17 +55704,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ml-4 flex-shrink-0" }, [
+    return _c("ul", { staticClass: "border border-gray-200 rounded-md" }, [
       _c(
-        "a",
+        "li",
         {
           staticClass:
-            "font-medium text-red-800 hover:text-red-600 transition duration-150 ease-in-out",
-          attrs: { href: "#" }
+            "pl-3 pr-4 py-3 flex items-center justify-between text-sm leading-5"
         },
         [
           _vm._v(
-            "\n                                            Remove\n                                        "
+            "\n                                        No\n                                        consultants\n                                        assigned\n                                        to\n                                        this\n                                        opportunity\n                                        yet\n                                    "
           )
         ]
       )
@@ -55610,37 +55723,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ml-4 flex-shrink-0" }, [
+    return _c("ul", { staticClass: "border border-gray-200 rounded-md" }, [
       _c(
-        "a",
+        "li",
         {
           staticClass:
-            "font-medium text-red-800 hover:text-red-600 transition duration-150 ease-in-out",
-          attrs: { href: "#" }
+            "pl-3 pr-4 py-3 border border-gray-200 flex items-center justify-between text-sm leading-5"
         },
         [
           _vm._v(
-            "\n                                            Download\n                                        "
-          )
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ml-4 flex-shrink-0" }, [
-      _c(
-        "a",
-        {
-          staticClass:
-            "font-medium text-red-800 hover:text-red-600 transition duration-150 ease-in-out",
-          attrs: { href: "#" }
-        },
-        [
-          _vm._v(
-            "\n                                            Download\n                                        "
+            "\n                                        Opps,\n                                        No\n                                        documents\n                                        attached\n                                    "
           )
         ]
       )

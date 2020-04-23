@@ -311,7 +311,7 @@
                                         select
                                     </button>
                                 </form>
-                                <ul
+                                <div
                                     v-if="
                                         opportunity
                                             .consultants
@@ -319,65 +319,76 @@
                                             .length !==
                                             0
                                     "
-                                    class="border border-gray-200 rounded-md"
                                 >
-                                    <li
+                                    <ul
                                         v-for="assigned in opportunity
                                             .consultants
                                             .data"
                                         :key="
                                             assigned.id
                                         "
-                                        class="pl-3 pr-4 py-3 flex items-center justify-between text-sm leading-5"
+                                        class="border border-gray-200 rounded-md"
                                     >
-                                        <div
-                                            class="w-0 flex-1 flex items-center"
+                                        <li
+                                            class="pl-3 pr-4 py-3 flex items-center justify-between text-sm leading-5"
                                         >
-                                            <svg
-                                                class="flex-shrink-0 h-5 w-5 text-gray-400"
-                                                fill="currentColor"
-                                                viewBox="0 0 20 20"
+                                            <div
+                                                class="w-0 flex-1 flex items-center"
                                             >
-                                                <path
-                                                    d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"
-                                                />
-                                            </svg>
-                                            <span
-                                                class="ml-2 flex-1 w-0 truncate"
+                                                <svg
+                                                    class="flex-shrink-0 h-5 w-5 text-gray-400"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 20 20"
+                                                >
+                                                    <path
+                                                        d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"
+                                                    />
+                                                </svg>
+                                                <span
+                                                    class="ml-2 flex-1 w-0 truncate"
+                                                >
+                                                    {{
+                                                        assigned.name
+                                                    }}
+                                                </span>
+                                            </div>
+                                            <div
+                                                class="ml-4 flex-shrink-0"
                                             >
-                                                {{
-                                                    assigned.name
-                                                }}
-                                            </span>
-                                        </div>
-                                        <div
-                                            class="ml-4 flex-shrink-0"
-                                        >
-                                            <a
-                                                href="#"
-                                                class="font-medium text-red-800 hover:text-red-600 transition duration-150 ease-in-out"
-                                            >
-                                                Remove
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <ul
+                                                <a
+                                                    href="#"
+                                                    @click.prevent="
+                                                        detachConsultant(
+                                                            assigned
+                                                        )
+                                                    "
+                                                    class="font-medium text-red-800 hover:text-red-600 transition duration-150 ease-in-out"
+                                                >
+                                                    Remove
+                                                </a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div
                                     v-else
-                                    class="border border-gray-200 rounded-md"
                                 >
-                                    <li
-                                        class="pl-3 pr-4 py-3 flex items-center justify-between text-sm leading-5"
+                                    <ul
+                                        class="border border-gray-200 rounded-md"
                                     >
-                                        No
-                                        consultants
-                                        assigned
-                                        to
-                                        this
-                                        opportunity
-                                        yet
-                                    </li>
-                                </ul>
+                                        <li
+                                            class="pl-3 pr-4 py-3 flex items-center justify-between text-sm leading-5"
+                                        >
+                                            No
+                                            consultants
+                                            assigned
+                                            to
+                                            this
+                                            opportunity
+                                            yet
+                                        </li>
+                                    </ul>
+                                </div>
                             </dd>
                         </div>
                         <div
@@ -414,81 +425,93 @@
                                         type="submit"
                                         class="appearance-none md:font-size-1 bg-red-800 text-white border border-red-700 py-1 px-2 rounded  m-4 focus:border-red-800"
                                     >
-                                        select
+                                        upload
                                     </button>
                                 </form>
-                                <ul
-                                    class="border border-gray-200 rounded-md"
+                                <div
+                                    v-if="
+                                        opportunity
+                                            .documents
+                                            .length !=
+                                            0
+                                    "
                                 >
-                                    <li
-                                        class="pl-3 pr-4 py-3 border border-gray-200 flex items-center justify-between text-sm leading-5"
+                                    <ul
+                                        class="border border-gray-200 rounded-md"
+                                        v-for="document in opportunity.documents"
+                                        :key="
+                                            document.id
+                                        "
                                     >
-                                        <div
-                                            class="w-0 flex-1 flex items-center"
+                                        <li
+                                            class="pl-3 pr-4 py-3 border border-gray-200 flex items-center justify-between text-sm leading-5"
                                         >
-                                            <svg
-                                                class="flex-shrink-0 h-5 w-5 text-gray-400"
-                                                fill="currentColor"
-                                                viewBox="0 0 20 20"
+                                            <div
+                                                class="w-0 flex-1 flex items-center"
                                             >
-                                                <path
-                                                    fill-rule="evenodd"
-                                                    d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
-                                                    clip-rule="evenodd"
-                                                />
-                                            </svg>
-                                            <span
-                                                class="ml-2 flex-1 w-0 truncate"
+                                                <svg
+                                                    class="flex-shrink-0 h-5 w-5 text-gray-400"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 20 20"
+                                                >
+                                                    <path
+                                                        fill-rule="evenodd"
+                                                        d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
+                                                        clip-rule="evenodd"
+                                                    />
+                                                </svg>
+                                                <span
+                                                    class="ml-2 flex-1 w-0 truncate"
+                                                    >{{
+                                                        document.original_name
+                                                    }}</span
+                                                >
+                                            </div>
+                                            <div
+                                                class="ml-4 flex-shrink-0"
                                             >
-                                                resume_back_end_developer.pdf
-                                            </span>
-                                        </div>
-                                        <div
-                                            class="ml-4 flex-shrink-0"
-                                        >
-                                            <a
-                                                href="#"
-                                                class="font-medium text-red-800 hover:text-red-600 transition duration-150 ease-in-out"
-                                            >
-                                                Download
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li
-                                        class="border-t border-gray-200 pl-3 pr-4 py-3 flex items-center justify-between text-sm leading-5"
+                                                <a
+                                                    href="#"
+                                                    @click.prevent="
+                                                        downloadDocument(
+                                                            document
+                                                        )
+                                                    "
+                                                    class="font-medium text-red-800 hover:text-red-600 transition duration-150 ease-in-out"
+                                                >
+                                                    Download
+                                                </a>
+                                                <a
+                                                    href="#"
+                                                    @click.prevent="
+                                                        removeDocument(
+                                                            document
+                                                        )
+                                                    "
+                                                    class="font-medium text-red-800 hover:text-red-600 transition duration-150 ease-in-out"
+                                                >
+                                                    Remove
+                                                </a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div
+                                    v-else
+                                >
+                                    <ul
+                                        class="border border-gray-200 rounded-md"
                                     >
-                                        <div
-                                            class="w-0 flex-1 flex items-center"
+                                        <li
+                                            class="pl-3 pr-4 py-3 border border-gray-200 flex items-center justify-between text-sm leading-5"
                                         >
-                                            <svg
-                                                class="flex-shrink-0 h-5 w-5 text-gray-400"
-                                                fill="currentColor"
-                                                viewBox="0 0 20 20"
-                                            >
-                                                <path
-                                                    fill-rule="evenodd"
-                                                    d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
-                                                    clip-rule="evenodd"
-                                                />
-                                            </svg>
-                                            <span
-                                                class="ml-2 flex-1 w-0 truncate"
-                                            >
-                                                coverletter_back_end_developer.pdf
-                                            </span>
-                                        </div>
-                                        <div
-                                            class="ml-4 flex-shrink-0"
-                                        >
-                                            <a
-                                                href="#"
-                                                class="font-medium text-red-800 hover:text-red-600 transition duration-150 ease-in-out"
-                                            >
-                                                Download
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
+                                            Opps,
+                                            No
+                                            documents
+                                            attached
+                                        </li>
+                                    </ul>
+                                </div>
                             </dd>
                             <div
                                 class="p-4"
@@ -530,17 +553,84 @@ export default {
     },
     created() {
         this.getUsers();
+        console.log(
+            this
+                .dataOpportunity
+        );
     },
     methods: {
+        downloadDocument(
+            document
+        ) {
+            axios
+                .get(
+                    `/opportunities/${this.opportunity.id}/download/${document.id}`
+                )
+                .then(
+                    (
+                        response
+                    ) => {
+                        if (
+                            response
+                        ) {
+                        }
+                    }
+                )
+                .catch(
+                    (
+                        error
+                    ) => {
+                        console.log(
+                            error
+                        );
+                    }
+                );
+        },
+        async removeDocument(
+            document
+        ) {
+            await Confirmation.confirm(
+                "Do you want to delete a file?",
+                "Continue"
+            ).then(
+                (
+                    done
+                ) => {
+                    axios
+                        .get(
+                            `/opportunities/${this.opportunity.id}/remove/${document.id}`
+                        )
+                        .then(
+                            (
+                                response
+                            ) => {
+                                if (
+                                    response
+                                ) {
+                                    console.log(
+                                        response
+                                    );
+                                }
+                                window.location = `/opportunities/${this.opportunity.id}`;
+                            }
+                        )
+                        .catch(
+                            (
+                                error
+                            ) => {
+                                console.log(
+                                    error
+                                );
+                            }
+                        );
+                }
+            );
+        },
         handleFileUpload(
             e
         ) {
             this.file =
                 e.target.files[0];
-            console.log(
-                this
-                    .file
-            );
         },
         attachDocument() {
             let formData = new FormData();
@@ -550,9 +640,6 @@ export default {
                     .file
             );
 
-            console.log(
-                formData
-            );
             axios
                 .post(
                     `/opportunities/${this.opportunity.id}/upload`,
@@ -568,9 +655,15 @@ export default {
                     (
                         response
                     ) => {
-                        console.log(
-                            response
-                        );
+                        if (
+                            response.data ==
+                            "success"
+                        ) {
+                            Flash.success(
+                                "You have successfully assigned consultant to this opportunity"
+                            );
+                            window.location = `/opportunities/${this.opportunity.id}`;
+                        }
                     }
                 )
                 .catch(
@@ -604,6 +697,45 @@ export default {
                     error
                 );
             }
+        },
+        async detachConsultant(
+            consultant
+        ) {
+            console.log(
+                consultant
+            );
+            await Confirmation.confirm(
+                "Do you want to remove this consultant?",
+                "Continue"
+            ).then(
+                (
+                    done
+                ) => {
+                    axios
+                        .get(
+                            `/opportunities/${this.opportunity.id}/removeconsultant/${consultant.id}`
+                        )
+                        .then(
+                            (
+                                response
+                            ) => {
+                                Flash.success(
+                                    "You have successfully assigned consultant to this opportunity"
+                                );
+                                window.location = `/opportunities/${this.opportunity.id}`;
+                            }
+                        )
+                        .catch(
+                            (
+                                error
+                            ) => {
+                                console.log(
+                                    error
+                                );
+                            }
+                        );
+                }
+            );
         },
         async getUsers() {
             try {

@@ -128,6 +128,21 @@ class Opportunity extends Model
         return $this->consultants()->attach($user);
     }
 
+
+    /**
+     * Remove a consultant tan opportunity.
+     *
+     * @param  string $body
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function removeConsultant($user)
+    {
+        if ($this->consultants->contains($user)) {
+            $this->consultants()->detach($user);
+        }
+        return $this;
+    }
+
     public function project()
     {
 

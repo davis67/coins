@@ -28,6 +28,7 @@ class OpportunitiesResource extends JsonResource
             "revenue" => $this->revenue,
             "team" => new TeamsResource($this->team),
             "consultants" => $this->consultants ? new UsersCollection($this->consultants) : null,
+            "documents" => $this->documents ? $this->documents : null,
             "lead_source" => $this->lead_source,
             "internal_deadline" => Carbon::parse($this->internal_deadline)->format('l, jS F Y'),
             "original_internal_deadline" => $this->internal_deadline,

@@ -25,7 +25,6 @@ class CreateDocumentsTable extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('opportunity_id')->references('id')->on('opportunities')->onDelete('cascade');
         });
     }
 

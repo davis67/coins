@@ -112,17 +112,7 @@ class ManageOpportunitiesTest extends TestCase
      * @test
      */
 
-    // public function an_opportunity_can_have_documents()
-    // {
-    //     Storage::fake('documents/opportunities');
-
-    //     $file = UploadedFile::fake()->create('document.pdf');
-    //     $opportunity = factory(Opportunity::class)->create();
-    //     $this->actingAs($user = factory(User::class)->create());
-    //     $response = $this->json('POST', '/opportunities/' . $opportunity->path() . '/upload', [
-    //         'document' => $file,
-    //     ]);
-    //     // Assert the file was stored...
-    //     Storage::disk('documents/opportunities')->assertExists($file->hashName());
-    // }
+    public function an_opportunity_document_can_be_downloaded()
+    {
+    }
 }

@@ -6,11 +6,11 @@ use App\Models\Opportunity;
 use App\Http\Requests\OpportunityRequest;
 use App\Http\Resources\OpportunitiesResource;
 use App\Http\Resources\OpportunitiesCollection;
+use App\Models\Document;
 use App\Models\Team;
 use App\User;
 use Countries;
-
-
+use Illuminate\Support\Facades\Storage;
 
 class OpportunitiesController extends Controller
 {
@@ -82,6 +82,35 @@ class OpportunitiesController extends Controller
     }
 
     /**
+     * download a document.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function downloadDocument($opportunity_id, $document_id)
+    {
+        $opportunity = Opportunity::findOrFail($opportunity_id);
+        $document = Document::findOrFail($document_id);
+        return Storage::download($document->file_path);
+    }
+
+    /**
+     * remove a document.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function removeDocument($opportunity_id, $document_id)
+    {
+        $opportunity = Opportunity::findOrFail($opportunity_id);
+        $document = Document::findOrFail($document_id);
+        Storage::delete($document->file_path);
+        $document->delete();
+        return 'success';
+    }
+
+
+    /**
      * assign a consultant.
      *
      * @return \Illuminate\Http\Response
@@ -91,6 +120,19 @@ class OpportunitiesController extends Controller
         $opportunity = Opportunity::findOrFail($opportunityId);
         $consultant = User::findOrFail($userId);
         $opportunity->assignConsultant($consultant);
+        return 'success';
+    }
+
+    /**
+     * dettach a consultant from an opportunity.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function removeConsultants($opportunityId, $userId)
+    {
+        $opportunity = Opportunity::findOrFail($opportunityId);
+        $consultant = User::findOrFail($userId);
+        $opportunity->removeConsultant($consultant);
         return 'success';
     }
 
