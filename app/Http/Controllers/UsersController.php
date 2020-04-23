@@ -3,23 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use App\User;
-use App\Leave;
-use App\TaskUser;
-use App\Timesheet;
 use App\Models\Team;
 use App\Title;
-use App\Assessment;
 use Auth;
-use DB;
-use Gate;
-use Alert;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\TeamsCollection;
 use App\Http\Resources\TeamsResource;
-use Session;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\UsersCollection;
 
@@ -45,14 +35,14 @@ class UsersController extends Controller
     {
         $users = User::all();
         $teams = Team::all();
-        $titles = Title::all();
-        return view('users.create', compact('users', 'titles', 'teams'));
+        return view('users.create', compact('users', 'teams'));
     }
 
     public function store(UserRequest $request)
     {
         $data = $request->validated();
         $user = User::create($data);
+        $data->recordActivity('added_user');
         return $user;
     }
 

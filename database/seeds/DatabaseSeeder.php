@@ -13,23 +13,14 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call([
-            LevelsTableSeeder::class,
-            TitlesTableSeeder::class,
+
             TeamsTableSeeder::class,
             UsersTableSeeder::class,
-            HolidaysTableSeeder::class,
-            ServicelinesTableSeeder::class,
-            LeavesettingsTableSeeder::class,
-            ExpertisesTableSeeder::class,
-            DeliverablesTableSeeder::class,
-            PermissionsSeeder::class
-            // FinancialyearTableSeeder::class
         ]);
-        factory(App\Meatpartone::class, 4)->create();
-        factory(App\Performance_metrics_details::class, 20)->create();
+        // factory(App\Meatpartone::class, 4)->create();
+        // factory(App\Performance_metrics_details::class, 20)->create();
 
-        factory(App\Meatparttwo::class, 1)->create();
-        factory(App\Parttwo_performance::class, 5)->create();
-
+        // factory(App\Meatparttwo::class, 1)->create();
+        // factory(App\Parttwo_performance::class, 5)->create();
     }
 }

@@ -63,9 +63,11 @@ class OpportunitiesController extends Controller
      */
     public function store(OpportunityRequest $request)
     {
-        return auth()->user()
+        $data =  auth()->user()
             ->opportunities()
             ->create($request->validated());
+        $data->recordActivity('created_opportunity');
+        return $data;
     }
 
     /**
@@ -78,6 +80,7 @@ class OpportunitiesController extends Controller
     {
         $opportunity = Opportunity::findOrFail($id);
         $opportunity->attachFIle(request()->file('file'));
+        $opportunity->recordActivity('uploaded_document');
         return 'success';
     }
 
@@ -91,6 +94,7 @@ class OpportunitiesController extends Controller
     {
         $opportunity = Opportunity::findOrFail($opportunity_id);
         $document = Document::findOrFail($document_id);
+        $opportunity->recordActivity('downloaded_document');
         return Storage::download($document->file_path);
     }
 
@@ -105,6 +109,7 @@ class OpportunitiesController extends Controller
         $opportunity = Opportunity::findOrFail($opportunity_id);
         $document = Document::findOrFail($document_id);
         Storage::delete($document->file_path);
+        $opportunity->recordActivity('removed_document');
         $document->delete();
         return 'success';
     }
@@ -120,6 +125,7 @@ class OpportunitiesController extends Controller
         $opportunity = Opportunity::findOrFail($opportunityId);
         $consultant = User::findOrFail($userId);
         $opportunity->assignConsultant($consultant);
+        $opportunity->recordActivity('assigned_consultant');
         return 'success';
     }
 
@@ -133,6 +139,7 @@ class OpportunitiesController extends Controller
         $opportunity = Opportunity::findOrFail($opportunityId);
         $consultant = User::findOrFail($userId);
         $opportunity->removeConsultant($consultant);
+        $opportunity->recordActivity('removed_consultant');
         return 'success';
     }
 
@@ -175,6 +182,7 @@ class OpportunitiesController extends Controller
     {
         $opportunity  = Opportunity::findOrFail($id);
         $opportunity->update($request->validated());
+        $opportunity->recordActivity('updated_opportunity');
         return 'success';
     }
 
@@ -189,6 +197,7 @@ class OpportunitiesController extends Controller
     public function destroy($id)
     {
         $opportunity = Opportunity::findOrFail($id);
+        $opportunity->recordActivity('deleted_opportunity');
         $opportunity->delete();
         return "success";
     }

@@ -4,23 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
-use App\Page;
-use App\Title;
 use App\Models\Team;
-use App\TaskUser;
-use App\Leave;
-use App\Leavesetting;
-use App\Project;
-use App\Contact;
 use App\Models\Opportunity;
-use App\Associate;
-use App\Holiday;
-use App\Serviceline;
-use App\Leaveforward;
-use App\Evaluation;
-use App\Expertise;
-use App\Deliverable;
-use App\Target;
 use Carbon\Carbon;
 use App\Charts\CoinChart;
 use Illuminate\Support\Facades\Mail;
@@ -48,9 +33,7 @@ class HomeController extends Controller
         // }
 
         $users = User::all();
-        $contacts = contact::all();
         $opportunities = Opportunity::all();
-        $projects = Project::all();
 
         $oppStage = DB::table('opportunities')
             ->selectRaw("count('id') as opportunitiesdone,sales_stage")
@@ -71,58 +54,55 @@ class HomeController extends Controller
             ->groupBy("country")
             ->get();
 
-        //Prjects per stage
-        $project_stages = DB::table('projects')->selectRaw("count('id') as currentProjects,project_stage")->groupBy("project_stage")->get();
-
         //Team Composition
         $composition = DB::SELECT("SELECT count(*) as total,t.team_code FROM users u JOIN teams t ON u.team_id=t.id WHERE u.userStatus='Active' GROUP BY team_code");
 
         //User Login Tracker
-        $addedUsers = User::where(DB::raw("(DATE_FORMAT(lastLogin,'%Y'))"), date('Y'))->get();
-        $today_users = User::whereDate('lastLogin', today())->count();
-        $yesterday_users = User::whereDate('lastLogin', today()->subDays(1))->count();
-        $users_2_days_ago = User::whereDate('lastLogin', today()->subDays(2))->count();
-        $users_3_days_ago = User::whereDate('lastLogin', today()->subDays(3))->count();
-        $users_4_days_ago = User::whereDate('lastLogin', today()->subDays(4))->count();
-        $users_5_days_ago = User::whereDate('lastLogin', today()->subDays(5))->count();
+        // $addedUsers = User::where(DB::raw("(DATE_FORMAT(lastLogin,'%Y'))"), date('Y'))->get();
+        // $today_users = User::whereDate('lastLogin', today())->count();
+        // $yesterday_users = User::whereDate('lastLogin', today()->subDays(1))->count();
+        // $users_2_days_ago = User::whereDate('lastLogin', today()->subDays(2))->count();
+        // $users_3_days_ago = User::whereDate('lastLogin', today()->subDays(3))->count();
+        // $users_4_days_ago = User::whereDate('lastLogin', today()->subDays(4))->count();
+        // $users_5_days_ago = User::whereDate('lastLogin', today()->subDays(5))->count();
 
         //Opportunities per stage
-        $stageData = [];
-        $stageLables = [];
-        foreach ($oppStage as $data) {
-            array_push($stageData, [
-                $data->opportunitiesdone
-            ]);
-            array_push($stageLables, [
-                $data->sales_stage
-            ]);
-        }
+        // $stageData = [];
+        // $stageLables = [];
+        // foreach ($oppStage as $data) {
+        //     array_push($stageData, [
+        //         $data->opportunitiesdone
+        //     ]);
+        //     array_push($stageLables, [
+        //         $data->sales_stage
+        //     ]);
+        // }
 
         //Opportunities per type
 
-        $statusData = [];
-        $statusLables = [];
-        foreach ($oppStatus as $data) {
-            array_push($statusData, [
-                $data->opportunitiesdone
-            ]);
-            array_push($statusLables, [
-                $data->type
-            ]);
-        }
+        // $statusData = [];
+        // $statusLables = [];
+        // foreach ($oppStatus as $data) {
+        //     array_push($statusData, [
+        //         $data->opportunitiesdone
+        //     ]);
+        //     array_push($statusLables, [
+        //         $data->type
+        //     ]);
+        // }
 
         //Opportunities per team
 
-        $teamData = [];
-        $teamLables = [];
-        foreach ($oppTeam as $data) {
-            array_push($teamData, [
-                $data->opportunitiesdone
-            ]);
-            array_push($teamLables, [
-                $data->team
-            ]);
-        }
+        // $teamData = [];
+        // $teamLables = [];
+        // foreach ($oppTeam as $data) {
+        //     array_push($teamData, [
+        //         $data->opportunitiesdone
+        //     ]);
+        //     array_push($teamLables, [
+        //         $data->team
+        //     ]);
+        // }
 
         //Opportunities per Country
 
@@ -134,20 +114,6 @@ class HomeController extends Controller
             ]);
             array_push($countryLables, [
                 $data->country
-            ]);
-        }
-
-        //Projects per stage
-
-        $projectData = [];
-        $projectLables = [];
-
-        foreach ($project_stages as $data) {
-            array_push($projectData, [
-                $data->currentProjects
-            ]);
-            array_push($projectLables, [
-                $data->project_stage
             ]);
         }
 
@@ -170,53 +136,53 @@ class HomeController extends Controller
          */
 
         //Opportunities
-        $opportunityStage = new CoinChart;
-        $opportunityStage->labels($stageLables);
-        $colors = ['#2C3E50', '#196F3D', '#7DCEA0', '#D1F2EB', '#E8DAEF', '#C0392B', '#76D7C4', '#117864', '#E67E22', '#AF7AC5'];
-        $opps = $opportunityStage->dataset('Opportunities per Stage', 'bar', $stageData);
-        $opps->backgroundColor($colors);
+        // $opportunityStage = new CoinChart;
+        // $opportunityStage->labels($stageLables);
+        // $colors = ['#2C3E50', '#196F3D', '#7DCEA0', '#D1F2EB', '#E8DAEF', '#C0392B', '#76D7C4', '#117864', '#E67E22', '#AF7AC5'];
+        // $opps = $opportunityStage->dataset('Opportunities per Stage', 'bar', $stageData);
+        // $opps->backgroundColor($colors);
 
-        $opportunityStatus = new CoinChart;
-        $opportunityStatus->labels($statusLables);
-        $colors = ['#AF7AC5', '#E67E22', '#D5DBDB', '#C0392B', '#76D7C4', '#117864', '#E67E22', '#7DCEA0', '#D1F2EB', '#E8DAEF'];
-        $opps = $opportunityStatus->dataset('Opportunities per Status', 'doughnut', $statusData);
-        $opps->backgroundColor($colors);
+        // $opportunityStatus = new CoinChart;
+        // $opportunityStatus->labels($statusLables);
+        // $colors = ['#AF7AC5', '#E67E22', '#D5DBDB', '#C0392B', '#76D7C4', '#117864', '#E67E22', '#7DCEA0', '#D1F2EB', '#E8DAEF'];
+        // $opps = $opportunityStatus->dataset('Opportunities per Status', 'doughnut', $statusData);
+        // $opps->backgroundColor($colors);
 
-        $opportunityTeam = new CoinChart;
-        $opportunityTeam->labels($teamLables);
-        $opportunityTeam->title('Opportunities per team');
-        $colors = ['#C0392B', '#76D7C4', '#117864', '#E67E22', '#AF7AC5', '#D5F5E3', '#D5DBDB', '#7DCEA0', '#D1F2EB', '#E8DAEF'];
-        $opps = $opportunityTeam->dataset('Group by Team', 'pie', $teamData);
-        $opps->backgroundColor($colors);
+        // $opportunityTeam = new CoinChart;
+        // $opportunityTeam->labels($teamLables);
+        // $opportunityTeam->title('Opportunities per team');
+        // $colors = ['#C0392B', '#76D7C4', '#117864', '#E67E22', '#AF7AC5', '#D5F5E3', '#D5DBDB', '#7DCEA0', '#D1F2EB', '#E8DAEF'];
+        // $opps = $opportunityTeam->dataset('Group by Team', 'pie', $teamData);
+        // $opps->backgroundColor($colors);
 
-        $opportunityCountry = new CoinChart;
-        $opportunityCountry->labels($countryLables);
-        $colors = ['#C0392B', '#76D7C4', '#117864', '#E67E22', '#AF7AC5', '#D5F5E3', '#D5DBDB', '#7DCEA0', '#D1F2EB', '#E8DAEF'];
-        $opps = $opportunityCountry->dataset('Opportunities per Country', 'bar', $countryData);
-        $opps->backgroundColor($colors);
+        // $opportunityCountry = new CoinChart;
+        // $opportunityCountry->labels($countryLables);
+        // $colors = ['#C0392B', '#76D7C4', '#117864', '#E67E22', '#AF7AC5', '#D5F5E3', '#D5DBDB', '#7DCEA0', '#D1F2EB', '#E8DAEF'];
+        // $opps = $opportunityCountry->dataset('Opportunities per Country', 'bar', $countryData);
+        // $opps->backgroundColor($colors);
 
 
 
-        $userChart = new CoinChart;
-        $userChart->labels(['5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today']);
-        $activity = $userChart->dataset('User Activity', 'line', [$users_5_days_ago, $users_4_days_ago, $users_3_days_ago, $users_2_days_ago, $yesterday_users, $today_users]);
-        $colors = ['#943126', '#D5DBDB', '#7DCEA0', '#D1F2EB', '#2471A3'];
-        $activity->backgroundColor($colors);
+        // $userChart = new CoinChart;
+        // $userChart->labels(['5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today']);
+        // $activity = $userChart->dataset('User Activity', 'line', [$users_5_days_ago, $users_4_days_ago, $users_3_days_ago, $users_2_days_ago, $yesterday_users, $today_users]);
+        // $colors = ['#943126', '#D5DBDB', '#7DCEA0', '#D1F2EB', '#2471A3'];
+        // $activity->backgroundColor($colors);
 
-        $teamChart = new CoinChart;
-        $teamChart->title('Team Composition');
+        // $teamChart = new CoinChart;
+        // $teamChart->title('Team Composition');
 
-        $teams = $teamChart->dataset('Consultants', 'pie', $userData);
-        $teamChart->labels($lables);
-        $colors = ['#85C1E9', '#76D7C4', '#F4D03F', '#E67E22', '#AF7AC5', '#943126', '#0000FF', '#7DCEA0', '#D1F2EB', '#17a2b8'];
-        $teams->backgroundColor($colors);
+        // $teams = $teamChart->dataset('Consultants', 'pie', $userData);
+        // $teamChart->labels($lables);
+        // $colors = ['#85C1E9', '#76D7C4', '#F4D03F', '#E67E22', '#AF7AC5', '#943126', '#0000FF', '#7DCEA0', '#D1F2EB', '#17a2b8'];
+        // $teams->backgroundColor($colors);
 
-        //Project Chart
-        $projectChart = new CoinChart;
-        $projectChart->labels($projectLables);
-        $colors = ['#117864', '#E67E22', '#AF7AC5', '#D5F5E3', '#D5DBDB', '#7DCEA0', '#D1F2EB', '#E8DAEF', '#C0392B', '#76D7C4'];
-        $opps = $projectChart->dataset('Projects per Stage', 'bar', $projectData);
-        $opps->backgroundColor($colors);
+        // //Project Chart
+        // $projectChart = new CoinChart;
+        // $projectChart->labels($projectLables);
+        // $colors = ['#117864', '#E67E22', '#AF7AC5', '#D5F5E3', '#D5DBDB', '#7DCEA0', '#D1F2EB', '#E8DAEF', '#C0392B', '#76D7C4'];
+        // $opps = $projectChart->dataset('Projects per Stage', 'bar', $projectData);
+        // $opps->backgroundColor($colors);
 
         return view('pages.home', compact(
             'projects',

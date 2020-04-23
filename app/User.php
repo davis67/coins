@@ -96,21 +96,6 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public static function getCreator()
-    {
-
-        $admin = DB::table('users')->latest('id')->first();
-
-        if ($admin != NULL) {
-
-            $admin = $admin->id;
-        } else {
-        }
-
-        return $admin;
-    }
-
-
     /**
      * Get all opportunities assigned to an consultant.
      *
@@ -126,79 +111,16 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
-
-    public function tasks()
+    /**
+     * Get all the activities triggered by the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function activities()
     {
-
-        return $this->belongsToMany('App\Task')->where('task_status', '!=', 'Done')->orWhere('task_status', '!=', 'Completed');
+        return $this->hasMany(User::class);
     }
 
-    public function doneTasks()
-    {
-        return $this->belongsToMany('App\Task')->where('task_status', 'Done')->orWhere('task_status', 'Completed');
-    }
-    public function timesheets()
-    {
-
-        return $this->hasMany('App\Timesheet');
-    }
-    public function comments()
-    {
-
-        return $this->hasMany('App\Comment');
-    }
-
-    public function permission()
-    {
-        return $this->hasOne(Permission::class);
-    }
-
-    public function assessments()
-    {
-
-        return $this->hasMany('App\Assessment')->selectRaw("targets.target_category AS category,assessments.assessment_score/targets.target_value*100 AS score")
-            ->join('targets', 'assessments.target_id', '=', 'targets.id')
-            ->where(['targets.assessable' => true])
-            ->groupBy('targets.target_category');
-    }
-
-    public function scores()
-    {
-
-        return $this->hasMany('App\TaskUser')->selectRaw("targets.target_category AS category,assessments.assessment_score/targets.target_value*100 AS grade")
-            ->join('targets', 'assessments.target_id', '=', 'targets.id')
-            ->where(['targets.assessable' => false])
-            ->groupBy('targets.target_category');
-    }
-
-    public function projects()
-    {
-
-        return $this->belongsToMany('App\Project');
-    }
-
-    public function leaves()
-    {
-
-        return $this->hasMany('App\Leave');
-    }
-
-    public function reportsTo()
-    {
-        return $this->hasMany(User::class, 'reportsTo');
-    }
-
-    public function titles()
-    {
-
-        return $this->belongsToMany('App\Title');
-    }
-
-    public function leavestatus()
-    {
-
-        return $this->hasMany(Leavestatus::class, 'approved_by');
-    }
 
     /**
      * Get all opportunities created by the user.
@@ -210,18 +132,6 @@ class User extends Authenticatable
     {
 
         return $this->belongsTo('App\Models\Team');
-    }
-
-    public function leads()
-    {
-
-        return $this->hasOne('App\Team')->join('users', 'users.id', '=', 'teams.team_leader');
-    }
-
-    public function level()
-    {
-
-        return $this->belongsTo('App\Level');
     }
 
     /**
@@ -243,18 +153,5 @@ class User extends Authenticatable
     public function documents()
     {
         return $this->hasMany(Document::class, 'user_id');
-    }
-
-    //function that checks whether the user has acertain title.
-    public function hasTitle($title)
-    {
-
-        //check if the user has the title stated in the arguments
-        if ($this->titles()->where('name', $title)->first()) {
-            return true;
-        }
-
-        //return false if the user has no the title stated in the arguments
-        return false;
     }
 }

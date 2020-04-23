@@ -6,10 +6,12 @@ use App\Models\Document;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use DB;
+use App\Traits\RecordsActivityTrait;
 use App\User;
 
 class Opportunity extends Model
 {
+    use RecordsActivityTrait;
 
     /**
      * The attributes that are mass assignable
@@ -32,6 +34,15 @@ class Opportunity extends Model
         'updated_by',
         'team_id'
     ];
+
+
+    /**
+     * Model events that should trigger new activity.
+     *
+     * @var array
+     */
+    protected static $recordableEvents = ['created', 'deleted'];
+
 
     /**
      * The ID attribute should be a string

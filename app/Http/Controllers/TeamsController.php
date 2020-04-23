@@ -4,16 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Team;
-use App\Models\User;
-use App\Target;
+use App\User;
 use App\Assessment;
 use App\Http\Resources\TeamsCollection;
-use App\Timesheet;
-use App\TaskUser;
-use DB;
-use Session;
-use Gate;
-use Auth;
+use DB;;
 
 class TeamsController extends Controller
 {
@@ -48,54 +42,6 @@ class TeamsController extends Controller
         return new TeamsCollection(Team::all());
     }
 
-    public function assessmentSummary($team)
-    {
-        $users = User::where(['team_id' => $team]);
-        $assessments = [];
-        $assessQuality =  $assessQuantity = $assessBusiness = $assessPersonal = $assessTeam = $index = 0;
-        foreach ($users as $user) :
-            $assessments[$index]['user'] = $user->name;
-
-            $result = Assessment::where(['user_id' => $user->id])->get();
-        //$assessments[$index]['result'] = $result;
-        endforeach;
-        // dd($assessments);
-    }
-
-    public function timesheetSummary($id)
-    {
-        $personal_targets = Assessment::where('user_id', $id)->get();
-        // $timesheets = [];
-        // $index = 0;
-        //     $timesheets[$index]['user'] = $id;
-        //     foreach(['Proposal','EOI','Pre-Qualification'] as $type):
-        //         $timesheets = TaskUser::where(['user_id' => $id])->get();
-        //     endforeach;
-        return $personal_targets;
-    }
-
-    public function opportunitySummary($team)
-    {
-        $users = User::where(['team_id' => $team]);
-        $summary = [];
-        $index = 0;
-        foreach ($users as $user) :
-            $summary[$index]['user'] = $user->name;
-            foreach (['Proposal', 'EOI', 'Pre-Qualification'] as $type) :
-                foreach (['Identified', 'Qualified', 'Prepared', 'Submitted', 'Won'] as $stage) :
-                    $opportunities = DB::table('opportunities')
-                        ->join('opportunity_user', 'opportunity_user.opportunity_id', '=', 'opportunities.id')
-                        ->where(['opportunities.type' => $type, 'opportunities.sales_stage' => $stage, 'opportunity_user.user_id' => $user->id])
-                        ->get();
-                    $stage = strtolower(implode(explode(' ', $stage)));
-                    $summary[$index][$type][$stage] = $opportunities->count();
-                endforeach;
-            endforeach;
-            $index += 1;
-        endforeach;
-        return $summary;
-    }
-
     /**
      * Persist a new team.
      *
@@ -108,10 +54,16 @@ class TeamsController extends Controller
             'team_code' => 'required',
             'team_leader' => 'nullable'
         ]);
-
+        $data->recordActivity('created_team');
         Team::create($data);
     }
 
+    /**
+     * Display the team.
+     *
+     * @param  Team $team
+     * @return \Illuminate\Http\Response
+     */
     public function show(Team $team)
     {
         $team = Team::findOrFail($team->id);
@@ -119,11 +71,24 @@ class TeamsController extends Controller
         return view('teams.show', compact('team', 'users'));
     }
 
+    /**
+     * Edit the team.
+     *
+     * @param  Team $team
+     * @return \Illuminate\Http\Response
+     */
+
     public function edit(Team $team)
     {
         return response()->json($team);
     }
-
+    /**
+     * Update the team.
+     *
+     * @param  Team $team
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function update(Request $request, Team $team)
     {
         $data = $request->validate([
@@ -134,7 +99,7 @@ class TeamsController extends Controller
         $data['updated_by'] = auth()->user()->id;
 
         $team->update($data);
-
+        $team->recordActivity('updated_team');
         return $team;
     }
 
@@ -149,6 +114,7 @@ class TeamsController extends Controller
 
     public function destroy(Team $team)
     {
+        $team->recordActivity('deleted_team');
         $team->delete();
     }
 }

@@ -2,11 +2,20 @@
 
 namespace App\Models;
 
+use App\Traits\RecordsActivityTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Team extends Model
 {
-    protected $fillable = ['team_name', 'team_code', 'team_leader', 'created_by', 'updated_by'];
+    use RecordsActivityTrait;
+
+    protected $fillable = [
+        'team_name',
+        'team_code',
+        'team_leader',
+        'created_by',
+        'updated_by'
+    ];
 
     public function users()
     {
