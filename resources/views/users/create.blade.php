@@ -85,6 +85,10 @@
             </a>
                 </div>
             </div>
-        <create-users :data-titles="{{$titles}}" :data-teams="{{json_encode($teams)}}" :data-users="{{$users}}"></create-users>
+            <div class="bg-white border-t border-b sm:border-l sm:border-r sm:rounded shadow mb-6">
+        <div class="w-11/12 py-8 mx-auto">
+        <create-users  :data-teams="{{json_encode($teams)}}" :data-users="{{$users}}"></create-users>
+    </div>
+</div>
     </div>
 @endsection

@@ -14,8 +14,7 @@ class CreateAssociatesTable extends Migration
     public function up()
     {
         Schema::create('associates', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->primary('id');
+            $table->uuid('id')->primary();
             $table->string('associate_name')->unique();
             $table->string('associate_gender');
             $table->string('associate_email')->unique();

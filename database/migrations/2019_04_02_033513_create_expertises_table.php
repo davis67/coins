@@ -14,8 +14,7 @@ class CreateExpertisesTable extends Migration
     public function up()
     {
         Schema::create('expertises', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->primary('id');
+            $table->uuid('id')->primary();
             $table->string('field_name');
             $table->string('field_description');
             $table->string('created_by');

@@ -17,7 +17,7 @@
         </li>
         <li class="mr-6 my-2 md:my-0">
         <a href="{{route('users.index')}}" class="{{ Nav::isResource('users') }} block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 border-b-2 border-white hover:border-purple-500">
-                <i class="fa fa-user-plus fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Users</span>
+                <i class="fa fa-user-plus fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Consultants</span>
             </a>
         </li>
         <li class="mr-6 my-2 md:my-0">
@@ -26,7 +26,7 @@
             </a>
         </li>
         <li class="mr-6 my-2 md:my-0">
-            <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 border-b-2 border-white hover:border-green-500">
+            <a href="{{route('contacts.index')}}" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 border-b-2 border-white hover:border-green-500">
                 <i class="fas fa-wallet fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Contacts</span>
             </a>
         </li>
@@ -37,7 +37,7 @@
         </li>
         <li class="mr-6 my-2 md:my-0">
             <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 border-b-2 border-white hover:border-red-500">
-                <i class="fa fa-wallet fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Configurations</span>
+                <i class="fa fa-wallet fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Projects</span>
             </a>
         </li>
     </ul>

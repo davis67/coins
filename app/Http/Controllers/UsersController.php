@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\Team;
-use App\Title;
 use Auth;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\TeamsCollection;
