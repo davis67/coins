@@ -185,7 +185,7 @@ class HomeController extends Controller
         // $opps->backgroundColor($colors);
 
         return view('pages.home', compact(
-            'projects',
+
             'teams',
             'opportunities',
             'users',

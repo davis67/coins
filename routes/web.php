@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes(['register' => false]);
-Auth::loginUsingId("adec643f-3994-460a-a8bf-9b638934ee64");
+Auth::loginUsingId("4c793b21-2995-4ae7-8cd8-da525f5bd795");
 
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/', 'HomeController@index');
